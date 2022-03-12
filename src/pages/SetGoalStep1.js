@@ -81,7 +81,7 @@ function SetGoalStep1() {
             <SubTitle>
               1 / 5 단계
               <br />
-              목표를 입력하세요.
+              목표를 입력하세요. 33333
             </SubTitle>
             <Input
               type="text"
