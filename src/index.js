@@ -60,7 +60,7 @@ table {
 body {
   font-weight: 400;
   font-family: 'Source Sans Pro', sans-serif;
-  color: ${(props) => props.theme.white.darker};
+  color: ${(props) => props.theme.black.lighter};
   line-height: 1.2;
   background-color: white;
   // 슬라이드 작동 시 좌우 스크롤 바 숨기기

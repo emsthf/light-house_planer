@@ -150,7 +150,7 @@ function Header() {
   return (
     <Nav variants={navVariants} initial="top" animate={navAnimation}>
       <Col>
-        <Link to="/movies">
+        <Link to="/">
           <Logo
             variants={logoVariants}
             animate="normal"

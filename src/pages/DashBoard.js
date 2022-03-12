@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  padding: 150px;
 `;
 
 const GridBox = styled.div`
@@ -20,9 +20,6 @@ const GridBox = styled.div`
 `;
 
 const Container = styled.div`
-  /* display: ;
-  justify-content: space-between;
-  align-items: center; */
   background-color: #a29bfe;
   height: 600px;
   /* box-shadow: 10px 8px 5px rgba(0, 0, 0, 0.5); */
@@ -106,16 +103,56 @@ const ContentBox = styled.div`
 const GoalBox = styled.div`
   width: 100%;
   height: 320px;
-  background-color: #5f27cd;
+  /* background-color: #5f27cd; */
+`;
+
+const GoalTitle = styled.span`
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 6px;
+`;
+
+const Explanation = styled.span`
+  font-size: 10px;
+  margin-top: 8px;
 `;
 
 const Goal = styled.div`
-  width: 95%;
+  width: 100%;
   height: 100px;
-  background-color: #341f97;
+  /* background-color: #341f97; */
   border-radius: 10px;
   border: 1px solid black;
-  margin: auto;
+  display: flex !important;
+  flex-direction: column;
+  padding: 20px;
+  margin-bottom: 10px;
+  div {
+    display: flex;
+    flex-direction: row;
+    i {
+      color: white;
+      margin-right: 6px;
+      font-size: 20px;
+    }
+    /* ${GoalTitle} {
+      font-size: 20px;
+      font-weight: bold;
+      margin-right: 6px;
+    } */
+    div {
+      border: 1px solid black;
+      border-radius: 10px;
+      width: 48px;
+      height: 22px;
+      font-size: 12px;
+      padding-top: 3px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+  }
 `;
 
 function DashBoard() {
@@ -137,9 +174,36 @@ function DashBoard() {
         </Container>
         <ContentBox>
           <GoalBox>
-            <Goal />
-            <Goal />
-            <Goal />
+            <Goal>
+              <div>
+                <i class="fa-regular fa-calendar-check"></i>
+                <GoalTitle>숨 쉬기</GoalTitle>
+                <div>진행 중</div>
+              </div>
+              <div>
+                <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
+              </div>
+            </Goal>
+            <Goal>
+              <div>
+                <i class="fa-regular fa-calendar-check"></i>
+                <GoalTitle>밥 먹기</GoalTitle>
+                <div>진행 중</div>
+              </div>
+              <div>
+                <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
+              </div>
+            </Goal>
+            <Goal>
+              <div>
+                <i class="fa-regular fa-calendar-check"></i>
+                <GoalTitle>걷기</GoalTitle>
+                <div>진행 중</div>
+              </div>
+              <div>
+                <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
+              </div>
+            </Goal>
           </GoalBox>
         </ContentBox>
       </GridBox>

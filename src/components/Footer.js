@@ -38,13 +38,8 @@ function Footer() {
       {/* {location.pathname === "/" ? null : ( */}
       <Container>
         <IconBox>
-          <a href="https://nomadcoders.co/" target="_blank">
-            <Img
-              src="https://nomadcoders.co/m.svg"
-              alt=""
-              aria-labelledby="노마드코더"
-              aria-required="true"
-            />
+          <a href="https://app.slack.com/client/T0315A0TSJV/C030L19Q6UW" target="_blank">
+            <i class="fa-brands fa-slack" style={{ margin: "0px 10px 10px 0px" }}></i>
           </a>
           <a href="https://github.com/emsthf" target="_blank">
             <i className="fab fa-github" style={{ margin: "0px 10px 10px 0px" }}></i>
