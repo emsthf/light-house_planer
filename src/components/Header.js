@@ -41,19 +41,19 @@ const Items = styled.ul`
 
 const Item = styled.li`
   margin-right: 20px;
-  color: ${(props) => props.theme.white.darker};
+  color: ${(props) => props.theme.black.darker};
   transition: color 0.3s ease-in-out;
   position: relative;
   display: flex;
   justify-content: center;
   flex-direction: column;
   &:hover {
-    color: ${(props) => props.theme.white.lighter};
+    color: ${(props) => props.theme.black.lighter};
   }
 `;
 
 const Search = styled.form`
-  color: white;
+  color: gray;
   display: flex;
   align-items: center;
   position: relative;
@@ -102,7 +102,7 @@ const logoVariants = {
 
 const navVariants = {
   top: { backgroundColor: "rgba(0, 0, 0, 0)" },
-  scroll: { backgroundColor: "rgba(0, 0, 0, 1)" },
+  scroll: { backgroundColor: "rgba(236, 204, 104, 1)" },
 };
 
 function Header() {
@@ -110,6 +110,7 @@ function Header() {
   // useMatch는 react router의 기능으로, 해당 router 안에 있는지 알려준다
   const homeMatch = useMatch("/dash");
   const tvMatch = useMatch("/board");
+  const challengeMatch = useMatch("/challenge");
   const inputAnumation = useAnimation();
   const navAnimation = useAnimation();
   // useViewPortScroll은 제일 아래로부터 얼마나 멀리 있는지를 알려준다.
@@ -172,6 +173,11 @@ function Header() {
           </Item>
           <Item>
             <Link to="/board">게시판 {tvMatch && <Circle layoutId="circle" />}</Link>
+          </Item>
+          <Item>
+            <Link to="/challenge">
+              Challenge {challengeMatch && <Circle layoutId="circle" />}
+            </Link>
           </Item>
         </Items>
       </Col>

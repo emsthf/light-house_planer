@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 
 const Wrapper = styled.div`
-  background-color: #74b9ff;
+  /* background-color: #74b9ff; */
   height: auto;
   min-height: 100%;
   width: 100vw;
@@ -30,17 +32,17 @@ const GridBox = styled.div`
 `;
 
 const Container = styled.div`
-  background-color: #a29bfe;
+  /* background-color: #a29bfe; */
   height: 600px;
   /* box-shadow: 10px 8px 5px rgba(0, 0, 0, 0.5); */
-  margin-right: 10px;
+  margin-right: 30px;
 `;
 
 const ProfileImg = styled.div`
   border-radius: 50%;
   width: 16em;
   height: 16em;
-  border: 2px solid white;
+  border: 2px solid gray;
   margin: auto;
   background: no-repeat
     url(http://jjal.today/data/file/gallery/1028612757_tfzgnpT0_8b425806e9bc8770ee9926f757d5ff046f92f11e.png);
@@ -122,6 +124,12 @@ const GoalBox = styled.div`
   margin-bottom: 20px;
 `;
 
+const BoxTitle = styled.span`
+  font-size: 20px;
+  font-weight: bold !important;
+  margin-bottom: 8px !important;
+`;
+
 const GoalTitle = styled.span`
   font-size: 20px;
   font-weight: bold;
@@ -138,10 +146,10 @@ const Explanation = styled.span`
   margin-top: 8px;
 `;
 
-const Goal = styled.div`
+const Goal = styled(motion.div)`
   width: 100%;
   height: 100px;
-  /* background-color: #341f97; */
+  background-color: #dff9fb;
   border-radius: 10px;
   border: 1px solid black;
   display: flex !important;
@@ -155,6 +163,7 @@ const Goal = styled.div`
       color: white;
       margin-right: 6px;
       font-size: 20px;
+      color: #95afc0;
     }
     /* ${GoalTitle} {
       font-size: 20px;
@@ -184,6 +193,7 @@ const BadgeBox = styled.div`
   width: 100%;
   height: 11em;
   border: 1px solid black;
+  border-radius: 15px;
   display: flex;
   flex-direction: column;
   padding: 15px;
@@ -211,15 +221,119 @@ const StatisticsBox = styled.div`
   width: 100%;
   height: 300px;
   border: 1px solid black;
+  border-radius: 15px;
   margin-bottom: 20px;
 `;
 
 const DoneGoalBox = styled.div`
   width: 100%;
   border: 1px solid black;
+  margin-bottom: 20px;
 `;
 
+const BoardBox = styled.div`
+  width: 100%;
+  height: 300px;
+  border: 1px solid black;
+  margin-bottom: 20px;
+`;
+
+const Table = styled.table`
+  border-collapse: collapse;
+  width: 100%;
+  border-style: hidden;
+  @media screen and (max-width: 480px) {
+    table {
+      font-size: 8px;
+    }
+  }
+`;
+
+const TH = styled.th`
+  /* border: 1px solid; */
+  text-align: left;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 22px;
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
+`;
+
+const TR = styled(motion.tr)`
+  cursor: pointer;
+  height: 45px;
+  &:nth-child(even) {
+    background-color: rgb(154, 170, 192);
+  }
+  &:hover {
+    background-color: #ffffff;
+  }
+`;
+
+const TD = styled.td`
+  /* border: 1px solid; */
+  text-align: left;
+  padding: 8px;
+  vertical-align: middle; // 테이블 수직 중앙 정렬
+  @media screen and (max-width: 500px) {
+    font-size: 13px;
+  }
+`;
+
+const IconBox = styled.div`
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  padding: 10px 0px 10px 0px;
+  transition: all 300ms ease;
+  &:hover {
+    transform: rotate(-20deg) scale(1.1);
+    color: #ff9f43;
+  }
+`;
+
+const Overlay = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  z-index: 80;
+`;
+
+const Box = styled(motion.div)`
+  position: absolute;
+  width: 40vw;
+  height: 80vh;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: white;
+  z-index: 90;
+  /* overflow: auto; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const modalVariants = {
+  entry: { opacity: 0, y: -50 },
+  normal: { opacity: 1, y: 0 },
+  exit: {
+    opacity: 0,
+    y: -50,
+  },
+};
+
 function DashBoard() {
+  const [id, setId] = useState(null);
+  const { scrollY } = useViewportScroll();
+  console.log(scrollY);
+
   return (
     <Wrapper>
       <GridBox>
@@ -238,8 +352,8 @@ function DashBoard() {
         </Container>
         <ContentBox>
           <GoalBox>
-            <span>현재 진행중인 목표</span>
-            <Goal>
+            <BoxTitle>현재 진행중인 목표</BoxTitle>
+            <Goal onClick={() => setId("1")} layoutId="1">
               <div>
                 <i class="fa-regular fa-calendar-check"></i>
                 <GoalTitle>숨 쉬기</GoalTitle>
@@ -249,7 +363,7 @@ function DashBoard() {
                 <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
               </div>
             </Goal>
-            <Goal>
+            <Goal onClick={() => setId("2")} layoutId="2">
               <div>
                 <i class="fa-regular fa-calendar-check"></i>
                 <GoalTitle>밥 먹기</GoalTitle>
@@ -259,7 +373,7 @@ function DashBoard() {
                 <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
               </div>
             </Goal>
-            <Goal>
+            <Goal onClick={() => setId("3")} layoutId="3">
               <div>
                 <i class="fa-regular fa-calendar-check"></i>
                 <GoalTitle>걷기</GoalTitle>
@@ -269,10 +383,12 @@ function DashBoard() {
                 <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
               </div>
             </Goal>
-            <CreateBtn>새 목표 생성</CreateBtn>
+            <Link to={"/"}>
+              <CreateBtn>새 목표 생성</CreateBtn>
+            </Link>
           </GoalBox>
           <BadgeBox>
-            <span style={{ marginBottom: "10px" }}>최근 획득 배지</span>
+            <BoxTitle style={{ marginBottom: "10px" }}>최근 획득 배지</BoxTitle>
             <BadgeList>
               <Badge />
               <Badge />
@@ -281,10 +397,10 @@ function DashBoard() {
               <Badge />
             </BadgeList>
           </BadgeBox>
-          <StatisticsBox>통계 박스</StatisticsBox>
+          <StatisticsBox>통계 박스. Apex Chart 원형 차트로 표시</StatisticsBox>
           <DoneGoalBox>
-            <span>최근 완료 목표</span>
-            <Goal>
+            <BoxTitle>최근 완료 목표</BoxTitle>
+            <Goal onClick={() => setId("4")} layoutId="4">
               <div>
                 <i class="fa-regular fa-calendar-check"></i>
                 <GoalTitle>숨 쉬기</GoalTitle>
@@ -294,7 +410,7 @@ function DashBoard() {
                 <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
               </div>
             </Goal>
-            <Goal>
+            <Goal onClick={() => setId("5")} layoutId="5">
               <div>
                 <i class="fa-regular fa-calendar-check"></i>
                 <GoalTitle>숨 쉬기</GoalTitle>
@@ -304,7 +420,7 @@ function DashBoard() {
                 <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
               </div>
             </Goal>
-            <Goal>
+            <Goal onClick={() => setId("6")} layoutId="6">
               <div>
                 <i class="fa-regular fa-calendar-check"></i>
                 <GoalTitle>숨 쉬기</GoalTitle>
@@ -315,8 +431,103 @@ function DashBoard() {
               </div>
             </Goal>
           </DoneGoalBox>
+          <BoardBox>
+            <BoxTitle>내 작성 글</BoxTitle>
+            <Table>
+              <thead>
+                <tr>
+                  <TH>Category</TH>
+                  <TH>Title</TH>
+                  <TH>Created date</TH>
+                  <TH>View</TH>
+                  <TH style={{ textAlign: "center" }}>Delete</TH>
+                </tr>
+              </thead>
+              <tbody>
+                <TR>
+                  <TD>인증</TD>
+                  <TD>3.15 공부 인증</TD>
+                  <TD>22.03.15</TD>
+                  <TD>123</TD>
+                  <TD style={{ textAlign: "center", padding: 0 }}>
+                    <IconBox>
+                      <i className="fa-solid fa-trash-can" />
+                    </IconBox>
+                  </TD>
+                </TR>
+                <TR>
+                  <TD>인증</TD>
+                  <TD>3.16 공부 인증</TD>
+                  <TD>22.03.16</TD>
+                  <TD>127</TD>
+                  <TD style={{ textAlign: "center", padding: 0 }}>
+                    <IconBox>
+                      <i className="fa-solid fa-trash-can" />
+                    </IconBox>
+                  </TD>
+                </TR>
+                <TR>
+                  <TD>인증</TD>
+                  <TD>3.17 공부 인증</TD>
+                  <TD>22.03.17</TD>
+                  <TD>162</TD>
+                  <TD style={{ textAlign: "center", padding: 0 }}>
+                    <IconBox>
+                      <i className="fa-solid fa-trash-can" />
+                    </IconBox>
+                  </TD>
+                </TR>
+                <TR>
+                  <TD>인증</TD>
+                  <TD>3.18 공부 인증</TD>
+                  <TD>22.03.18</TD>
+                  <TD>134</TD>
+                  <TD style={{ textAlign: "center", padding: 0 }}>
+                    <IconBox>
+                      <i className="fa-solid fa-trash-can" />
+                    </IconBox>
+                  </TD>
+                </TR>
+                <TR>
+                  <TD>자랑</TD>
+                  <TD>공부 포기</TD>
+                  <TD>22.03.19</TD>
+                  <TD>2340</TD>
+                  <TD style={{ textAlign: "center", padding: 0 }}>
+                    <IconBox>
+                      <i className="fa-solid fa-trash-can" />
+                    </IconBox>
+                  </TD>
+                </TR>
+              </tbody>
+            </Table>
+          </BoardBox>
         </ContentBox>
       </GridBox>
+
+      <AnimatePresence>
+        {/* Box를 클릭해서 setId()로 해당 박스 id가 저장되어 id가 존재하면 Overlay를 보여준다 */}
+        {id ? (
+          <Overlay
+            // Overlay를 클릭 시 id에 null을 저장해서 Overlay를 숨긴다
+            onClick={() => setId(null)}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {/* Overlay에 있는 Box 컴포넌트와 하나로 여겨지는 것은 Grid에서 id가 선택된 Box */}
+            <Box
+              layoutId={id}
+              variants={modalVariants}
+              initial="entry"
+              animate="normal"
+              exit="exit"
+              style={{ top: scrollY.get() + 100 }}
+            >
+              {id}
+            </Box>
+          </Overlay>
+        ) : null}
+      </AnimatePresence>
     </Wrapper>
   );
 }
