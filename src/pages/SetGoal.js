@@ -91,6 +91,27 @@ margin-left: ${props => props.marginLeft && '2rem'};
 }
 `;
 
+const Label = styled.label`
+margin-right: 1rem;
+`;
+
+const InputRadio = styled.input`
+margin-right: 0.4rem;
+`;
+
+const InputDate = styled.input`
+width: 10rem;
+height: 2rem;
+padding: 0 1rem;
+`;
+
+const Select = styled.select`
+width: 8rem;
+height: 2rem;
+text-align: center;
+font-size: 1rem;
+`;
+
 const Content = styled.div`
 width: 100%;
 height: 2rem;
@@ -143,7 +164,7 @@ function SetGoal({step}) {
             goalTitle : data.goalTitle,
             totalCount : (data.totalCount === '' && parseInt(step) >= 3) ? totalDate : data.totalCount,
             startDay : data.startDay,
-            endDay : ((data.endDay !== '60' && data.endDay !== '') && parseInt(step) >= 3) ? basicEndDate : data.endDay,
+            endDay : ((data.endDay !== '60' && data.endDay === '') && parseInt(step) >= 3) ? basicEndDate : data.endDay,
             weekCount : data.weekCount,
             goalDesc : data.goalDesc
         });
@@ -202,12 +223,12 @@ function SetGoal({step}) {
                                     <br />
                                     목표 기간을 선택하세요.
                                 </SubTitle>
-                                <label>
-                                    <input type='radio' value='60' {...register('totalCount', { required: true })} /> 60일
-                                </label>
-                                <label>
-                                    <input type='radio' value='' {...register('totalCount', { required: true })} /> 사용자 지정
-                                </label>
+                                <Label>
+                                    <InputRadio type='radio' value='60' {...register('totalCount', { required: true })} />60일
+                                </Label>
+                                <Label>
+                                    <InputRadio type='radio' value='' {...register('totalCount', { required: true })} />사용자 지정
+                                </Label>
                                 <ErrorMessage>
                                     {errors.countType?.type === 'required' && '기간을 선택해 주세요.'}
                                 </ErrorMessage>
@@ -229,26 +250,26 @@ function SetGoal({step}) {
                                     <br />
                                     목표 시작일과 종료일을 지정해주세요.
                                 </SubTitle>
-                                <label>
-                                    <input type='date' {...register('startDay' , {
+                                <Label>
+                                    <InputDate type='date' {...register('startDay' , {
                                         required : true,
                                         min : minDate
                                     })} />
-                                </label>
-                                <label>
-                                    <input type='date' {...register('endDay' , {
+                                </Label>
+                                <Label>
+                                    <InputDate type='date' {...register('endDay' , {
                                         required : true,
                                         min : endDayMinDate,
                                         max : maxDate
                                     })} />
-                                </label>
+                                </Label>
                                 <ErrorMessage>
                                     {errors.startDay?.type === 'required' && '시작일을 선택해 주세요.'}
                                     {errors.startDay?.type === 'min' && '시작일은 오늘부터 선택 가능합니다.'}<br/>
                                     {errors.endDay?.type === 'required' && '종료일을 선택해 주세요.'}
-                                    {errors.endDay?.type === 'min' && '최소 기간은 7일 입니다.'}
-                                    {errors.endDay?.type === 'max' && '종료일은 1년 이내로 지정해 주세요.'}
-                                    {(watchStartDay && watchEndDay && totalDate < 7) && '목표 기간을 다시 확인하세요.'}
+                                    {errors.endDay?.type === 'min' && ' 최소 기간은 7일 입니다.'}
+                                    {errors.endDay?.type === 'max' && ' 종료일은 1년 이내로 지정해 주세요.'}
+                                    {(watchStartDay && watchEndDay && totalDate < 7) && ' 목표 기간을 다시 확인하세요.'}
                                 </ErrorMessage>
                                 <Desc>
                                     실행 시작일과 종료일의 날짜를 선택하세요.<br/>
@@ -266,12 +287,12 @@ function SetGoal({step}) {
                                     <br />
                                     목표 시작일을 지정해주세요.
                                 </SubTitle>
-                                <label>
-                                    <input type='date' {...register('startDay' , {
+                                <Label>
+                                    <InputDate type='date' {...register('startDay' , {
                                         required : true,
                                         min : minDate
                                     })} />
-                                </label>
+                                </Label>
                                 <ErrorMessage>
                                     {errors.startDay?.type === 'required' && '시작일을 선택해 주세요.'}
                                     {errors.startDay?.type === 'min' && '시작일은 오늘부터 선택 가능합니다.'}
@@ -293,7 +314,7 @@ function SetGoal({step}) {
                                     <br />
                                     일주일 중 실행할 목표 실천 횟수를 지정해주세요.
                                 </SubTitle>
-                                <select {...register('weekCount', {required : true})}>
+                                <Select {...register('weekCount', {required : true})}>
                                     <option value='1'>1</option>
                                     <option value='2'>2</option>
                                     <option value='3'>3</option>
@@ -301,7 +322,7 @@ function SetGoal({step}) {
                                     <option value='5'>5</option>
                                     <option value='6'>6</option>
                                     <option value='7'>7</option>
-                                </select>
+                                </Select>
                                 <ErrorMessage>
                                     {errors.weekCount?.type === 'required' && '실행 횟수를 선택해 주세요.'}
                                 </ErrorMessage>
