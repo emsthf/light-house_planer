@@ -5,7 +5,6 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { goalState } from '../Atom';
 
-
 const Container = styled.div`
 width: 1200px;
 margin: 20vh auto;
@@ -13,7 +12,7 @@ min-height: 100vh;
 `;
 
 const Setting = styled.div`
-width: 100%;
+width: 90%;
 min-height: 90vh;
 margin: 5vh auto;
 background: #fafafa;
@@ -92,12 +91,6 @@ margin-left: ${props => props.marginLeft && '2rem'};
 }
 `;
 
-const InputNumber = styled.input`
-padding: 0.2rem 0.5rem;
-width: 3rem;
-border-radius: 20px;
-`;
-
 const Content = styled.div`
 width: 100%;
 height: 2rem;
@@ -124,22 +117,23 @@ function SetGoal({step}) {
 
     const { register, watch, handleSubmit, formState: { errors } } = useForm();
 
-    // const watchCountType = watch('countType');
-    // const watchCountNum = watch('totalCount');
-
     // step3
     const watchStartDay = watch('startDay');
     const watchEndDay = watch('endDay');
 
-    const startDate = new Date(goal.startDay); // 목표 시작일
-    const endDate = new Date(goal.endDay); // 목표 종료일
-    
+    // startDay validation
     const today = new Date();
     const minDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`; // 선택 가능한 최소 시작일, 오늘
-    const endDayMinDate = `${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate() + 7}`; // 선택 가능한 종료일의 최소 시작일
-    const maxDate = `${startDate.getFullYear() + 1}-${startDate.getMonth() + 1}-${startDate.getDate()}`; // 시작일부터 최대 1년 이내 종료일
+    const watchStartDate = new Date(watchStartDay); // 사용자가 선택한 목표 시작일
 
-    const totalTime = new Date(endDate) - new Date(startDate); // 목표 종료일 - 목표 시작일
+    // endDay validation
+    const basicEndDate = `${watchStartDate.getFullYear()}-${watchStartDate.getMonth() + 3}-${watchStartDate.getDate()}`; // 기본 60일 설정 endDay
+    
+    const endDayMin = new Date(`${watchStartDate.getFullYear()}-${watchStartDate.getMonth() + 1}-${watchStartDate.getDate() + 6}`);
+    const endDayMinDate = `${endDayMin.getFullYear()}-${endDayMin.getMonth() + 1}-${endDayMin.getDate()}`; // 선택 가능한 종료일의 최소 시작일, 시작일 7일 이후
+    const maxDate = `${watchStartDate.getFullYear() + 1}-${watchStartDate.getMonth() + 1}-${watchStartDate.getDate()}`; // 시작일부터 최대 1년 이내 종료일
+
+    const totalTime = new Date(watchEndDay) - new Date(watchStartDay); // 목표 종료일 - 목표 시작일
     const totalDate = (totalTime / 1000 / 60 / 60 / 24) + 1; // 목표 기간(밀리세컨, 초, 분, 시)
     
     const onSubmit = data => {
@@ -147,12 +141,13 @@ function SetGoal({step}) {
         setGoal({
             ...goal,
             goalTitle : data.goalTitle,
-            totalCount : data.totalCount,
+            totalCount : (data.totalCount === '' && parseInt(step) >= 3) ? totalDate : data.totalCount,
             startDay : data.startDay,
-            endDay : data.endDay,
+            endDay : ((data.endDay !== '60' && data.endDay !== '') && parseInt(step) >= 3) ? basicEndDate : data.endDay,
             weekCount : data.weekCount,
             goalDesc : data.goalDesc
         });
+        
         if(step === '5') {
             setGoalStep('1');
             navigate('/');
@@ -160,9 +155,9 @@ function SetGoal({step}) {
             setGoalStep(prev => (parseInt(prev) + 1).toString);
             navigate(`/set/${parseInt(step)+1}`);
         }
-        console.log(goal);
         // console.log(totalDate);
     };
+    console.log(goal);
 
     const resetGoal = () => {
         // navigate('/');
@@ -177,7 +172,7 @@ function SetGoal({step}) {
                     <Wrapper>
                         <MainTitle>목표 설정</MainTitle>
                         {
-                            (step && step === '1') && <>
+                            step === '1' && <>
                                 <SubTitle>
                                     1 / 5 단계
                                     <br />
@@ -201,7 +196,7 @@ function SetGoal({step}) {
                             </>
                         }
                         {
-                            (step && step === '2') && <>
+                            step === '2' && <>
                                 <SubTitle>
                                     2 / 5 단계
                                     <br />
@@ -209,22 +204,12 @@ function SetGoal({step}) {
                                 </SubTitle>
                                 <label>
                                     <input type='radio' value='60' {...register('totalCount', { required: true })} /> 60일
-                                    {/* <input type='hidden' value='60' {...register('totalCount')} /> */}
                                 </label>
                                 <label>
                                     <input type='radio' value='' {...register('totalCount', { required: true })} /> 사용자 지정
-                                    {/* {watchCountType === 'custom' && 
-                                        <InputNumber type='number' {...register('totalCount', {
-                                            required: true,
-                                            min : 7,
-                                            max : 365
-                                        })}></InputNumber> 
-                                    } */}
                                 </label>
                                 <ErrorMessage>
                                     {errors.countType?.type === 'required' && '기간을 선택해 주세요.'}
-                                    {/* {(watchCountType === 'custom' && watchCountNum < 7) && '목표 기간을 최소 7일 이상으로 지정해 주세요.'}
-                                    {(watchCountType === 'custom' && watchCountNum > 365) && '목표 기간을 최대 365일 이하로 지정해 주세요.'} */}
                                 </ErrorMessage>
                                 <Desc>
                                     의사 존 맥스웰은 우리의 뇌가 새로운 행동에 익숙해지는데 걸리는 
@@ -238,7 +223,7 @@ function SetGoal({step}) {
                             </>
                         }
                         {
-                            (step && step === '3') && <>
+                            (step === '3' && goal.totalCount === '') && <>
                                 <SubTitle>
                                     3 / 5 단계
                                     <br />
@@ -263,11 +248,38 @@ function SetGoal({step}) {
                                     {errors.endDay?.type === 'required' && '종료일을 선택해 주세요.'}
                                     {errors.endDay?.type === 'min' && '최소 기간은 7일 입니다.'}
                                     {errors.endDay?.type === 'max' && '종료일은 1년 이내로 지정해 주세요.'}
-                                    {(watchStartDay && watchEndDay && watchStartDay >= watchEndDay) && '목표 기간을 다시 확인하세요.'}
+                                    {(watchStartDay && watchEndDay && totalDate < 7) && '목표 기간을 다시 확인하세요.'}
                                 </ErrorMessage>
                                 <Desc>
                                     실행 시작일과 종료일의 날짜를 선택하세요.<br/>
                                     최소 기간은 7일 이며 최대 365일까지 가능합니다.
+                                </Desc>
+                                <ButtonWrapper>
+                                    <Button disabled={totalDate < 7}>다 음</Button>
+                                </ButtonWrapper>
+                            </>
+                        }
+                        {
+                            (step === '3' && goal.totalCount === '60') && <>
+                                <SubTitle>
+                                    3 / 5 단계
+                                    <br />
+                                    목표 시작일을 지정해주세요.
+                                </SubTitle>
+                                <label>
+                                    <input type='date' {...register('startDay' , {
+                                        required : true,
+                                        min : minDate
+                                    })} />
+                                </label>
+                                <ErrorMessage>
+                                    {errors.startDay?.type === 'required' && '시작일을 선택해 주세요.'}
+                                    {errors.startDay?.type === 'min' && '시작일은 오늘부터 선택 가능합니다.'}
+                                </ErrorMessage>
+                                <Desc>
+                                    기본 60일을 선택하셨습니다.<br/>
+                                    실행 시작일의 날짜를 선택하세요.<br/>
+                                    <strong>목표 종료일 : {watchStartDay && basicEndDate}</strong>
                                 </Desc>
                                 <ButtonWrapper>
                                     <Button>다 음</Button>
@@ -275,7 +287,7 @@ function SetGoal({step}) {
                             </>
                         }
                         {
-                            (step && step === '4') && <>
+                            step === '4' && <>
                                 <SubTitle>
                                     4 / 5 단계
                                     <br />
@@ -303,7 +315,7 @@ function SetGoal({step}) {
                             </>
                         }
                         {
-                            (step && step === '5') && <>
+                            step === '5' && <>
                                 <SubTitle>5 / 5 단계</SubTitle>
                                     <h4>나의 목표</h4>
                                     <Content></Content>
@@ -314,7 +326,7 @@ function SetGoal({step}) {
                                     <h4>나의 목표에 대한 설명</h4>
                                     <Textarea {...register('goalDesc', {required : true})}></Textarea>
                                     <ErrorMessage>
-                                    {errors.goalDesc?.type === 'required' && '목표에 대한 구체적인 설명을 입력해주세요.'}
+                                        {errors.goalDesc?.type === 'required' && '목표에 대한 구체적인 설명을 입력해주세요.'}
                                     </ErrorMessage>
                                 <ButtonWrapper>
                                     <Button>등 록</Button>
