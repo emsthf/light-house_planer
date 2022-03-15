@@ -3,26 +3,37 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   background-color: #74b9ff;
-  min-height: 100vh;
+  height: auto;
+  min-height: 100%;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 150px;
+  padding: 100px 250px 150px 100px;
+  margin: auto;
+  @media screen and (min-width: 768px) {
+    padding-right: 24px !important;
+    padding-left: 24px !important;
+  }
+  @media screen and (min-width: 768px) {
+    padding-right: 24px !important;
+    padding-left: 24px !important;
+  }
 `;
 
 const GridBox = styled.div`
   display: grid;
   height: 100%;
-  width: 100%;
+  max-width: 1280px;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1fr 4fr;
 `;
 
 const Container = styled.div`
   background-color: #a29bfe;
   height: 600px;
   /* box-shadow: 10px 8px 5px rgba(0, 0, 0, 0.5); */
+  margin-right: 10px;
 `;
 
 const ProfileImg = styled.div`
@@ -95,6 +106,7 @@ const EditBtn = styled.div`
 
 const ContentBox = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -102,14 +114,23 @@ const ContentBox = styled.div`
 
 const GoalBox = styled.div`
   width: 100%;
-  height: 320px;
   /* background-color: #5f27cd; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 `;
 
 const GoalTitle = styled.span`
   font-size: 20px;
   font-weight: bold;
   margin-right: 6px;
+`;
+
+const Status = styled.div`
+  background-color: #badc58;
+  color: white;
 `;
 
 const Explanation = styled.span`
@@ -155,6 +176,49 @@ const Goal = styled.div`
   }
 `;
 
+const CreateBtn = styled.button`
+  border-radius: 5px;
+`;
+
+const BadgeBox = styled.div`
+  width: 100%;
+  height: 11em;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  margin-bottom: 20px;
+`;
+
+const BadgeList = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+`;
+
+const Badge = styled.div`
+  width: 7em;
+  height: 7em;
+  border-radius: 50%;
+  border: 1px solid black;
+  margin: auto;
+  background: no-repeat
+    url(https://cdn.pixabay.com/photo/2019/12/01/09/08/logo-4664978__480.png);
+  background-size: cover;
+`;
+
+const StatisticsBox = styled.div`
+  width: 100%;
+  height: 300px;
+  border: 1px solid black;
+  margin-bottom: 20px;
+`;
+
+const DoneGoalBox = styled.div`
+  width: 100%;
+  border: 1px solid black;
+`;
+
 function DashBoard() {
   return (
     <Wrapper>
@@ -174,11 +238,12 @@ function DashBoard() {
         </Container>
         <ContentBox>
           <GoalBox>
+            <span>현재 진행중인 목표</span>
             <Goal>
               <div>
                 <i class="fa-regular fa-calendar-check"></i>
                 <GoalTitle>숨 쉬기</GoalTitle>
-                <div>진행 중</div>
+                <Status>진행 중</Status>
               </div>
               <div>
                 <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
@@ -188,7 +253,7 @@ function DashBoard() {
               <div>
                 <i class="fa-regular fa-calendar-check"></i>
                 <GoalTitle>밥 먹기</GoalTitle>
-                <div>진행 중</div>
+                <Status>진행 중</Status>
               </div>
               <div>
                 <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
@@ -198,13 +263,58 @@ function DashBoard() {
               <div>
                 <i class="fa-regular fa-calendar-check"></i>
                 <GoalTitle>걷기</GoalTitle>
-                <div>진행 중</div>
+                <Status>진행 중</Status>
               </div>
               <div>
                 <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
               </div>
             </Goal>
+            <CreateBtn>새 목표 생성</CreateBtn>
           </GoalBox>
+          <BadgeBox>
+            <span style={{ marginBottom: "10px" }}>최근 획득 배지</span>
+            <BadgeList>
+              <Badge />
+              <Badge />
+              <Badge />
+              <Badge />
+              <Badge />
+            </BadgeList>
+          </BadgeBox>
+          <StatisticsBox>통계 박스</StatisticsBox>
+          <DoneGoalBox>
+            <span>최근 완료 목표</span>
+            <Goal>
+              <div>
+                <i class="fa-regular fa-calendar-check"></i>
+                <GoalTitle>숨 쉬기</GoalTitle>
+                <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
+              </div>
+              <div>
+                <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
+              </div>
+            </Goal>
+            <Goal>
+              <div>
+                <i class="fa-regular fa-calendar-check"></i>
+                <GoalTitle>숨 쉬기</GoalTitle>
+                <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
+              </div>
+              <div>
+                <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
+              </div>
+            </Goal>
+            <Goal>
+              <div>
+                <i class="fa-regular fa-calendar-check"></i>
+                <GoalTitle>숨 쉬기</GoalTitle>
+                <Status style={{ backgroundColor: "tomato" }}>실패</Status>
+              </div>
+              <div>
+                <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
+              </div>
+            </Goal>
+          </DoneGoalBox>
         </ContentBox>
       </GridBox>
     </Wrapper>
