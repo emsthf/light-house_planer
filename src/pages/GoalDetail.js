@@ -1,4 +1,5 @@
 import React from "react";
+import { ProgressBar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -38,6 +39,12 @@ const Check = styled.form`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const ProgressBox = styled.div`
+  width: 80%;
+  margin: auto;
+  margin-top: 25px;
 `;
 
 const Input = styled.input`
@@ -94,6 +101,8 @@ const StyledLink = styled(Link)`
 `;
 
 function GoalDetail() {
+  const now = 65;
+
   return (
     <Container>
       <Wrapper>
@@ -104,9 +113,11 @@ function GoalDetail() {
           <label>오늘의 목표 체크</label>
           <Input type="checkbox"></Input>
           <Button marginLeft>인증글 쓰기</Button>
-          {/* <Progress></Progress>
-                    <Chart></Chart> */}
+          {/* <Chart></Chart> */}
         </Check>
+        <ProgressBox>
+          <ProgressBar animated now={now} label={`${now}%`} style={{ height: "25px" }} />
+        </ProgressBox>
         <ButtonWrapper>
           <Button
             backgroundColor={"#373737"}

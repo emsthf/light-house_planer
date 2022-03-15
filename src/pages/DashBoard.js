@@ -151,7 +151,7 @@ const Goal = styled(motion.div)`
   height: 100px;
   background-color: #dff9fb;
   border-radius: 10px;
-  border: 1px solid black;
+  border: 1px solid gray;
   display: flex !important;
   flex-direction: column;
   padding: 20px;
@@ -171,7 +171,7 @@ const Goal = styled(motion.div)`
       margin-right: 6px;
     } */
     div {
-      border: 1px solid black;
+      border: 1px solid gray;
       border-radius: 10px;
       width: 48px;
       height: 22px;
@@ -192,7 +192,7 @@ const CreateBtn = styled.button`
 const BadgeBox = styled.div`
   width: 100%;
   height: 11em;
-  border: 1px solid black;
+  border: 1px solid gray;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
@@ -220,22 +220,22 @@ const Badge = styled.div`
 const StatisticsBox = styled.div`
   width: 100%;
   height: 300px;
-  border: 1px solid black;
+  border: 1px solid gray;
   border-radius: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 `;
 
 const DoneGoalBox = styled.div`
   width: 100%;
-  border: 1px solid black;
-  margin-bottom: 20px;
+  /* border: 1px solid black; */
+  margin-bottom: 30px;
 `;
 
 const BoardBox = styled.div`
   width: 100%;
   height: 300px;
-  border: 1px solid black;
-  margin-bottom: 20px;
+  /* border: 1px solid black; */
+  margin-bottom: 30px;
 `;
 
 const Table = styled.table`
@@ -296,6 +296,7 @@ const IconBox = styled.div`
 const Overlay = styled(motion.div)`
   position: fixed;
   top: 0;
+  left: 0px;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
