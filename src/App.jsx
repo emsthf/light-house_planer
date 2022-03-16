@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import BadgeList from "./pages/BadgeList";
 import DashBoard from "./pages/DashBoard";
 import GoalDetail from "./pages/GoalDetail";
 import SetGoal from "./pages/SetGoal";
@@ -17,6 +18,7 @@ function App() {
         <Route path="/set/4" element={<SetGoal step='4' />} />
         <Route path="/set/5" element={<SetGoal step='5' />} />
         <Route path="/goal" element={<GoalDetail />} />
+        <Route path="/badge" element={<BadgeList />} />
       </Routes>
       <Footer />
     </BrowserRouter>

@@ -9,11 +9,12 @@ const Container = styled.div`
 width: 1200px;
 margin: 20vh auto;
 min-height: 100vh;
+margin-bottom: 240px;
 `;
 
 const Setting = styled.div`
 width: 90%;
-min-height: 90vh;
+height: ${props => props.SettingHeight || '90vh'};
 margin: 5vh auto;
 background: #fafafa;
 border-radius: 40px;
@@ -29,10 +30,14 @@ const MainTitle = styled.h2`
 text-align: center;
 box-sizing: border-box;
 padding: 4rem 0 2rem 0;
+font-weight: bold;
+font-size: 1.4rem;
 `;
 
 const SubTitle = styled.h3`
 margin: 2rem 0;
+font-weight: bold;
+line-height: 1.7rem;
 `;
 
 const InputText = styled.input`
@@ -58,13 +63,14 @@ color: #888;
 const Desc = styled.div`
 width: 100%;
 margin: 1rem 0;
+color: ${props => props.fontColor || '#000'};
 `;
 
 const ButtonWrapper = styled.div`
 width: 100%;
 display: flex;
 justify-content: center;
-margin: 1rem 0;
+margin-top: 2rem;
 `;
 
 const Button = styled.button`
@@ -112,11 +118,23 @@ text-align: center;
 font-size: 1rem;
 `;
 
+const GoalTitle = styled.h4`
+margin: 1rem 0 0.4rem 0.8rem;
+`;
+
 const Content = styled.div`
-width: 100%;
-height: 2rem;
-border: 1px solid #000;
+width: 95%;
+height: 4rem;
+display: flex;
+align-items: center;
+padding-left: 2rem;
+border: 1px solid #cfcfcf;
 border-radius: 20px;
+`;
+
+const Strong = styled.strong`
+font-weight: bold;
+font-size: 1.1rem;
 `;
 
 const Textarea = styled.textarea`
@@ -145,10 +163,14 @@ function SetGoal({step}) {
     // startDay validation
     const today = new Date();
     const minDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`; // 선택 가능한 최소 시작일, 오늘
+    const minMaxDate = `${today.getFullYear()}-${today.getMonth() + 2}-${today.getDate()}`; // 선택 가능한 최대 시작일, 한달 이내
     const watchStartDate = new Date(watchStartDay); // 사용자가 선택한 목표 시작일
 
+    
     // endDay validation
-    const basicEndDate = `${watchStartDate.getFullYear()}-${watchStartDate.getMonth() + 3}-${watchStartDate.getDate()}`; // 기본 60일 설정 endDay
+    const basicEndTime = watchStartDate.getTime() + (60 * 24 * 60 * 60 * 1000); // 60일 * 시 * 분 * 초 * 밀리세컨
+    const basicEndDay = new Date(basicEndTime);
+    const basicEndDate = `${basicEndDay.getFullYear()}-${basicEndDay.getMonth() + 1}-${basicEndDay.getDate()}`; // 기본 60일 설정 endDay
     
     const endDayMin = new Date(`${watchStartDate.getFullYear()}-${watchStartDate.getMonth() + 1}-${watchStartDate.getDate() + 6}`);
     const endDayMinDate = `${endDayMin.getFullYear()}-${endDayMin.getMonth() + 1}-${endDayMin.getDate()}`; // 선택 가능한 종료일의 최소 시작일, 시작일 7일 이후
@@ -164,7 +186,7 @@ function SetGoal({step}) {
             goalTitle : data.goalTitle,
             totalCount : (data.totalCount === '' && parseInt(step) >= 3) ? totalDate : data.totalCount,
             startDay : data.startDay,
-            endDay : ((data.endDay !== '60' && data.endDay === '') && parseInt(step) >= 3) ? basicEndDate : data.endDay,
+            endDay : (data.totalCount === '60' && parseInt(step) >= 3) ? basicEndDate : data.endDay,
             weekCount : data.weekCount,
             goalDesc : data.goalDesc
         });
@@ -188,7 +210,7 @@ function SetGoal({step}) {
 
     return(
         <Container>
-            <Setting>
+            <Setting SettingHeight={step === '5' ? '115vh' : '90vh'}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Wrapper>
                         <MainTitle>목표 설정</MainTitle>
@@ -230,7 +252,7 @@ function SetGoal({step}) {
                                     <InputRadio type='radio' value='' {...register('totalCount', { required: true })} />사용자 지정
                                 </Label>
                                 <ErrorMessage>
-                                    {errors.countType?.type === 'required' && '기간을 선택해 주세요.'}
+                                    {errors.totalCount?.type === 'required' && '기간을 선택해 주세요.'}
                                 </ErrorMessage>
                                 <Desc>
                                     의사 존 맥스웰은 우리의 뇌가 새로운 행동에 익숙해지는데 걸리는 
@@ -253,7 +275,8 @@ function SetGoal({step}) {
                                 <Label>
                                     <InputDate type='date' {...register('startDay' , {
                                         required : true,
-                                        min : minDate
+                                        min : minDate,
+                                        max : minMaxDate
                                     })} />
                                 </Label>
                                 <Label>
@@ -265,10 +288,11 @@ function SetGoal({step}) {
                                 </Label>
                                 <ErrorMessage>
                                     {errors.startDay?.type === 'required' && '시작일을 선택해 주세요.'}
-                                    {errors.startDay?.type === 'min' && '시작일은 오늘부터 선택 가능합니다.'}<br/>
+                                    {errors.startDay?.type === 'min' && '시작일은 오늘부터 선택 가능합니다.'}
+                                    {errors.startDay?.type === 'max' && '시작일은 오늘부터 한달 이내로 설정해주세요.'}<br/>
                                     {errors.endDay?.type === 'required' && '종료일을 선택해 주세요.'}
-                                    {errors.endDay?.type === 'min' && ' 최소 기간은 7일 입니다.'}
-                                    {errors.endDay?.type === 'max' && ' 종료일은 1년 이내로 지정해 주세요.'}
+                                    {errors.endDay?.type === 'min' && '최소 기간은 7일 입니다.'}
+                                    {errors.endDay?.type === 'max' && '종료일은 1년 이내로 지정해 주세요.'}
                                     {(watchStartDay && watchEndDay && totalDate < 7) && ' 목표 기간을 다시 확인하세요.'}
                                 </ErrorMessage>
                                 <Desc>
@@ -290,17 +314,19 @@ function SetGoal({step}) {
                                 <Label>
                                     <InputDate type='date' {...register('startDay' , {
                                         required : true,
-                                        min : minDate
+                                        min : minDate,
+                                        max : minMaxDate
                                     })} />
                                 </Label>
                                 <ErrorMessage>
                                     {errors.startDay?.type === 'required' && '시작일을 선택해 주세요.'}
                                     {errors.startDay?.type === 'min' && '시작일은 오늘부터 선택 가능합니다.'}
+                                    {errors.startDay?.type === 'max' && '시작일은 오늘부터 한달 이내로 설정해주세요.'}
                                 </ErrorMessage>
                                 <Desc>
                                     기본 60일을 선택하셨습니다.<br/>
                                     실행 시작일의 날짜를 선택하세요.<br/>
-                                    <strong>목표 종료일 : {watchStartDay && basicEndDate}</strong>
+                                    목표 종료일 : <Strong>{watchStartDay && basicEndDate}</Strong>
                                 </Desc>
                                 <ButtonWrapper>
                                     <Button>다 음</Button>
@@ -337,18 +363,30 @@ function SetGoal({step}) {
                         }
                         {
                             step === '5' && <>
-                                <SubTitle>5 / 5 단계</SubTitle>
-                                    <h4>나의 목표</h4>
-                                    <Content></Content>
-                                    <h4>나의 목표 기간</h4>
-                                    <Content></Content>
-                                    <h4>나의 목표 실행횟수</h4>
-                                    <Content></Content>
-                                    <h4>나의 목표에 대한 설명</h4>
+                                    <SubTitle>5 / 5 단계</SubTitle>
+                                    <GoalTitle>- 나의 목표</GoalTitle>
+                                    <Content>
+                                        <p><Strong>{goal.goalTitle}</Strong></p>
+                                    </Content>
+                                    <GoalTitle>- 나의 목표 기간</GoalTitle>
+                                    <Content>
+                                        <p>
+                                            {goal.startDay} ~ {goal.endDay} (총 <Strong>{goal.totalCount}</Strong>일)
+                                        </p>
+                                    </Content>
+                                    <GoalTitle>- 나의 목표 실행횟수</GoalTitle>
+                                    <Content>
+                                        <p>일주일에 <Strong>{goal.weekCount}</Strong>번 실행</p>
+                                    </Content>
+                                    <GoalTitle>- 나의 목표에 대한 설명</GoalTitle>
                                     <Textarea {...register('goalDesc', {required : true})}></Textarea>
                                     <ErrorMessage>
-                                        {errors.goalDesc?.type === 'required' && '목표에 대한 구체적인 설명을 입력해주세요.'}
+                                        {errors.goalDesc?.type === 'required' && '목표에 대한 구체적인 설명 또는 실행 방안을 입력해주세요.'}
                                     </ErrorMessage>
+                                    <Desc fontColor={'#a9a9a9'}>
+                                        직접 설정한 목표의 내용을 확인하세요.<br/>
+                                        맞으면 등록, 틀리면 다시 등록하기 버튼을 눌러 목표를 다시 설정해주세요.
+                                    </Desc>
                                 <ButtonWrapper>
                                     <Button>등 록</Button>
                                     <Button marginLeft type='button' onClick={resetGoal}>다시 등록하기</Button>
