@@ -11,25 +11,55 @@ function PieChart() {
     <div>
       <ApexChart
         type="donut"
+        width={400}
+        height={400}
         series={[14, 6]} // 배열의 첫번째 인덱스는 성공 목표 갯수, 두번째 인덱스는 실패 목표 갯수를 입력하면 자동으로 연산해 준다
-        chartOptions={{
-          labels: ["Apple", "Mango"],
-        }}
         options={{
           // theme: {
           //   mode: isDark ? "dark" : "light",
           // },
+          labels: ["Success", "Fail"],
           plotOptions: {
             pie: {
               donut: {
                 labels: {
                   show: true,
-                  // name: {
-                  //   show:true,
-                  // },
-                  // value: {
-                  //   ...
-                  // }
+                  name: {
+                    show: true,
+                    fontSize: "22px",
+                    fontFamily: "Helvetica, Arial, sans-serif",
+                    fontWeight: 600,
+                    color: undefined,
+                    offsetY: -10,
+                    formatter: function (val) {
+                      return val;
+                    },
+                  },
+                  value: {
+                    show: true,
+                    fontSize: "16px",
+                    fontFamily: "Helvetica, Arial, sans-serif",
+                    fontWeight: 400,
+                    color: undefined,
+                    offsetY: 16,
+                    formatter: function (val) {
+                      return val;
+                    },
+                  },
+                  total: {
+                    show: false,
+                    showAlways: false,
+                    label: "Total",
+                    fontSize: "22px",
+                    fontFamily: "Helvetica, Arial, sans-serif",
+                    fontWeight: 600,
+                    color: "#373d3f",
+                    formatter: function (w) {
+                      return w.globals.seriesTotals.reduce((a, b) => {
+                        return a + b;
+                      }, 0);
+                    },
+                  },
                 },
               },
               customScale: 0.8,

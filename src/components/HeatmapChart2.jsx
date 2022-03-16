@@ -10,13 +10,13 @@ const ChartBox = styled.div`
 `;
 
 function HeatmapChart2() {
-  const xLabels = new Array(10).fill(0).map((_, i) => `${i + 1}`); // 몇 주를 생성 할 지 배열에 넣으면 됨
+  const xLabels = new Array(48).fill(0).map((_, i) => `${i + 1}`); // 몇 주를 생성 할 지 배열에 넣으면 됨
   const xLabelsVisibility = new Array(24)
     .fill(0)
     .map((_, i) => (i % 2 === 0 ? true : false));
 
   // const yLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const yLabels = new Array(5).fill(0).map((_, i) => `${i + 1}`); // 한 주에 몇 회를 시행할지 횟수를 넣어면 됨
+  const yLabels = new Array(7).fill(0).map((_, i) => `${i + 1}`); // 한 주에 몇 회를 시행할지 횟수를 넣어면 됨
   const data = new Array(yLabels.length)
     .fill(0)
     .map(() =>
