@@ -120,7 +120,7 @@ function GoalDetail() {
         <ProgressBox>
           <ProgressBar animated now={now} label={`${now}%`} style={{ height: "25px" }} />
         </ProgressBox>
-        <HeatmapChart2 />
+        <HeatMapChart />
         <ButtonWrapper>
           <Button
             backgroundColor={"#373737"}
