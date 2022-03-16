@@ -3,6 +3,7 @@ import { ProgressBar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import HeatMapChart from "../components/HeatMapChart";
+import HeatmapChart2 from "../components/HeatmapChart2";
 
 const Container = styled.div`
   width: 1200px;
@@ -119,7 +120,7 @@ function GoalDetail() {
         <ProgressBox>
           <ProgressBar animated now={now} label={`${now}%`} style={{ height: "25px" }} />
         </ProgressBox>
-        {/* <HeatMapChart /> */}
+        <HeatmapChart2 />
         <ButtonWrapper>
           <Button
             backgroundColor={"#373737"}

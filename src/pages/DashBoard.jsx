@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
+import PieChart from "../components/PieChart";
 
 const Wrapper = styled.div`
   /* background-color: #74b9ff; */
@@ -219,7 +220,6 @@ const Badge = styled.div`
 
 const StatisticsBox = styled.div`
   width: 100%;
-  height: 300px;
   border: 1px solid gray;
   border-radius: 15px;
   margin-bottom: 30px;
@@ -398,7 +398,9 @@ function DashBoard() {
               <Badge />
             </BadgeList>
           </BadgeBox>
-          <StatisticsBox>통계 박스. Apex Chart 원형 차트로 표시</StatisticsBox>
+          <StatisticsBox>
+            <PieChart />
+          </StatisticsBox>
           <DoneGoalBox>
             <BoxTitle>최근 완료 목표</BoxTitle>
             <Goal onClick={() => setId("4")} layoutId="4">
