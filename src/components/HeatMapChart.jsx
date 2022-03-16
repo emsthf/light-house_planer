@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 import ApexChart from "react-apexcharts";
+import styled from "styled-components";
+
+const ChartBox = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+`;
 
 function HeatMapChart() {
   const xLabels = new Array(7).fill(0).map((_, i) => `${i + 1}`); // x축. 몇주 동안 체크하는지
@@ -8,9 +15,10 @@ function HeatMapChart() {
     { name: 1, data: [10, 100, 100, 10, 100, 10, 10] },
     { name: 2, data: [100, 100, 100, 10, 100, 10, 10] },
     { name: 3, data: [10, 100, 10, 10, 100, 10, 10] },
-    { name: 3, data: [10, 100, 100, 10, 10, 100, 10] },
     { name: 4, data: [10, 10, 10, 10, 100, 10, 100] },
   ];
+  console.log(testData[0].name);
+  console.log(testData[0].data);
 
   const [state, setState] = useState({
     options: {
@@ -23,8 +31,8 @@ function HeatMapChart() {
     },
     series: [
       // testData.map((item) => ({
-      //   name: `${item[item.name - 1].name}`,
-      //   data: item[item.name - 1].data,
+      //   name: `${item.name}`,
+      //   data: [10, 100, 100, 10, 100, 10, 10],
       // })),
 
       {
@@ -47,14 +55,14 @@ function HeatMapChart() {
   });
 
   return (
-    <div>
+    <ChartBox>
       <ApexChart
         options={state.options}
         series={state.series}
         type="heatmap"
         width="500"
       />
-    </div>
+    </ChartBox>
   );
 }
 

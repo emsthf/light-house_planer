@@ -356,7 +356,7 @@ function DashBoard() {
             <BoxTitle>현재 진행중인 목표</BoxTitle>
             <Goal onClick={() => setId("1")} layoutId="1">
               <div>
-                <i class="fa-regular fa-calendar-check"></i>
+                <i className="fa-regular fa-calendar-check"></i>
                 <GoalTitle>숨 쉬기</GoalTitle>
                 <Status>진행 중</Status>
               </div>
@@ -366,7 +366,7 @@ function DashBoard() {
             </Goal>
             <Goal onClick={() => setId("2")} layoutId="2">
               <div>
-                <i class="fa-regular fa-calendar-check"></i>
+                <i className="fa-regular fa-calendar-check"></i>
                 <GoalTitle>밥 먹기</GoalTitle>
                 <Status>진행 중</Status>
               </div>
@@ -376,7 +376,7 @@ function DashBoard() {
             </Goal>
             <Goal onClick={() => setId("3")} layoutId="3">
               <div>
-                <i class="fa-regular fa-calendar-check"></i>
+                <i className="fa-regular fa-calendar-check"></i>
                 <GoalTitle>걷기</GoalTitle>
                 <Status>진행 중</Status>
               </div>
@@ -405,7 +405,7 @@ function DashBoard() {
             <BoxTitle>최근 완료 목표</BoxTitle>
             <Goal onClick={() => setId("4")} layoutId="4">
               <div>
-                <i class="fa-regular fa-calendar-check"></i>
+                <i className="fa-regular fa-calendar-check"></i>
                 <GoalTitle>숨 쉬기</GoalTitle>
                 <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
               </div>
@@ -415,7 +415,7 @@ function DashBoard() {
             </Goal>
             <Goal onClick={() => setId("5")} layoutId="5">
               <div>
-                <i class="fa-regular fa-calendar-check"></i>
+                <i className="fa-regular fa-calendar-check"></i>
                 <GoalTitle>숨 쉬기</GoalTitle>
                 <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
               </div>
@@ -425,7 +425,7 @@ function DashBoard() {
             </Goal>
             <Goal onClick={() => setId("6")} layoutId="6">
               <div>
-                <i class="fa-regular fa-calendar-check"></i>
+                <i className="fa-regular fa-calendar-check"></i>
                 <GoalTitle>숨 쉬기</GoalTitle>
                 <Status style={{ backgroundColor: "tomato" }}>실패</Status>
               </div>
