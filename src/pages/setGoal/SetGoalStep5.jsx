@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -139,8 +139,8 @@ function SetGoalStep5() {
     console.log(goal);
 
     const resetGoal = () => {
-        // navigate('/');
-        console.log('reset');
+        navigate('/set/1');
+        // console.log('reset');
     };
 
 

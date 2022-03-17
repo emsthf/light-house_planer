@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -99,7 +99,7 @@ function SetGoalStep4() {
     const setGoal = useSetRecoilState(goalState);
     const goal = useRecoilValue(goalState);
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
     
     const onSubmit = data => {
         // console.log(data);
@@ -110,6 +110,12 @@ function SetGoalStep4() {
         
         navigate('/set/5');
     };
+
+    useEffect(() => {
+        reset({
+            data : ''
+        })
+    }, []);
 
 
     return(

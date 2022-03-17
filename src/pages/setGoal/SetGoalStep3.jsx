@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -106,7 +106,7 @@ function SetGoalStep3() {
     const setGoal = useSetRecoilState(goalState);
     const goal = useRecoilValue(goalState);
 
-    const { register, watch, handleSubmit, formState: { errors } } = useForm();
+    const { register, watch, handleSubmit, formState: { errors }, reset } = useForm();
 
     // step3
     const watchStartDay = watch('startDay');
@@ -147,7 +147,11 @@ function SetGoalStep3() {
         // console.log(totalDate);
     };
 
-    console.log(basicEndDay);
+    useEffect(() => {
+        reset({
+            data : ''
+        })
+    }, []);
 
 
     return(

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -99,7 +99,7 @@ function SetGoalStep1() {
 
     const [goal, setGoal] = useRecoilState(goalState); // set한 목표 goalState atom에 저장
 
-    const { register, watch, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm();
     
     const onSubmit = data => {
         // console.log(data);
@@ -109,6 +109,12 @@ function SetGoalStep1() {
 
         navigate('/set/2');
     };
+
+    useEffect(() => {
+        reset({
+            data : ''
+        });
+    }, []);
 
 
     return(
