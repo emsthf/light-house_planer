@@ -130,22 +130,22 @@ function SignUp() {
                         </ErrorMessage>
                     </Label>
                     <Label>
-                        <Input type='email' placeholder='이메일' {...register('email', {
+                        <Input type='text' placeholder='이메일' {...register('email', {
                             required: true,
-                            pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+                            pattern: /^([a-z0-9+_.-]+)@([\da-z+-]+)\.([a-z\.]{2,6})$/
                         })}></Input>
                         <ErrorMessage>
                             {errors.email?.type === 'required' && '이메일을 입력해주세요.'}
                         </ErrorMessage>
                     </Label>
                     <Label>
-                        <Input type='password' placeholder='비밀번호(숫자 포함 영문자 8자 이상)' {...register('password', {
+                        <Input type='password' placeholder='비밀번호(영문자 및 숫자 8자 이상)' {...register('password', {
                             required: true,
                             pattern: /^(?=.*\d)(?=.*[A-Za-z])[A-Za-z\d]{8,}$/
                         })}></Input>
                         <ErrorMessage>
                             {errors.password?.type === 'required' && '비밀번호를 입력해주세요.'}
-                            {errors.password?.type === 'pattern' && '비밀번호는 숫자 포함 영문자 8자 이상이어야 합니다.'}
+                            {errors.password?.type === 'pattern' && '비밀번호는 영문자 및 숫자 8자 이상이어야 합니다.'}
                         </ErrorMessage>
                     </Label>
                     <Label>
