@@ -1,7 +1,10 @@
 import React from "react";
 import ApexChart from "react-apexcharts";
+import { useRecoilValue } from "recoil";
+import { darkModeState } from "../Atom";
 
 function PieChart() {
+  const isDark = useRecoilValue(darkModeState);
   const state = {
     series: [44, 55, 41, 17, 15],
     labels: ["A", "B", "C", "D", "E"],
@@ -15,9 +18,9 @@ function PieChart() {
         height={400}
         series={[14, 6]} // 배열의 첫번째 인덱스는 성공 목표 갯수, 두번째 인덱스는 실패 목표 갯수를 입력하면 자동으로 연산해 준다
         options={{
-          // theme: {
-          //   mode: isDark ? "dark" : "light",
-          // },
+          theme: {
+            mode: isDark ? "dark" : "light",
+          },
           labels: ["Success", "Fail"],
           plotOptions: {
             pie: {

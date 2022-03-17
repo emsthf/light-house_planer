@@ -6,7 +6,6 @@ import PieChart from "../components/PieChart";
 import TimelineChart from "../components/TimelineChart";
 
 const Wrapper = styled.div`
-  /* background-color: #74b9ff; */
   height: auto;
   min-height: 100%;
   width: 100vw;
@@ -34,7 +33,6 @@ const GridBox = styled.div`
 `;
 
 const Container = styled.div`
-  /* background-color: #a29bfe; */
   height: 600px;
   /* box-shadow: 10px 8px 5px rgba(0, 0, 0, 0.5); */
   margin-right: 30px;
@@ -56,7 +54,6 @@ const ProfileImg = styled.div`
 
 const ProfileBox = styled.div`
   display: block;
-  background-color: white;
   height: 250px;
   width: 16em;
   margin: auto;
@@ -65,7 +62,7 @@ const ProfileBox = styled.div`
 
 const Name = styled.span`
   display: block;
-  color: black;
+  color: ${(props) => props.theme.textColor};
   font-size: 30px;
   font-weight: bold;
 `;
@@ -79,7 +76,7 @@ const InfoBox = styled.div`
 
 const Email = styled.span`
   display: block !important;
-  color: black;
+  color: ${(props) => props.theme.textColor};
   width: 100%;
   line-height: 24px;
 `;
@@ -97,14 +94,14 @@ const EditBtn = styled.div`
   align-items: center;
   width: 100%;
   height: 33px;
-  background-color: #6c5ce7;
+  background-color: #40739e;
   border-radius: 10px;
   text-align: center;
   margin: auto;
   margin-top: 20px;
   cursor: pointer;
   &:hover {
-    background-color: #a29bfe;
+    background-color: #487eb0;
   }
 `;
 
@@ -150,7 +147,6 @@ const Explanation = styled.span`
 const Goal = styled(motion.div)`
   width: 100%;
   height: 100px;
-  background-color: #dff9fb;
   border-radius: 10px;
   border: 1px solid gray;
   display: flex !important;
@@ -211,7 +207,7 @@ const Badge = styled.div`
   width: 7em;
   height: 7em;
   border-radius: 50%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   margin: auto;
   background: no-repeat
     url(https://cdn.pixabay.com/photo/2019/12/01/09/08/logo-4664978__480.png);

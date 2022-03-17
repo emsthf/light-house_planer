@@ -5,7 +5,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   min-height: 100vh;
   min-width: 100vw;
-  background-color: ${(props) => props.theme.light.lighter};
+  background-color: ${(props) => props.theme.bgColor};
   padding: 120px 0px 150px 0px;
 `;
 
@@ -118,8 +118,8 @@ function Landing() {
       <Carousel>
         <h2>Life is Too Short</h2>
         <h2>Luck is the residue of design</h2>
-        <Link to="/set/1" style={{ marginTop: "20px" }}>
-          <span>+목표 세우기</span>
+        <Link to="/set/1" style={{ marginTop: "48px" }}>
+          <span style={{ fontWeight: "bold" }}>+목표 세우기</span>
         </Link>
       </Carousel>
       <DescContainer>

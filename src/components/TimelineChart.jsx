@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import ApexChart from "react-apexcharts";
+import { useRecoilValue } from "recoil";
+import { darkModeState } from "../Atom";
 
 function TimelineChart() {
+  const isDark = useRecoilValue(darkModeState);
   const [state, setState] = useState({
     series: [
       {
@@ -22,12 +25,16 @@ function TimelineChart() {
       },
     ],
     options: {
+      theme: {
+        mode: isDark ? "dark" : "light",
+      },
       chart: {
         height: 350,
         type: "rangeBar",
         toolbar: {
           show: false,
         },
+        background: "transparent",
       },
       plotOptions: {
         bar: {

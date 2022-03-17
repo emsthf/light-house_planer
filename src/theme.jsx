@@ -14,3 +14,15 @@ export const theme = {
     lighter: "#ecf0f1",
   },
 };
+
+export const lightTheme = {
+  textColor: "#0e1014",
+  bgColor: "#eaeaea",
+  cardBgColor: "#dff9fb",
+};
+
+export const darkTheme = {
+  textColor: "#eaeaea",
+  bgColor: "#0e1014",
+  cardBgColor: "#273c75",
+};
