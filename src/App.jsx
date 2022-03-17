@@ -16,7 +16,6 @@ import SignUp from "./pages/sign/SignUp";
 import Landing from "./pages/Landing";
 import SetGoal from "./pages/SetGoal";
 
-
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +30,7 @@ function App() {
         <Route path="/goal" element={<GoalDetail />} />
         <Route path="/badge" element={<BadgeList />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={<Landing />} />
       </Routes>
       <Footer />
     </BrowserRouter>
