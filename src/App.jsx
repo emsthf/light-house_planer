@@ -30,6 +30,7 @@ function App() {
         <Route path="/goal" element={<GoalDetail />} />
         <Route path="/badge" element={<BadgeList />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/board" element={<Board />} />
         <Route path="/" element={<Landing />} />
       </Routes>
       <Footer />

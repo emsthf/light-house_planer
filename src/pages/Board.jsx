@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 const Wrapper = styled.div`
   /* background-color: #74b9ff; */
   height: auto;
-  min-height: 100%;
+  min-height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
