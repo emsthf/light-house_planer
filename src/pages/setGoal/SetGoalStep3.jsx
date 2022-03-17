@@ -106,30 +106,36 @@ function SetGoalStep3() {
     const setGoal = useSetRecoilState(goalState);
     const goal = useRecoilValue(goalState);
 
-    const { register, watch, handleSubmit, formState: { errors }, reset } = useForm();
-
-    // step3
+    const today = new Date();
+    const todayYear = today.getFullYear();
+    const todayMonth = today.getMonth() >= 9 ? `${today.getMonth() + 1}` : `0${today.getMonth() + 1}`
+    const todayDate = today.getDate() > 9 ? `${today.getDate()}` : `0${today.getDate()}`;
+    const minDate = `${todayYear}-${todayMonth}-${todayDate}`; // 선택 가능한 최소 시작일, 오늘
+    
+    const { register, watch, handleSubmit, formState: { errors } } = useForm({
+        defaultValues : {
+            startDay : `${todayYear}-${todayMonth}-${todayDate}`
+        }
+    });
+    
+    // watch date
     const watchStartDay = watch('startDay');
     const watchEndDay = watch('endDay');
-
-    // startDay validation
-    const today = new Date();
-    const minDate = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`; // 선택 가능한 최소 시작일, 오늘
-    const minMaxDate = `${today.getFullYear()}-${today.getMonth() + 2}-${today.getDate()}`; // 선택 가능한 최대 시작일, 한달 이내
-    const watchStartDate = new Date(watchStartDay); // 사용자가 선택한 목표 시작일
-
     
-    // endDay validation
-    const basicEndTime = watchStartDate.getTime() + (60 * 24 * 60 * 60 * 1000); // 60일 * 시 * 분 * 초 * 밀리세컨
-    const basicEndDay = new Date(basicEndTime);
+    // startDay validation
+    const minMaxDate = `${todayYear}-${todayMonth + 1}-${todayDate}`; // 선택 가능한 최대 시작일, 한달 이내
+    const startDate = new Date(watchStartDay); // 사용자가 선택한 목표 시작일
 
+    // endDay validation
+    const basicEndTime = startDate.getTime() + (60 * 24 * 60 * 60 * 1000); // 60일 * 시 * 분 * 초 * 밀리세컨
+    const basicEndDay = new Date(basicEndTime);
     const month = basicEndDay.getMonth() >= 9 ? `${basicEndDay.getMonth() + 1}` : `0${basicEndDay.getMonth() + 1}`;
     const day = basicEndDay.getDate() > 9 ? `${basicEndDay.getDate()}` : `0${basicEndDay.getDate()}`;
     const basicEndDate = `${basicEndDay.getFullYear()}-${month}-${day}`; // 기본 60일 설정 endDay
     
-    const endDayMin = new Date(`${watchStartDate.getFullYear()}-${watchStartDate.getMonth() + 1}-${watchStartDate.getDate() + 6}`);
+    const endDayMin = new Date(`${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate() + 6}`);
     const endDayMinDate = `${endDayMin.getFullYear()}-${endDayMin.getMonth() + 1}-${endDayMin.getDate()}`; // 선택 가능한 종료일의 최소 시작일, 시작일 7일 이후
-    const maxDate = `${watchStartDate.getFullYear() + 1}-${watchStartDate.getMonth() + 1}-${watchStartDate.getDate()}`; // 시작일부터 최대 1년 이내 종료일
+    const maxDate = `${startDate.getFullYear() + 1}-${startDate.getMonth() + 1}-${startDate.getDate()}`; // 시작일부터 최대 1년 이내 종료일
 
     const totalTime = new Date(watchEndDay) - new Date(watchStartDay); // 목표 종료일 - 목표 시작일
     const totalDate = (totalTime / 1000 / 60 / 60 / 24) + 1; // 목표 기간(밀리세컨, 초, 분, 시)
@@ -144,14 +150,7 @@ function SetGoalStep3() {
         });
         
         navigate('/set/4');
-        // console.log(totalDate);
     };
-
-    useEffect(() => {
-        reset({
-            data : ''
-        })
-    }, []);
 
 
     return(

@@ -9,6 +9,7 @@ import SetGoalStep2 from "./pages/setGoal/SetGoalStep2";
 import SetGoalStep3 from "./pages/setGoal/SetGoalStep3";
 import SetGoalStep4 from "./pages/setGoal/SetGoalStep4";
 import SetGoalStep5 from "./pages/setGoal/SetGoalStep5";
+import SignUp from "./pages/sign/SignUp";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/set/5" element={<SetGoalStep5 />} />
         <Route path="/goal" element={<GoalDetail />} />
         <Route path="/badge" element={<BadgeList />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
       <Footer />
     </BrowserRouter>
