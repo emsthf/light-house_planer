@@ -116,12 +116,11 @@ function GoalDetail() {
           <label>오늘의 목표 체크</label>
           <Input type="checkbox"></Input>
           <Button marginLeft>인증글 쓰기</Button>
-          {/* <Chart></Chart> */}
         </Check>
         <ProgressBox>
           <ProgressBar animated now={now} label={`${now}%`} style={{ height: "25px" }} />
         </ProgressBox>
-        <HeatmapChart2 />
+        {/* <HeatMapChart /> */}
         <ButtonWrapper>
           <Button
             backgroundColor={"#373737"}

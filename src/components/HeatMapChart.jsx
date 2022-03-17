@@ -1,106 +1,73 @@
-import React from "react";
-// import ApexChart from "react-apexcharts";
+import React, { useState } from "react";
+import ApexChart from "react-apexcharts";
+import styled from "styled-components";
+
+const ChartBox = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+`;
 
 function HeatMapChart() {
-  const count = 20;
-  const yrange = { max: 100, min: 1 };
-  var i = 0;
-  var series = [];
-  while (i < count) {
-    var x = "w" + (i + 1).toString();
-    var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
+  const xLabels = new Array(7).fill(0).map((_, i) => `${i + 1}`); // x축. 몇주 동안 체크하는지
+  const yLabels = new Array(5).fill(0).map((_, i) => `${i + 1}`); // y축. 일주일에 몇번 체크할건지
+  const testData = [
+    { name: 1, data: [10, 100, 100, 10, 100, 10, 10] },
+    { name: 2, data: [100, 100, 100, 10, 100, 10, 10] },
+    { name: 3, data: [10, 100, 10, 10, 100, 10, 10] },
+    { name: 4, data: [10, 10, 10, 10, 100, 10, 100] },
+  ];
+  const test = [2, 4];
+  console.log(testData[0].name);
+  console.log(testData[0].data);
 
-    series.push({
-      x: x,
-      y: y,
-    });
-    i++;
-  }
+  const [state, setState] = useState({
+    options: {
+      chart: {
+        id: "basic-bar",
+      },
+      xaxis: {
+        categories: xLabels,
+      },
+    },
+    series: [
+      test.map((item) => ({
+        name: testData[0].name,
+        data: [10, 10, 10, 10, 100, 10, 100],
+      })),
+
+      {
+        name: testData[0].name,
+        data: testData[0].data,
+      },
+      // {
+      //   name: "1",
+      //   data: [10, 100, 100, 10, 100, 10, 10],
+      // },
+      // {
+      //   name: "2",
+      //   data: [100, 100, 100, 10, 100, 10, 10],
+      // },
+      // {
+      //   name: "3",
+      //   data: [10, 100, 10, 10, 100, 10, 10],
+      // },
+      // {
+      //   name: "4",
+      //   data: [10, 10, 10, 10, 100, 10, 100],
+      // },
+    ],
+  });
 
   return (
-    <div>
-      {/* <ApexChart
-        type="HeatMapChart"
-        series={[
-          {
-            name: "Metric1",
-            data: generateData(18, {
-              min: 0,
-              max: 90,
-            }),
-          },
-          {
-            name: "Metric2",
-            data: generateData(18, {
-              min: 0,
-              max: 90,
-            }),
-          },
-          {
-            name: "Metric3",
-            data: generateData(18, {
-              min: 0,
-              max: 90,
-            }),
-          },
-          {
-            name: "Metric4",
-            data: generateData(18, {
-              min: 0,
-              max: 90,
-            }),
-          },
-          {
-            name: "Metric5",
-            data: generateData(18, {
-              min: 0,
-              max: 90,
-            }),
-          },
-          {
-            name: "Metric6",
-            data: generateData(18, {
-              min: 0,
-              max: 90,
-            }),
-          },
-          {
-            name: "Metric7",
-            data: generateData(18, {
-              min: 0,
-              max: 90,
-            }),
-          },
-          {
-            name: "Metric8",
-            data: generateData(18, {
-              min: 0,
-              max: 90,
-            }),
-          },
-          {
-            name: "Metric9",
-            data: generateData(18, {
-              min: 0,
-              max: 90,
-            }),
-          },
-        ]}
-        options={{
-          chart: {
-            height: 350,
-            type: "heatmap",
-          },
-          dataLabels: {
-            enabled: false,
-          },
-          colors: ["#008FFB"],
-          title: {
-            text: "HeatMap Chart (Single color)",
-          },
-        }}
-      /> */}
-    </div>
+    <ChartBox>
+      <ApexChart
+        options={state.options}
+        series={state.series}
+        type="heatmap"
+        width="500"
+      />
+    </ChartBox>
   );
 }
 

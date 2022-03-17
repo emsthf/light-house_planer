@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 import PieChart from "../components/PieChart";
+import TimelineChart from "../components/TimelineChart";
 
 const Wrapper = styled.div`
   /* background-color: #74b9ff; */
@@ -117,12 +118,11 @@ const ContentBox = styled.div`
 
 const GoalBox = styled.div`
   width: 100%;
-  /* background-color: #5f27cd; */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
+  /* align-items: center; */
+  margin-bottom: 30px;
 `;
 
 const BoxTitle = styled.span`
@@ -198,7 +198,7 @@ const BadgeBox = styled.div`
   display: flex;
   flex-direction: column;
   padding: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 `;
 
 const BadgeList = styled.div`
@@ -218,24 +218,18 @@ const Badge = styled.div`
   background-size: cover;
 `;
 
-const StatisticsBox = styled.div`
-  width: 100%;
+const StatisticsBox = styled(GoalBox)`
   border: 1px solid gray;
   border-radius: 15px;
-  margin-bottom: 30px;
+  flex-direction: row;
+  /* justify-content: space-between; */
+  align-items: center;
 `;
 
-const DoneGoalBox = styled.div`
-  width: 100%;
-  /* border: 1px solid black; */
-  margin-bottom: 30px;
-`;
+const DoneGoalBox = styled(GoalBox)``;
 
-const BoardBox = styled.div`
-  width: 100%;
+const BoardBox = styled(GoalBox)`
   height: 300px;
-  /* border: 1px solid black; */
-  margin-bottom: 30px;
 `;
 
 const Table = styled.table`
@@ -356,7 +350,7 @@ function DashBoard() {
             <BoxTitle>현재 진행중인 목표</BoxTitle>
             <Goal onClick={() => setId("1")} layoutId="1">
               <div>
-                <i class="fa-regular fa-calendar-check"></i>
+                <i className="fa-regular fa-calendar-check"></i>
                 <GoalTitle>숨 쉬기</GoalTitle>
                 <Status>진행 중</Status>
               </div>
@@ -366,7 +360,7 @@ function DashBoard() {
             </Goal>
             <Goal onClick={() => setId("2")} layoutId="2">
               <div>
-                <i class="fa-regular fa-calendar-check"></i>
+                <i className="fa-regular fa-calendar-check"></i>
                 <GoalTitle>밥 먹기</GoalTitle>
                 <Status>진행 중</Status>
               </div>
@@ -376,7 +370,7 @@ function DashBoard() {
             </Goal>
             <Goal onClick={() => setId("3")} layoutId="3">
               <div>
-                <i class="fa-regular fa-calendar-check"></i>
+                <i className="fa-regular fa-calendar-check"></i>
                 <GoalTitle>걷기</GoalTitle>
                 <Status>진행 중</Status>
               </div>
@@ -400,12 +394,13 @@ function DashBoard() {
           </BadgeBox>
           <StatisticsBox>
             <PieChart />
+            <TimelineChart />
           </StatisticsBox>
           <DoneGoalBox>
             <BoxTitle>최근 완료 목표</BoxTitle>
             <Goal onClick={() => setId("4")} layoutId="4">
               <div>
-                <i class="fa-regular fa-calendar-check"></i>
+                <i className="fa-regular fa-calendar-check"></i>
                 <GoalTitle>숨 쉬기</GoalTitle>
                 <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
               </div>
@@ -415,7 +410,7 @@ function DashBoard() {
             </Goal>
             <Goal onClick={() => setId("5")} layoutId="5">
               <div>
-                <i class="fa-regular fa-calendar-check"></i>
+                <i className="fa-regular fa-calendar-check"></i>
                 <GoalTitle>숨 쉬기</GoalTitle>
                 <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
               </div>
@@ -425,7 +420,7 @@ function DashBoard() {
             </Goal>
             <Goal onClick={() => setId("6")} layoutId="6">
               <div>
-                <i class="fa-regular fa-calendar-check"></i>
+                <i className="fa-regular fa-calendar-check"></i>
                 <GoalTitle>숨 쉬기</GoalTitle>
                 <Status style={{ backgroundColor: "tomato" }}>실패</Status>
               </div>
