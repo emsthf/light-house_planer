@@ -7,145 +7,144 @@ import styled from 'styled-components';
 import { goalState } from '../Atom';
 
 const Container = styled.div`
-width: 1200px;
-margin: 20vh auto;
-min-height: 100vh;
-margin-bottom: 240px;
+  width: 1200px;
+  margin: 20vh auto;
+  min-height: 100vh;
+  margin-bottom: 240px;
 `;
 
 const Setting = styled.div`
-width: 90%;
-height: ${props => props.SettingHeight || '90vh'};
-margin: 5vh auto;
-background: #fafafa;
-border-radius: 40px;
-box-shadow: 4px 8px 24px #d7d7d7;
+  width: 90%;
+  height: ${(props) => props.SettingHeight || "90vh"};
+  margin: 5vh auto;
+  background: #fafafa;
+  border-radius: 40px;
+  box-shadow: 4px 8px 24px #d7d7d7;
 `;
 
 const Wrapper = styled.div`
-width: 80%;
-margin: 0 auto;
+  width: 80%;
+  margin: 0 auto;
 `;
 
 const MainTitle = styled.h2`
-text-align: center;
-box-sizing: border-box;
-padding: 4rem 0 2rem 0;
-font-weight: bold;
-font-size: 1.4rem;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 4rem 0 2rem 0;
+  font-weight: bold;
+  font-size: 1.4rem;
 `;
 
 const SubTitle = styled.h3`
-margin: 2rem 0;
-font-weight: bold;
-line-height: 1.7rem;
+  margin: 2rem 0;
+  font-weight: bold;
+  line-height: 1.7rem;
 `;
 
 const InputText = styled.input`
-padding: 1rem;
-border: 0;
-width: 800px;
-border-bottom: 1px solid #000;
-background: #fafafa;
-::placeholder {
+  padding: 1rem;
+  border: 0;
+  width: 800px;
+  border-bottom: 1px solid #000;
+  background: #fafafa;
+  ::placeholder {
     color: #888;
-}
-&:focus {
+  }
+  &:focus {
     outline: none;
-}
+  }
 `;
 
 const ErrorMessage = styled.div`
-font-size: 0.8rem;
-margin: 0.5rem 0 0 1rem;
-color: #888;
+  font-size: 0.8rem;
+  margin: 0.5rem 0 0 1rem;
+  color: #888;
 `;
 
 const Desc = styled.div`
-width: 100%;
-margin: 1rem 0;
-color: ${props => props.fontColor || '#000'};
+  width: 100%;
+  margin: 1rem 0;
+  color: ${(props) => props.fontColor || "#000"};
 `;
 
 const ButtonWrapper = styled.div`
-width: 100%;
-display: flex;
-justify-content: center;
-margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
 `;
 
 const Button = styled.button`
-padding: 0.5rem 3rem;
-border: none;
-box-shadow: 3px 4px 8px #b7b7b7;
-background: #416dea;
-color: #fff;
-font-weight: bold;
-border-radius: 30px;
-margin: 1rem 0;
-margin-left: ${props => props.marginLeft && '2rem'};
-&:hover {
+  padding: 0.5rem 3rem;
+  border: none;
+  box-shadow: 3px 4px 8px #b7b7b7;
+  background: #416dea;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 30px;
+  margin: 1rem 0;
+  margin-left: ${(props) => props.marginLeft && "2rem"};
+  &:hover {
     box-shadow: none;
     background: linear-gradient(315deg, #89d8d3, #416dea 74%);
-}
-&:active {
+  }
+  &:active {
     background: linear-gradient(315deg, #89d8d3, #416dea 74%);
     box-shadow: 3px 4px 10px #bbb;
-}
-&:disabled {
+  }
+  &:disabled {
     background: linear-gradient(315deg, #cfcfcf, #707070 74%);
     box-shadow: 3px 4px 10px #bbb;
-}
+  }
 `;
 
 const Label = styled.label`
-margin-right: 1rem;
+  margin-right: 1rem;
 `;
 
 const InputRadio = styled.input`
-margin-right: 0.4rem;
+  margin-right: 0.4rem;
 `;
 
 const InputDate = styled.input`
-width: 10rem;
-height: 2rem;
-padding: 0 1rem;
+  width: 10rem;
+  height: 2rem;
+  padding: 0 1rem;
 `;
 
 const Select = styled.select`
-width: 8rem;
-height: 2rem;
-text-align: center;
-font-size: 1rem;
+  width: 8rem;
+  height: 2rem;
+  text-align: center;
+  font-size: 1rem;
 `;
 
 const GoalTitle = styled.h4`
-margin: 1rem 0 0.4rem 0.8rem;
+  margin: 1rem 0 0.4rem 0.8rem;
 `;
 
 const Content = styled.div`
-width: 95%;
-height: 4rem;
-display: flex;
-align-items: center;
-padding-left: 2rem;
-border: 1px solid #cfcfcf;
-border-radius: 20px;
+  width: 95%;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  padding-left: 2rem;
+  border: 1px solid #cfcfcf;
+  border-radius: 20px;
 `;
 
 const Strong = styled.strong`
-font-weight: bold;
-font-size: 1.1rem;
+  font-weight: bold;
+  font-size: 1.1rem;
 `;
 
 const Textarea = styled.textarea`
-margin-top: 0.5rem;
-padding: 1rem;
-width: 800px;
-height: 80px;
-border-radius: 20px;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  width: 800px;
+  height: 80px;
+  border-radius: 20px;
 `;
-
 
 function SetGoal({step}) {
 
