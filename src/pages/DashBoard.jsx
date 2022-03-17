@@ -342,7 +342,9 @@ function DashBoard() {
               <Motto>no pain, no gain</Motto>
               <Grade>🕊️ 갈매기</Grade>
             </InfoBox>
-            <EditBtn>Edit profile</EditBtn>
+            <Link to="/signup">
+              <EditBtn>Edit profile</EditBtn>
+            </Link>
           </ProfileBox>
         </Container>
         <ContentBox>
@@ -378,7 +380,7 @@ function DashBoard() {
                 <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
               </div>
             </Goal>
-            <Link to={"/"}>
+            <Link to={"/set/1"}>
               <CreateBtn>새 목표 생성</CreateBtn>
             </Link>
           </GoalBox>

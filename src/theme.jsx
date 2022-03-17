@@ -5,8 +5,12 @@ export const theme = {
     darker: "#95a5a6",
     lighter: "#ecf0f1",
   },
-  white: {
-    lighter: "#2e3238",
+  light: {
+    lighter: "#eaeaea",
     darker: "#0e1014",
+  },
+  dark: {
+    darker: "#95a5a6",
+    lighter: "#ecf0f1",
   },
 };

@@ -50,7 +50,7 @@ const Items = styled.ul`
 
 const Item = styled.li`
   margin-right: 20px;
-  color: ${(props) => props.theme.black.lighter};
+  color: ${(props) => props.theme.light.darker};
   transition: color 0.3s ease-in-out;
   position: relative;
   display: flex;
@@ -161,7 +161,9 @@ function Header() {
   return (
     <Nav variants={navVariants} initial="top" animate={navAnimation}>
       <Col>
-        <HeaderTitle>Light House</HeaderTitle>
+        <Link to="/">
+          <HeaderTitle>Light House</HeaderTitle>
+        </Link>
       </Col>
       <Col>
         {/* <Search onSubmit={handleSubmit(onValid)}>

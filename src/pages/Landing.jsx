@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
   min-height: 100vh;
   min-width: 100vw;
-  background-color: black;
+  background-color: ${(props) => props.theme.light.lighter};
   padding: 120px 0px 150px 0px;
 `;
 
@@ -117,7 +118,9 @@ function Landing() {
       <Carousel>
         <h2>Life is Too Short</h2>
         <h2>Luck is the residue of design</h2>
-        <span>+목표 세우러 가기</span>
+        <Link to="/set/1" style={{ marginTop: "20px" }}>
+          <span>+목표 세우기</span>
+        </Link>
       </Carousel>
       <DescContainer>
         <h2>Description</h2>
