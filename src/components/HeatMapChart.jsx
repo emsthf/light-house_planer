@@ -17,6 +17,7 @@ function HeatMapChart() {
     { name: 3, data: [10, 100, 10, 10, 100, 10, 10] },
     { name: 4, data: [10, 10, 10, 10, 100, 10, 100] },
   ];
+  const test = [2, 4];
   console.log(testData[0].name);
   console.log(testData[0].data);
 
@@ -30,27 +31,31 @@ function HeatMapChart() {
       },
     },
     series: [
-      // testData.map((item) => ({
-      //   name: `${item.name}`,
-      //   data: [10, 100, 100, 10, 100, 10, 10],
-      // })),
+      test.map((item) => ({
+        name: testData[0].name,
+        data: [10, 10, 10, 10, 100, 10, 100],
+      })),
 
       {
-        name: "1",
-        data: [10, 100, 100, 10, 100, 10, 10],
+        name: testData[0].name,
+        data: testData[0].data,
       },
-      {
-        name: "2",
-        data: [100, 100, 100, 10, 100, 10, 10],
-      },
-      {
-        name: "3",
-        data: [10, 100, 10, 10, 100, 10, 10],
-      },
-      {
-        name: "4",
-        data: [10, 10, 10, 10, 100, 10, 100],
-      },
+      // {
+      //   name: "1",
+      //   data: [10, 100, 100, 10, 100, 10, 10],
+      // },
+      // {
+      //   name: "2",
+      //   data: [100, 100, 100, 10, 100, 10, 10],
+      // },
+      // {
+      //   name: "3",
+      //   data: [10, 100, 10, 10, 100, 10, 10],
+      // },
+      // {
+      //   name: "4",
+      //   data: [10, 10, 10, 10, 100, 10, 100],
+      // },
     ],
   });
 
