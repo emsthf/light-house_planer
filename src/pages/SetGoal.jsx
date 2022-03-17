@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -148,6 +149,8 @@ border-radius: 20px;
 
 function SetGoal({step}) {
 
+    const url = 'http://localhost:8080/api/goal';
+
     const navigate = useNavigate();
 
     const [goalStep, setGoalStep] = useState(step); // 다음 단계로 이동
@@ -184,16 +187,27 @@ function SetGoal({step}) {
         setGoal({
             ...goal,
             goalTitle : data.goalTitle,
-            totalCount : (data.totalCount === '' && parseInt(step) >= 3) ? totalDate : data.totalCount,
+            totalCount : (goal.totalCount === '' && data.endDay !== '' && step === '3') 
+                        ? totalDate 
+                        : (parseInt(step) > 3 && goal.totalCount !== '60')
+                        ? goal.totalCount
+                        : data.totalCount,
             startDay : data.startDay,
-            endDay : (data.totalCount === '60' && parseInt(step) >= 3) ? basicEndDate : data.endDay,
+            endDay : (goal.totalCount === '60' && parseInt(step) >= 3) ? basicEndDate : data.endDay,
             weekCount : data.weekCount,
             goalDesc : data.goalDesc
         });
         
         if(step === '5') {
-            setGoalStep('1');
-            navigate('/');
+            
+            axios.post(url, {
+                ...goal
+            }).then(Response => {
+                console.log('Success');
+                setGoalStep('1');
+                navigate('/');
+            }).catch(Error => console.log(Error));
+
         } else {
             setGoalStep(prev => (parseInt(prev) + 1).toString);
             navigate(`/set/${parseInt(step)+1}`);
