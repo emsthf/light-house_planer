@@ -2,11 +2,16 @@ import React from "react";
 import styled from "styled-components";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 
+const Container = styled.div`
+width: 80vw;
+margin: auto;
+`;
+
 const Wrapper = styled.div`
   /* background-color: #74b9ff; */
   height: auto;
   min-height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -35,7 +40,7 @@ const BoardBox = styled.div`
 const BoxTitle = styled.span`
   font-size: 20px;
   font-weight: bold !important;
-  margin-bottom: 8px !important;
+  margin-bottom: 40px !important;
 `;
 
 const Table = styled.table`
@@ -51,10 +56,11 @@ const Table = styled.table`
 
 const TH = styled.th`
   /* border: 1px solid; */
-  text-align: left;
+  text-align: center;
   padding: 8px;
   background-color: rgba(0, 0, 0, 0.5);
-  font-size: 22px;
+  font-weight: 100;
+  color: #fff;
   @media screen and (max-width: 500px) {
     font-size: 12px;
   }
@@ -64,7 +70,10 @@ const TR = styled(motion.tr)`
   cursor: pointer;
   height: 45px;
   &:nth-child(even) {
-    background-color: rgb(154, 170, 192);
+    background-color: rgba(154, 170, 192, 0.2);
+  }
+  &:nth-child(odd) {
+    background-color: rgba(154, 170, 192, 0.1);
   }
   &:hover {
     background-color: #ffffff;
@@ -73,7 +82,7 @@ const TR = styled(motion.tr)`
 
 const TD = styled.td`
   /* border: 1px solid; */
-  text-align: left;
+  text-align: ${props => props.textAlign || 'left'};
   padding: 8px;
   vertical-align: middle; // 테이블 수직 중앙 정렬
   @media screen and (max-width: 500px) {
@@ -83,59 +92,61 @@ const TD = styled.td`
 
 function Board() {
   return (
-    <Wrapper>
-      <BoardBox>
-        <BoxTitle>게시판</BoxTitle>
-        <Table>
-          <thead>
-            <tr>
-              <TH>Category</TH>
-              <TH>Title</TH>
-              <TH>작성자</TH>
-              <TH>Created date</TH>
-              <TH>View</TH>
-            </tr>
-          </thead>
-          <tbody>
-            <TR>
-              <TD>인증</TD>
-              <TD>3.15 공부 인증</TD>
-              <TD>케빈</TD>
-              <TD>22.03.15</TD>
-              <TD>123</TD>
-            </TR>
-            <TR>
-              <TD>인증</TD>
-              <TD>3.16 공부 인증</TD>
-              <TD>케빈</TD>
-              <TD>22.03.16</TD>
-              <TD>127</TD>
-            </TR>
-            <TR>
-              <TD>인증</TD>
-              <TD>3.17 공부 인증</TD>
-              <TD>케빈</TD>
-              <TD>22.03.17</TD>
-              <TD>162</TD>
-            </TR>
-            <TR>
-              <TD>인증</TD>
-              <TD>3.18 공부 인증</TD>
-              <TD>케빈</TD>
-              <TD>22.03.18</TD>
-              <TD>134</TD>
-            </TR>
-            <TR>
-              <TD>자랑</TD>
-              <TD>공부 포기</TD>
-              <TD>케빈</TD>
-              <TD>22.03.19</TD>
-              <TD>2340</TD>
-            </TR>
-          </tbody>
-        </Table>
-      </BoardBox>
-    </Wrapper>
+    <Container>
+      <Wrapper>
+        <BoardBox>
+          <BoxTitle>게시판</BoxTitle>
+          <Table>
+            <thead>
+              <tr>
+                <TH>Category</TH>
+                <TH>Title</TH>
+                <TH>작성자</TH>
+                <TH>Created date</TH>
+                <TH>View</TH>
+              </tr>
+            </thead>
+            <tbody>
+              <TR>
+                <TD textAlign={'center'}>인증</TD>
+                <TD>3.15 공부 인증</TD>
+                <TD textAlign={'center'}>케빈</TD>
+                <TD textAlign={'center'}>22.03.15</TD>
+                <TD textAlign={'center'}>123</TD>
+              </TR>
+              <TR>
+                <TD textAlign={'center'}>인증</TD>
+                <TD>3.16 공부 인증</TD>
+                <TD textAlign={'center'}>케빈</TD>
+                <TD textAlign={'center'}>22.03.16</TD>
+                <TD textAlign={'center'}>127</TD>
+              </TR>
+              <TR>
+                <TD textAlign={'center'}>인증</TD>
+                <TD>3.17 공부 인증</TD>
+                <TD textAlign={'center'}>케빈</TD>
+                <TD textAlign={'center'}>22.03.17</TD>
+                <TD textAlign={'center'}>162</TD>
+              </TR>
+              <TR>
+                <TD textAlign={'center'}>인증</TD>
+                <TD>3.18 공부 인증</TD>
+                <TD textAlign={'center'}>케빈</TD>
+                <TD textAlign={'center'}>22.03.18</TD>
+                <TD textAlign={'center'}>134</TD>
+              </TR>
+              <TR>
+                <TD textAlign={'center'}>자랑</TD>
+                <TD>공부 포기</TD>
+                <TD textAlign={'center'}>케빈</TD>
+                <TD textAlign={'center'}>22.03.19</TD>
+                <TD textAlign={'center'}>2340</TD>
+              </TR>
+            </tbody>
+          </Table>
+        </BoardBox>
+      </Wrapper>
+    </Container>
   );
 }
 

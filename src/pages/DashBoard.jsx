@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 100px 250px 150px 100px;
   margin: auto;
+  margin-top: 5vh;
   @media screen and (min-width: 768px) {
     padding-right: 24px !important;
     padding-left: 24px !important;
@@ -26,7 +27,7 @@ const Wrapper = styled.div`
 
 const GridBox = styled.div`
   display: grid;
-  height: 100%;
+  /* height: 100%; */
   max-width: 1280px;
   grid-template-columns: repeat(2, 1fr);
   grid-template-columns: 1fr 4fr;
@@ -114,12 +115,13 @@ const ContentBox = styled.div`
 `;
 
 const GoalBox = styled.div`
-  width: 100%;
+  width: 96%;
+  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   /* align-items: center; */
-  margin-bottom: 30px;
+  margin-bottom: 52px;
 `;
 
 const BoxTitle = styled.span`
@@ -187,14 +189,15 @@ const CreateBtn = styled.button`
 `;
 
 const BadgeBox = styled.div`
-  width: 100%;
+  width: 96%;
+  margin: auto;
   height: 11em;
   border: 1px solid gray;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   padding: 15px;
-  margin-bottom: 30px;
+  margin-bottom: 52px;
 `;
 
 const BadgeList = styled.div`
@@ -222,7 +225,8 @@ const StatisticsBox = styled(GoalBox)`
   align-items: center;
 `;
 
-const DoneGoalBox = styled(GoalBox)``;
+const DoneGoalBox = styled(GoalBox)`
+`;
 
 const BoardBox = styled(GoalBox)`
   height: 300px;
@@ -243,8 +247,9 @@ const TH = styled.th`
   /* border: 1px solid; */
   text-align: left;
   padding: 8px;
+  padding-left: 2rem;
   background-color: rgba(0, 0, 0, 0.5);
-  font-size: 22px;
+  color: #fff;
   @media screen and (max-width: 500px) {
     font-size: 12px;
   }
@@ -254,7 +259,10 @@ const TR = styled(motion.tr)`
   cursor: pointer;
   height: 45px;
   &:nth-child(even) {
-    background-color: rgb(154, 170, 192);
+    background-color: rgba(154, 170, 192, 0.4);
+  }
+  &:nth-child(odd) {
+    background-color: rgba(154, 170, 192, 0.1);
   }
   &:hover {
     background-color: #ffffff;
@@ -265,6 +273,7 @@ const TD = styled.td`
   /* border: 1px solid; */
   text-align: left;
   padding: 8px;
+  padding-left: 2rem;
   vertical-align: middle; // 테이블 수직 중앙 정렬
   @media screen and (max-width: 500px) {
     font-size: 13px;

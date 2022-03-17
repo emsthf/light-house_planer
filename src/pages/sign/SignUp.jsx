@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import { getValue } from '@testing-library/user-event/dist/utils';
 
 const Container = styled.div`
   width: 1200px;
@@ -9,7 +10,9 @@ const Container = styled.div`
 `;
 
 const FormWrapper = styled.div`
-width: 100%;
+width: 80%;
+margin: 0 auto;
+padding-bottom: 8vh;
 `;
 
 const Title = styled.h2`
@@ -19,8 +22,7 @@ font-weight: bold;
 `;
 
 const Form = styled.form`
-width: 80%;
-margin: 0 auto;
+width: 100%;
 `;
 
 const Label = styled.label`
@@ -50,6 +52,10 @@ const ErrorMessage = styled.div`
 font-size: 0.8rem;
 margin: 0.5rem 0 0 1rem;
 color: #888;
+`;
+
+const SubTitle = styled.p`
+margin-bottom: 0.5rem;
 `;
 
 const InputFile = styled.input``;
@@ -87,16 +93,16 @@ function SignUp() {
 
     const [user, setUser] = useState({});
 
-    const { register, handleSubmit, formState: { errors }, reset, getValues } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset, watch } = useForm();
 
     const onSubmit = data => {
-        setUser({
-            name : data.name,
-            email: data.email,
-            password: data.password,
-            phone: data.phone
-        });
-        console.log(user);
+        // setUser({
+        //     name : data.name,
+        //     email: data.email,
+        //     password: data.password,
+        //     phone: data.phone
+        // });
+        console.log('submit');
     };
 
     const resetForm = () => {
@@ -117,7 +123,7 @@ function SignUp() {
                     <Label>
                         <Input type='text' placeholder='이름' {...register('name', {
                             required : true,
-                            // pattern : /^[A-Za-z0-9]{4,20}$/
+                            pattern : /^[A-Za-z0-9가-힣]{2,20}$/
                         })}></Input>
                         <ErrorMessage>
                             {errors.name?.type === 'required' && '이름을 입력해주세요.'}
@@ -126,47 +132,52 @@ function SignUp() {
                     <Label>
                         <Input type='text' placeholder='이메일' {...register('email', {
                             required: true,
-                            // pattern: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+                            pattern: /^([a-z0-9+_.-]+)@([\da-z+-]+)\.([a-z\.]{2,6})$/
                         })}></Input>
                         <ErrorMessage>
                             {errors.email?.type === 'required' && '이메일을 입력해주세요.'}
                         </ErrorMessage>
                     </Label>
                     <Label>
-                        <Input type='password' placeholder='비밀번호' {...register('password', {
+                        <Input type='password' placeholder='비밀번호(영문자 및 숫자 8자 이상)' {...register('password', {
                             required: true,
-                            // pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+                            pattern: /^(?=.*\d)(?=.*[A-Za-z])[A-Za-z\d]{8,}$/
                         })}></Input>
                         <ErrorMessage>
                             {errors.password?.type === 'required' && '비밀번호를 입력해주세요.'}
+                            {errors.password?.type === 'pattern' && '비밀번호는 영문자 및 숫자 8자 이상이어야 합니다.'}
                         </ErrorMessage>
                     </Label>
                     <Label>
                         <Input type='password' placeholder='비밀번호 확인' {...register('passwordConfirm', {
                             required: true,
-                            // pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+                            pattern: /^(?=.*\d)(?=.*[A-Za-z])[A-Za-z\d]{8,}$/
                         })}></Input>
                         <ErrorMessage>
-                            {errors.passwordConfirm?.type === 'required' && '비밀번호를 다시 입력해주세요.'}
-                            {getValues('password') !== getValues('passwordConfirm') && '비밀번호를 다시 확인해주세요.'}
+                            {errors.passwordConfirm?.type === 'required' && '다시 한번 비밀번호를 입력해주세요.'}
+                            {watch('password') !== '' && watch('passwordConfirm') !== '' &&watch('password') !== watch('passwordConfirm') && '비밀번호를 다시 확인해주세요.'}
                         </ErrorMessage>
-                        <Button padding={'0.5rem 1.1rem'}>check</Button>
                     </Label>
                     <Label>
-                        <Input type='text' placeholder='전화번호' {...register('phone', {
+                        <Input type='text' placeholder='전화번호 ( - 제외 입력)' {...register('phone', {
                             required: true,
-                            // pattern: /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/
+                            pattern: /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g
                         })}></Input>
                         <ErrorMessage>
                             {errors.phone?.type === 'required' && '전화번호를 입력해주세요.'}
                         </ErrorMessage>
                     </Label>
                     <Label>
+                        <SubTitle>프로필 이미지</SubTitle>
                         <InputFile type='file' accept='image/*'></InputFile>
                     </Label>
                     <ButtonWrapper>
                         <Button>가입</Button>
-                        <Button marginLeft onClick={resetForm}>reset</Button>
+                        <Button type='button'
+                            marginLeft onClick={resetForm}
+                            backgroundColor={"#89d8d3"}
+                            hoverColor={"linear-gradient(315deg, #416dea, #89d8d3 74%)"}
+                        >reset</Button>
                     </ButtonWrapper>
                 </Form>
             </FormWrapper>
