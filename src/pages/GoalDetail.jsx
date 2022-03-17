@@ -9,6 +9,7 @@ const Container = styled.div`
   width: 1200px;
   margin: 20vh auto;
   min-height: 100vh;
+  margin-bottom: 240px;
 `;
 
 const Wrapper = styled.div`
