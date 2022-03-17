@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import { getValue } from '@testing-library/user-event/dist/utils';
 
 const Container = styled.div`
   width: 1200px;
@@ -53,6 +54,10 @@ margin: 0.5rem 0 0 1rem;
 color: #888;
 `;
 
+const SubTitle = styled.p`
+margin-bottom: 0.5rem;
+`;
+
 const InputFile = styled.input``;
 
 const ButtonWrapper = styled.div`
@@ -97,11 +102,7 @@ function SignUp() {
         //     password: data.password,
         //     phone: data.phone
         // });
-        console.log(data.name);
-        console.log(data.email);
-        console.log(data.password);
-        console.log(data.passwordConfirm);
-        console.log(data.phone);
+        console.log('submit');
     };
 
     const resetForm = () => {
@@ -122,7 +123,7 @@ function SignUp() {
                     <Label>
                         <Input type='text' placeholder='이름' {...register('name', {
                             required : true,
-                            pattern : /^[A-Za-z0-9]{4,20}$/
+                            pattern : /^[A-Za-z0-9가-힣]{2,20}$/
                         })}></Input>
                         <ErrorMessage>
                             {errors.name?.type === 'required' && '이름을 입력해주세요.'}
@@ -138,19 +139,19 @@ function SignUp() {
                         </ErrorMessage>
                     </Label>
                     <Label>
-                        <Input type='password' placeholder='비밀번호(영어 대문자, 소문자, 숫자, 특수문자 포함 8자 이상)' {...register('password', {
+                        <Input type='password' placeholder='비밀번호(숫자 포함 영문자 8자 이상)' {...register('password', {
                             required: true,
-                            pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+                            pattern: /^(?=.*\d)(?=.*[A-Za-z])[A-Za-z\d]{8,}$/
                         })}></Input>
                         <ErrorMessage>
                             {errors.password?.type === 'required' && '비밀번호를 입력해주세요.'}
-                            {errors.password?.type === 'pattern' && '비밀번호는 영어 대문자, 소문자, 숫자, 특수문자 포함 8자 이상이어야 합니다.'}
+                            {errors.password?.type === 'pattern' && '비밀번호는 숫자 포함 영문자 8자 이상이어야 합니다.'}
                         </ErrorMessage>
                     </Label>
                     <Label>
                         <Input type='password' placeholder='비밀번호 확인' {...register('passwordConfirm', {
                             required: true,
-                            pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+                            pattern: /^(?=.*\d)(?=.*[A-Za-z])[A-Za-z\d]{8,}$/
                         })}></Input>
                         <ErrorMessage>
                             {errors.passwordConfirm?.type === 'required' && '다시 한번 비밀번호를 입력해주세요.'}
@@ -158,16 +159,16 @@ function SignUp() {
                         </ErrorMessage>
                     </Label>
                     <Label>
-                        <Input type='text' placeholder='전화번호' {...register('phone', {
+                        <Input type='text' placeholder='전화번호 ( - 제외 입력)' {...register('phone', {
                             required: true,
-                            pattern: /^\d{3}-\d{3,4}-\d{4}$/
+                            pattern: /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g
                         })}></Input>
                         <ErrorMessage>
                             {errors.phone?.type === 'required' && '전화번호를 입력해주세요.'}
-                            {errors.phone?.type === 'pattern' && '올바른 전화번호를 입력해주세요.'}
                         </ErrorMessage>
                     </Label>
                     <Label>
+                        <SubTitle>프로필 이미지</SubTitle>
                         <InputFile type='file' accept='image/*'></InputFile>
                     </Label>
                     <ButtonWrapper>
