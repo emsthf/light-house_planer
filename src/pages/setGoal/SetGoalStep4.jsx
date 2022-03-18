@@ -18,7 +18,8 @@ height: 90vh;
 margin: 5vh auto;
 background: #fafafa;
 border-radius: 40px;
-box-shadow: 4px 8px 24px #d7d7d7;
+box-shadow: ${props => props.theme.boxShadow};
+color: ${props => props.theme.titleColor};
 `;
 
 const Wrapper = styled.div`

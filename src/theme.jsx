@@ -19,10 +19,17 @@ export const lightTheme = {
   textColor: "#0e1014",
   bgColor: "#eaeaea",
   cardBgColor: "#dff9fb",
+  boxShadow : "4px 8px 24px #d7d7d7",
+  border: "none",
+  innerBgColor: "#fafafa",
 };
 
 export const darkTheme = {
   textColor: "#eaeaea",
   bgColor: "#0e1014",
   cardBgColor: "#273c75",
+  boxShadow : "none",
+  titleColor: "#444",
+  border: "1px solid #eaeaea",
+  innerBgColor: "#0e1014",
 };

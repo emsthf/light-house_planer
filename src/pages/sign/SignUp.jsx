@@ -70,7 +70,7 @@ const ButtonWrapper = styled.div`
 const Button = styled.button`
   padding: ${props => props.padding || '0.5rem 3rem'};
   border: none;
-  box-shadow: 3px 4px 8px #b7b7b7;
+  box-shadow: ${props => props.theme.boxShadow};
   background: ${(props) => props.backgroundColor || "#416dea"};
   color: #fff;
   border-radius: 30px;

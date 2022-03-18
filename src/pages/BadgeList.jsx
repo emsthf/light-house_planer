@@ -22,6 +22,7 @@ margin-bottom: 40px;
 const Section = styled.section`
 width: 880px;
 margin: 0 auto;
+color: ${props => props.theme.textColor};
 /* text-align: center; */
 `;
 
@@ -34,9 +35,11 @@ width: 100%;
 min-height: 500px;
 padding: 2rem 1rem 4rem 1rem;
 box-sizing: border-box;
-background: #fafafa;
+/* background: #fafafa; */
+background: ${props => props.theme.innerBgColor};
+border: ${props => props.theme.border};
 border-radius: 20px;
-box-shadow: 3px 5px 10px #d7d7d7;
+box-shadow: ${props => props.theme.boxShadow};
 display: flex;
 flex-wrap: wrap;
 margin: 0 auto;
@@ -47,7 +50,7 @@ const Badge = styled.div`
 width: 120px;
 height: 120px;
 background: #fafafa;
-box-shadow: 3px 5px 10px #d7d7d7;
+box-shadow: ${props => props.theme.boxShadow};
 border-radius: 50%;
 margin: 24px;
 position: relative;
@@ -63,6 +66,7 @@ position: absolute;
 left: 50%;
 bottom: -1.8rem;
 transform: translateX(-50%);
+color: ${props => props.theme.textColor};
 `;
 
 function BadgeList() {
