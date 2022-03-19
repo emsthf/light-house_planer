@@ -27,6 +27,19 @@ const Title = styled.div`
   justify-content: center;
   margin: 2rem auto;
 `;
+
+const ChallengeCondition = styled.div`
+  border-radius: 50%;
+  display: block;
+  background-color: #d9e5ff;
+  height: 100px;
+  width: 7em;
+  margin: auto;
+  align-items: center;
+  margin-left: 550px;
+  margin-right: 6px;
+`;
+
 const TitleGridBox = styled.div`
   display: flex;
   display: grid;
@@ -144,18 +157,6 @@ const ChallengesTable = styled.div`
   box-shadow: 4px 7px 10px #a6a6a6;
   padding: 15px;
   //   margin-right: 30px;
-`;
-
-const ChallengeCondition = styled.div`
-  border-radius: 50%;
-  display: block;
-  background-color: #d9e5ff;
-  height: 100px;
-  width: 7em;
-  margin: auto;
-  align-items: center;
-  margin-left: 6px;
-  margin-right: 6px;
 `;
 
 // const BadgeBox = styled.div`
