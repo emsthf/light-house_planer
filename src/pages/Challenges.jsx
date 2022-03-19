@@ -27,6 +27,19 @@ const Title = styled.div`
   justify-content: center;
   margin: 2rem auto;
 `;
+
+const ChallengeCondition = styled.div`
+  border-radius: 50%;
+  display: block;
+  background-color: #d9e5ff;
+  height: 100px;
+  width: 7em;
+  margin: auto;
+  align-items: center;
+  margin-left: 550px;
+  margin-right: 6px;
+`;
+
 const TitleGridBox = styled.div`
   display: flex;
   display: grid;
@@ -146,18 +159,6 @@ const ChallengesTable = styled.div`
   //   margin-right: 30px;
 `;
 
-const ChallengeCondition = styled.div`
-  border-radius: 50%;
-  display: block;
-  background-color: #d9e5ff;
-  height: 100px;
-  width: 7em;
-  margin: auto;
-  align-items: center;
-  margin-left: 6px;
-  margin-right: 6px;
-`;
-
 // const BadgeBox = styled.div`
 //   width: 96%;
 //   margin: auto;
@@ -198,7 +199,7 @@ function Challenges() {
       <Wrapper>
         <ChallengesTable>
           <Title>
-            챌린지1111111<ChallengeCondition></ChallengeCondition>
+            챌린지1<ChallengeCondition></ChallengeCondition>
           </Title>
           <Title>
             챌린지2<ChallengeCondition></ChallengeCondition>
