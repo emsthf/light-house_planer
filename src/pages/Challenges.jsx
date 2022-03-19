@@ -198,7 +198,7 @@ function Challenges() {
       <Wrapper>
         <ChallengesTable>
           <Title>
-            챌린지1<ChallengeCondition></ChallengeCondition>
+            챌린지1111111<ChallengeCondition></ChallengeCondition>
           </Title>
           <Title>
             챌린지2<ChallengeCondition></ChallengeCondition>
