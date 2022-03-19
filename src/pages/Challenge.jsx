@@ -24,6 +24,7 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
+  border-radius: 4%;
   // background-color: #dcebff;
   background-color: #f0f8ff;
   height: 600px;
@@ -33,9 +34,11 @@ const Container = styled.div`
 `;
 
 const ChallengeNameBox = styled.div`
+  border-radius: 3%;
   display: block;
   // background-color: #ffcccc;
-  background-color: #90afff;
+  // background-color: #90afff;
+  background-color: #d9e5ff;
   height: 45px;
   width: 41em;
   margin: auto;
@@ -45,6 +48,7 @@ const ChallengeNameBox = styled.div`
 
 const ChallengeName = styled.span`
   margin: 15px;
+  width: 40em;
   display: block;
   color: BLACK;
   font-size: 30px;
@@ -139,36 +143,46 @@ background: no-repeat
 const ChallengeRewardBox = styled.div`
   border-radius: 10%;
   display: block;
-  background-color: #ffdee9;
+  background-color: #d9e5ff;
   height: 150px;
   width: 10em;
   margin: auto;
   padding: 15px;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: 3.4px;
+  margin-right: 6px;
 `;
 
 const EnrollBtn = styled.button`
   margin-top: 15px;
   margin-left: 25px;
   border-radius: 7px;
+  border: none;
+  box-shadow: 3px 4px 8px #b7b7b7;
+  background: ${(props) => props.backgroundColor || "#416dea"};
+  color: #fff;
+  font-weight: bold;
+  border-radius: 30px;
+  // margin: 1rem 0;
+  margin-left: ${(props) => props.marginLeft && "2rem"};
+  &:hover {
+    box-shadow: none;
+    background: ${(props) =>
+      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
+  }
+  &:active {
+    box-shadow: none;
+    background: ${(props) =>
+      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
+    box-shadow: 3px 4px 10px #bbb;
+  }
 `;
 
 //여기구분
 
-const modalVariants = {
-  entry: { opacity: 0, y: -50 },
-  normal: { opacity: 1, y: 0 },
-  exit: {
-    opacity: 0,
-    y: -50,
-  },
-};
-
 function Challenge() {
-  const [id, setId] = useState(null);
-  const { scrollY } = useViewportScroll();
-  console.log(scrollY);
+  // const [id, setId] = useState(null);
+  // const { scrollY } = useViewportScroll();
+  // console.log(scrollY);
 
   return (
     <Wrapper>
