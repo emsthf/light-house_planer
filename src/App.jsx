@@ -22,6 +22,7 @@ import { useRecoilState } from "recoil";
 import { darkModeState } from "./Atom";
 
 import Challenge from "./pages/Challenge";
+import Challenges from "./pages/Challenges";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -115,9 +116,8 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/board" element={<Board />} />
           <Route path="/" element={<Landing />} />
-        </Routes>
-        <Routes>
           <Route path="/challenge" element={<Challenge />} />
+          <Route path="/challenges" element={<Challenges />} />
         </Routes>
         <Footer />
       </BrowserRouter>
