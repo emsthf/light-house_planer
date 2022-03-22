@@ -23,6 +23,8 @@ import { darkModeState } from "./Atom";
 
 import Challenge from "./pages/Challenge";
 import Challenges from "./pages/Challenges";
+import AuthBoard from "./pages/AuthBoard";
+import AuthBoardDetail from "./pages/AuthBoardDetail";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -118,6 +120,8 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/challenge" element={<Challenge />} />
           <Route path="/challenges" element={<Challenges />} />
+          <Route path="/authboard" element={<AuthBoard />} />
+          <Route path="/authdetail" element={<AuthBoardDetail />} />
         </Routes>
         <Footer />
       </BrowserRouter>
