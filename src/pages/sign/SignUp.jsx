@@ -92,9 +92,18 @@ const Button = styled.button`
 function SignUp() {
 
     const [user, setUser] = useState({});
+    const [img, setImg] = useState();
 
-    const { register, handleSubmit, formState: { errors }, reset, watch } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset, watch, getValues } = useForm();
 
+    const readFile = (e) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = function(e) {
+            setImg(e.target.result);
+        }
+    }
+    
     const onSubmit = data => {
         // setUser({
         //     name : data.name,
@@ -103,6 +112,7 @@ function SignUp() {
         //     phone: data.phone
         // });
         console.log('submit');
+        console.log(data);
     };
 
     const resetForm = () => {
@@ -169,7 +179,7 @@ function SignUp() {
                     </Label>
                     <Label>
                         <SubTitle>프로필 이미지</SubTitle>
-                        <InputFile type='file' accept='image/*'></InputFile>
+                        <InputFile type='file' accept='image/*' {...register('img')} onClick={e => console.log(e)}></InputFile>
                     </Label>
                     <ButtonWrapper>
                         <Button>가입</Button>
