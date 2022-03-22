@@ -26,6 +26,8 @@ import Challenge from "./pages/Challenge";
 import Challenges from "./pages/Challenges";
 import SiteRule from "./pages/SiteRule";
 import ContactUs from "./pages/ContactUs";
+import BoardDetail from "./pages/BoardDetail";
+import GoalList from "./pages/GoalList";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -124,6 +126,10 @@ function App() {
             <Route path="/challenges" element={<Challenges />} />
             <Route path="/site-rule" element={<SiteRule />} />
             <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/board/1" element={<BoardDetail />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/challenge" element={<Challenge />} />
+            <Route path="/challenges" element={<Challenges />} />
           </Routes>
           <Footer />
         </BrowserRouter>

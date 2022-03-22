@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
+import { Link } from "react-router-dom";
+import { Pagination } from "react-bootstrap";
 
 const Container = styled.div`
 width: 80vw;
@@ -90,7 +92,31 @@ const TD = styled.td`
   }
 `;
 
+const PageWrapper = styled.div`
+margin-top: 4rem;
+`;
+
+const Nav = styled.nav`
+display: flex;
+`;
+
+const PageBtn = styled.button`
+padding: 0.4rem 0.8rem;
+border: none;
+background: #416dea;
+color: #fff;
+&:hover {
+    background: linear-gradient(315deg, #89d8d3, #416dea 74%);
+}
+&:active {
+    background: linear-gradient(315deg, #89d8d3, #416dea 74%);
+    box-shadow: 0 3px 10px #999;
+}
+margin: ${props => props.margin || '0'};
+`;
+
 function Board() {
+
   return (
     <Container>
       <Wrapper>
@@ -144,6 +170,15 @@ function Board() {
               </TR>
             </tbody>
           </Table>
+          <PageWrapper>
+            <Nav>
+              {/* <PageBtn margin={'0 8px'}>Prev</PageBtn> */}
+              <ul>
+
+              </ul>
+              {/* <PageBtn margin={'0 8px'}>Next</PageBtn> */}
+            </Nav>
+          </PageWrapper>
         </BoardBox>
       </Wrapper>
     </Container>
