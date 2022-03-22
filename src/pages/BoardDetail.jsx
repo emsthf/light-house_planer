@@ -88,7 +88,7 @@ margin-top: 2rem;
 const Button = styled.button`
 padding: ${props => props.padding || '0.5rem 2rem'};
 border: none;
-box-shadow: 3px 4px 8px #b7b7b7;
+box-shadow: ${props => props.theme.boxShadow};
 background: ${(props) => props.backgroundColor || "#416dea"};
 color: #fff;
 border-radius: ${props => props.borderRadius || '30px'};
@@ -102,6 +102,7 @@ margin: 1rem;
     background: linear-gradient(315deg, #89d8d3, #416dea 74%);
     background: ${(props) =>
       props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
+    box-shadow: 2px 3px 10px #888;
 }
 `;
 

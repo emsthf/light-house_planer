@@ -74,7 +74,6 @@ const Button = styled.button`
       props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
   }
   &:active {
-    box-shadow: none;
     background: ${(props) =>
       props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
     box-shadow: 3px 4px 10px #bbb;

@@ -11,8 +11,8 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 100px 250px 150px 100px;
-  margin: auto;
+  margin: 20vh auto;
+  margin-bottom: 240px;
   @media screen and (min-width: 768px) {
     padding-right: 24px !important;
     padding-left: 24px !important;
@@ -25,19 +25,16 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
   border-radius: 4%;
-  // background-color: #dcebff;
   background-color: #f0f8ff;
   height: 600px;
   max-width: 1270px;
-  box-shadow: 10px 8px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 10px 8px 5px rgba(0, 0, 0, 0.2);
   margin-right: 30px;
 `;
 
 const ChallengeNameBox = styled.div`
   border-radius: 3%;
   display: block;
-  // background-color: #ffcccc;
-  // background-color: #90afff;
   background-color: #d9e5ff;
   height: 45px;
   width: 41em;
@@ -74,6 +71,7 @@ const GridBox = styled.div`
   max-width: 1280px;
   // grid-template-columns: repeat(2, 1fr);
   grid-template-columns: 6fr 2fr;
+  color: ${props => props.theme.titleColor};
 `;
 
 const InfoBox = styled.div`
