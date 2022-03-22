@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { ThemeProvider } from "styled-components";
+import { ParallaxProvider } from "react-scroll-parallax";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import BadgeList from "./pages/BadgeList";
@@ -25,6 +26,11 @@ import Challenge from "./pages/Challenge";
 import Challenges from "./pages/Challenges";
 import AuthBoard from "./pages/AuthBoard";
 import AuthBoardDetail from "./pages/AuthBoardDetail";
+import SiteRule from "./pages/SiteRule";
+import ContactUs from "./pages/ContactUs";
+import BoardDetail from "./pages/BoardDetail";
+import GoalList from "./pages/GoalList";
+
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
