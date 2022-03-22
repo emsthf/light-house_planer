@@ -21,7 +21,8 @@ const Title = styled.div`
   height: 100px;
   background: #fafafa;
   border-radius: 20px;
-  box-shadow: 3px 5px 10px #d7d7d7;
+  box-shadow: ${props => props.theme.boxShadow};
+  color: ${props => props.theme.titleColor};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,7 +39,8 @@ const Check = styled.form`
   margin: 0 auto;
   background: #fafafa;
   border-radius: 20px;
-  box-shadow: 3px 5px 10px #d7d7d7;
+  box-shadow: ${props => props.theme.boxShadow};
+  color: ${props => props.theme.titleColor};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,7 +61,7 @@ const Input = styled.input`
 const Button = styled.button`
   padding: 0.5rem 3rem;
   border: none;
-  box-shadow: 3px 4px 8px #b7b7b7;
+  box-shadow: ${props => props.theme.boxShadow};
   background: ${(props) => props.backgroundColor || "#416dea"};
   color: #fff;
   font-weight: bold;
