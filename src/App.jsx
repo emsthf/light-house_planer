@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { ThemeProvider } from "styled-components";
+import { ParallaxProvider } from "react-scroll-parallax";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import BadgeList from "./pages/BadgeList";
@@ -23,6 +24,8 @@ import { darkModeState } from "./Atom";
 
 import Challenge from "./pages/Challenge";
 import Challenges from "./pages/Challenges";
+import SiteRule from "./pages/SiteRule";
+import ContactUs from "./pages/ContactUs";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -101,26 +104,30 @@ function App() {
 
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <GlobalStyle />
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/dash" element={<DashBoard />} />
-          <Route path="/set/1" element={<SetGoalStep1 />} />
-          <Route path="/set/2" element={<SetGoalStep2 />} />
-          <Route path="/set/3" element={<SetGoalStep3 />} />
-          <Route path="/set/4" element={<SetGoalStep4 />} />
-          <Route path="/set/5" element={<SetGoalStep5 />} />
-          <Route path="/goal" element={<GoalDetail />} />
-          <Route path="/badge" element={<BadgeList />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/board" element={<Board />} />
-          <Route path="/" element={<Landing />} />
-          <Route path="/challenge" element={<Challenge />} />
-          <Route path="/challenges" element={<Challenges />} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
+      <ParallaxProvider>
+        <GlobalStyle />
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path="/dash" element={<DashBoard />} />
+            <Route path="/set/1" element={<SetGoalStep1 />} />
+            <Route path="/set/2" element={<SetGoalStep2 />} />
+            <Route path="/set/3" element={<SetGoalStep3 />} />
+            <Route path="/set/4" element={<SetGoalStep4 />} />
+            <Route path="/set/5" element={<SetGoalStep5 />} />
+            <Route path="/goal" element={<GoalDetail />} />
+            <Route path="/badge" element={<BadgeList />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/board" element={<Board />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/challenge" element={<Challenge />} />
+            <Route path="/challenges" element={<Challenges />} />
+            <Route path="/site-rule" element={<SiteRule />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </ParallaxProvider>
     </ThemeProvider>
   );
 }

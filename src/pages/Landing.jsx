@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -57,62 +57,45 @@ const GalleryContainer = styled.div`
 
 const InfoBox = styled.div`
   z-index: 10;
+  cursor: pointer;
+  width: 100%;
+  color: rgba(0, 0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 100px;
+  font-weight: 600;
+  &:hover {
+    background: transparent;
+    color: ${(props) => props.theme.textColor};
+  }
 `;
 
 const Info1 = styled(InfoBox)`
-  width: 100%;
   background: no-repeat
     url(https://static.wixstatic.com/media/94e66f_ee0a937509db478cabc64e2279600da4~mv2_d_3019_3275_s_4_2.gif/v1/fill/w_453,h_452,q_90/94e66f_ee0a937509db478cabc64e2279600da4~mv2_d_3019_3275_s_4_2.webp);
   background-size: cover;
-  color: rgba(0, 0, 0, 0);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 100px;
-  font-weight: 600;
-  &:hover {
-    background: transparent;
-    color: white;
-  }
 `;
 
 const Info2 = styled(InfoBox)`
-  width: 100%;
   background: no-repeat
     url(https://static.wixstatic.com/media/84770f_5b748949a90e444dbdab497ec466ab22~mv2.gif/v1/fit/w_1000,h_1000,al_c,q_80/file.jpg);
   background-size: cover;
-  color: rgba(0, 0, 0, 0);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 100px;
-  font-weight: 600;
-  &:hover {
-    background: transparent;
-    color: white;
-  }
 `;
 
 const Info3 = styled(InfoBox)`
   background: no-repeat
     url(https://static.wixstatic.com/media/94e66f_cc6315f5bf1e43aca75ca1810f880907~mv2.gif/v1/fill/w_452,h_452,q_90/94e66f_cc6315f5bf1e43aca75ca1810f880907~mv2.webp);
   background-size: cover;
-  color: rgba(0, 0, 0, 0);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 100px;
-  font-weight: 600;
-  &:hover {
-    background: transparent;
-    color: white;
-  }
 `;
 
 function Landing() {
+  const navigate = useNavigate();
+  const onBoxClicked = (id) => {
+    navigate(`/${id}`);
+  };
+
   return (
     <Wrapper>
       <Carousel>
@@ -132,9 +115,9 @@ function Landing() {
         </span>
       </DescContainer>
       <GalleryContainer>
-        <Info1>#About Us</Info1>
-        <Info2>#Site Rules</Info2>
-        <Info3>#Contact Us</Info3>
+        <Info1 onClick={() => onBoxClicked("about-us")}>#About Us</Info1>
+        <Info2 onClick={() => onBoxClicked("site-rule")}>#Site Rules</Info2>
+        <Info3 onClick={() => onBoxClicked("contact-us")}>#Contact Us</Info3>
       </GalleryContainer>
     </Wrapper>
   );
