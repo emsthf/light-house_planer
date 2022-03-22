@@ -23,6 +23,8 @@ import { darkModeState } from "./Atom";
 
 import Challenge from "./pages/Challenge";
 import Challenges from "./pages/Challenges";
+import BoardDetail from "./pages/BoardDetail";
+import GoalList from "./pages/GoalList";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -111,10 +113,12 @@ function App() {
           <Route path="/set/3" element={<SetGoalStep3 />} />
           <Route path="/set/4" element={<SetGoalStep4 />} />
           <Route path="/set/5" element={<SetGoalStep5 />} />
+          <Route path="/goal/list" element={<GoalList />} />
           <Route path="/goal" element={<GoalDetail />} />
           <Route path="/badge" element={<BadgeList />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/board" element={<Board />} />
+          <Route path="/board/1" element={<BoardDetail />} />
           <Route path="/" element={<Landing />} />
           <Route path="/challenge" element={<Challenge />} />
           <Route path="/challenges" element={<Challenges />} />
