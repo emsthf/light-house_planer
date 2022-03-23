@@ -115,6 +115,7 @@ function GoalDetail() {
   const url = `http://localhost:8080/api/goal/${isGoalId}`;
   const navigate = useNavigate();
 
+  // 목표 세부 조회
   useEffect(() => {
     axios
       .get(url)
@@ -133,10 +134,11 @@ function GoalDetail() {
       .catch((Error) => {
         console.log(Error);
       });
-  }, [checked]);
+  }, [now]);
 
   // const now = 60;
 
+  // 목표 일일 체크
   const onChecked = () => {
     if (checked === false) {
       axios
@@ -198,6 +200,7 @@ function GoalDetail() {
     }
   };
 
+  // 목표 삭제
   const goalDelete = (id) => {
     if (window.confirm("정말 이 목표를 지우시겠습니까?")) {
       axios
@@ -208,8 +211,6 @@ function GoalDetail() {
         .catch((Error) => {
           console.log(Error);
         });
-    } else {
-      window.alert("삭제가 취소되었습니다.");
     }
   };
 
