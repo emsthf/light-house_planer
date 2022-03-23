@@ -31,7 +31,6 @@ import ContactUs from "./pages/ContactUs";
 import BoardDetail from "./pages/BoardDetail";
 import GoalList from "./pages/GoalList";
 
-
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -128,6 +127,8 @@ function App() {
           <Route path="/challenges" element={<Challenges />} />
           <Route path="/authboard" element={<AuthBoard />} />
           <Route path="/authdetail" element={<AuthBoardDetail />} />
+          <Route path="/site-rule" element={<SiteRule />} />
+          <Route path="/contact-us" element={<ContactUs />} />
         </Routes>
         <Footer />
       </BrowserRouter>

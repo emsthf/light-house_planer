@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Parallax } from "react-scroll-parallax";
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -80,25 +79,23 @@ function SiteRule() {
       </OuterStepBox>
       <Title>FAQ</Title>
       <SubTitle>자주 묻는 질문들</SubTitle>
-      <Parallax translateY={[30, -80]}>
-        <FAQContainer>
-          <FAQUl>
-            <FAQLi onClick={() => toggleMenu()}>
-              <span>How do I add a new question?</span>
-              <i className="fa-solid fa-angle-down"></i>
-            </FAQLi>
-            <FAQLi>
-              <span>How do I add a new question?</span>
-              <i className="fa-solid fa-angle-down"></i>
-            </FAQLi>
-            <FAQLi>
-              <span>How do I add a new question?</span>
-              <i className="fa-solid fa-angle-down"></i>
-            </FAQLi>
-            <FAQLi>How do I add a new question?</FAQLi>
-          </FAQUl>
-        </FAQContainer>
-      </Parallax>
+      <FAQContainer>
+        <FAQUl>
+          <FAQLi onClick={() => toggleMenu()}>
+            <span>How do I add a new question?</span>
+            <i className="fa-solid fa-angle-down"></i>
+          </FAQLi>
+          <FAQLi>
+            <span>How do I add a new question?</span>
+            <i className="fa-solid fa-angle-down"></i>
+          </FAQLi>
+          <FAQLi>
+            <span>How do I add a new question?</span>
+            <i className="fa-solid fa-angle-down"></i>
+          </FAQLi>
+          <FAQLi>How do I add a new question?</FAQLi>
+        </FAQUl>
+      </FAQContainer>
     </Wrapper>
   );
 }

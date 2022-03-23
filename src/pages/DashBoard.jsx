@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 import PieChart from "../components/PieChart";
@@ -155,6 +155,7 @@ const Goal = styled(motion.div)`
   flex-direction: column;
   padding: 20px;
   margin-bottom: 10px;
+  cursor: pointer;
   div {
     display: flex;
     flex-direction: row;
@@ -191,7 +192,7 @@ const CreateBtn = styled.button`
 const BadgeBox = styled.div`
   width: 96%;
   margin: auto;
-  height: 11em;
+  /* height: 11em; */
   border: 1px solid gray;
   border-radius: 15px;
   display: flex;
@@ -215,6 +216,13 @@ const Badge = styled.div`
   background: no-repeat
     url(https://cdn.pixabay.com/photo/2019/12/01/09/08/logo-4664978__480.png);
   background-size: cover;
+  cursor: pointer;
+`;
+
+const MoreBadge = styled.span`
+  margin-top: 15px;
+  text-align: center;
+  cursor: pointer;
 `;
 
 const StatisticsBox = styled(GoalBox)`
@@ -225,8 +233,7 @@ const StatisticsBox = styled(GoalBox)`
   align-items: center;
 `;
 
-const DoneGoalBox = styled(GoalBox)`
-`;
+const DoneGoalBox = styled(GoalBox)``;
 
 const BoardBox = styled(GoalBox)`
   height: 300px;
@@ -334,6 +341,11 @@ function DashBoard() {
   const { scrollY } = useViewportScroll();
   console.log(scrollY);
 
+  const navigate = useNavigate();
+  const onClicked = () => {
+    navigate("/badge");
+  };
+
   return (
     <Wrapper>
       <GridBox>
@@ -398,6 +410,7 @@ function DashBoard() {
               <Badge />
               <Badge />
             </BadgeList>
+            <MoreBadge onClick={() => onClicked()}>+더보기</MoreBadge>
           </BadgeBox>
           <StatisticsBox>
             <PieChart />
