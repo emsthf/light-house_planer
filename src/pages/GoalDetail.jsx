@@ -1,7 +1,10 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { ProgressBar } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { goalId } from "../Atom";
 import HeatMapChart from "../components/HeatMapChart";
 import HeatmapChart2 from "../components/HeatmapChart2";
 
@@ -21,8 +24,8 @@ const Title = styled.div`
   height: 100px;
   background: #fafafa;
   border-radius: 20px;
-  box-shadow: ${props => props.theme.boxShadow};
-  color: ${props => props.theme.titleColor};
+  box-shadow: ${(props) => props.theme.boxShadow};
+  color: ${(props) => props.theme.titleColor};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,8 +42,8 @@ const Check = styled.form`
   margin: 0 auto;
   background: #fafafa;
   border-radius: 20px;
-  box-shadow: ${props => props.theme.boxShadow};
-  color: ${props => props.theme.titleColor};
+  box-shadow: ${(props) => props.theme.boxShadow};
+  color: ${(props) => props.theme.titleColor};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -61,7 +64,7 @@ const Input = styled.input`
 const Button = styled.button`
   padding: 0.5rem 3rem;
   border: none;
-  box-shadow: ${props => props.theme.boxShadow};
+  box-shadow: ${(props) => props.theme.boxShadow};
   background: ${(props) => props.backgroundColor || "#416dea"};
   color: #fff;
   font-weight: bold;
@@ -105,17 +108,126 @@ const StyledLink = styled(Link)`
 `;
 
 function GoalDetail() {
-  const now = 30;
+  const [isGoalId, setIsGoalId] = useRecoilState(goalId);
+  const [goal, setGoal] = useState({});
+  const [now, setNow] = useState();
+  const [checked, setChecked] = useState(false);
+  const url = `http://localhost:8080/api/goal/${isGoalId}`;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(url)
+      .then((Response) => {
+        setGoal(Response.data);
+        console.log(Response.data);
+        setNow(
+          (
+            (Response.data.count /
+              (Math.ceil(Response.data.totalCount / 7) * Response.data.weekCount +
+                (Response.data.totalCount % 7))) *
+            100
+          ).toFixed(2)
+        );
+      })
+      .catch((Error) => {
+        console.log(Error);
+      });
+  }, [checked]);
+
+  // const now = 60;
+
+  const onChecked = () => {
+    if (checked === false) {
+      axios
+        .put("http://localhost:8080/api/goal", {
+          id: goal.id,
+          goalTitle: goal.goalTitle,
+          goalDesc: goal.goalDesc,
+          startDay: goal.startDay,
+          endDay: goal.endDay,
+          weekCount: goal.weekCount,
+          count: goal.count + 1,
+          totalCount: goal.totalCount,
+          doing: goal.doing,
+          state: goal.state,
+        })
+        .then((Response) => {
+          setChecked(!checked); // 체크 상태 변경
+          window.alert("오늘 목표 달성!");
+          setNow(
+            (
+              (Response.data.count /
+                (Math.ceil(Response.data.totalCount / 7) * Response.data.weekCount +
+                  (Response.data.totalCount % 7))) *
+              100
+            ).toFixed(2)
+          );
+        })
+        .catch((Error) => {
+          console.log(Error);
+        });
+    } else {
+      axios
+        .put("http://localhost:8080/api/goal", {
+          id: goal.id,
+          goalTitle: goal.goalTitle,
+          goalDesc: goal.goalDesc,
+          startDay: goal.startDay,
+          endDay: goal.endDay,
+          weekCount: goal.weekCount,
+          count: goal.count - 1,
+          totalCount: goal.totalCount,
+          doing: goal.doing,
+          state: goal.state,
+        })
+        .then((Response) => {
+          setChecked(!checked);
+          setNow(
+            (
+              (Response.data.count /
+                (Math.ceil(Response.data.totalCount / 7) * Response.data.weekCount +
+                  (Response.data.totalCount % 7))) *
+              100
+            ).toFixed(2)
+          );
+        })
+        .catch((Error) => {
+          console.log(Error);
+        });
+    }
+  };
+
+  const goalDelete = (id) => {
+    if (window.confirm("정말 이 목표를 지우시겠습니까?")) {
+      axios
+        .delete(`http://localhost:8080/api/goal/${id}`)
+        .then((Response) => {
+          navigate("/dash");
+        })
+        .catch((Error) => {
+          console.log(Error);
+        });
+    } else {
+      window.alert("삭제가 취소되었습니다.");
+    }
+  };
 
   return (
     <Container>
       <Wrapper>
-        <Title>목표명</Title>
-        <Desc>설명</Desc>
-        <Date>기간</Date>
+        <Title>{goal.goalTitle ? goal.goalTitle : "목표 명"}</Title>
+        <Desc>{goal.goalDesc ? goal.goalDesc : "목표 설명"}</Desc>
+        <Date>
+          {goal.startDay
+            ? `${goal.startDay.substring(0, 10)} ~ ${goal.endDay.substring(0, 10)} 주 ${
+                goal.weekCount
+              }회`
+            : "목표 기간"}
+        </Date>
         <Check>
           <label>오늘의 목표 체크</label>
-          <Input type="checkbox"></Input>
+          <Input type="checkbox" onChange={() => onChecked()} />
           <Button marginLeft>인증글 쓰기</Button>
         </Check>
         <ProgressBox>
@@ -126,6 +238,7 @@ function GoalDetail() {
           <Button
             backgroundColor={"#373737"}
             hoverColor={"linear-gradient(315deg, #8e8e8e, #373737 74%)"}
+            onClick={() => goalDelete(goal.id)}
           >
             포 기
           </Button>
