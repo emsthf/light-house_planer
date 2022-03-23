@@ -9,7 +9,6 @@ const Container = styled.div`
   margin: 20vh auto;
   min-height: 100vh;
   margin-bottom: 240px;
-  color: ${props => props.theme.titleColor};
 `;
 
 const Wrapper = styled.div`
@@ -22,8 +21,7 @@ const Title = styled.div`
   height: 130px;
   background: #fafafa;
   border-radius: 20px;
-  /* box-shadow: 3px 5px 10px #d7d7d7; */
-  box-shadow: ${props => props.theme.boxShadow};
+  box-shadow: 3px 5px 10px #d7d7d7;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -64,7 +62,7 @@ const Paging = styled.span`
   width: 150px;
   height: 30px;
   border-radius: 5px;
-  box-shadow: ${props => props.theme.boxShadow};
+  box-shadow: 2px 5px 10px #d7d7d7;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,7 +75,7 @@ const NewChallengeEnroll = styled.span`
   width: 150px;
   height: 30px;
   border-radius: 5px;
-  box-shadow: ${props => props.theme.boxShadow};
+  box-shadow: 2px 5px 10px #d7d7d7;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,7 +100,7 @@ const ToNotice = styled.div`
   margin-left: 380px;
   border-radius: 5px;
   border: none;
-  box-shadow: ${props => props.theme.boxShadow};
+  box-shadow: 3px 4px 8px #b7b7b7;
   background: ${(props) => props.backgroundColor || "#416dea"};
   color: #fff;
   font-weight: bold;
@@ -114,6 +112,7 @@ const ToNotice = styled.div`
       props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
   }
   &:active {
+    box-shadow: none;
     background: ${(props) =>
       props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
     box-shadow: 3px 4px 10px #bbb;
@@ -128,7 +127,7 @@ const ToAuthentication = styled.div`
   margin-left: 25px;
   border-radius: 7px;
   border: none;
-  box-shadow: ${props => props.theme.boxShadow};
+  box-shadow: 3px 4px 8px #b7b7b7;
   background: ${(props) => props.backgroundColor || "#416dea"};
   color: #fff;
   font-weight: bold;
@@ -140,6 +139,7 @@ const ToAuthentication = styled.div`
       props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
   }
   &:active {
+    box-shadow: none;
     background: ${(props) =>
       props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
     box-shadow: 3px 4px 10px #bbb;
@@ -152,47 +152,14 @@ const ChallengesTable = styled.div`
   border: 2px #878787;
   // background-color: #dcebff;
   //   background-color: #f0f8ff;
+  background-color: #ebf7ff;
+  // background-color: #d9e5ff;
   height: 700px;
   max-width: 1100px;
-  /* box-shadow: 4px 7px 10px #a6a6a6; */
-  box-shadow: ${props => props.theme.boxShadow};
+  box-shadow: 4px 7px 10px #a6a6a6;
   padding: 15px;
   //   margin-right: 30px;
 `;
-
-// const BadgeBox = styled.div`
-//   width: 96%;
-//   margin: auto;
-//   height: 11em;
-//   border: 1px solid gray;
-//   border-radius: 15px;
-//   display: flex;
-//   flex-direction: column;
-//   padding: 15px;
-//   margin-bottom: 52px;
-// `;
-
-// const BadgeList = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   width: 100%;
-// `;
-
-// const Badge = styled.div`
-//   width: 7em;
-//   height: 7em;
-//   border-radius: 50%;
-//   /* border: 1px solid black; */
-//   margin: auto;
-//   background: no-repeat
-//     url(https://cdn.pixabay.com/photo/2019/12/01/09/08/logo-4664978__480.png);
-//   background-size: cover;
-// `;
-// const BoxTitle = styled.span`
-//   font-size: 20px;
-//   font-weight: bold !important;
-//   margin-bottom: 8px !important;
-// `;
 
 function Challenges() {
   return (
