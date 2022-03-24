@@ -98,12 +98,11 @@ background: rgba(0, 0, 0, 0.4);
 position: fixed;
 top: 0;
 left: 0;
-z-index: 100;
 `;
 
 const Modal = styled(motion.div)`
 width: 500px;
-height: 280px;
+height: 300px;
 background: #fafafa;
 border-radius: 20px;
 color: ${props => props.theme.titleColor};
@@ -122,7 +121,7 @@ const Label = styled.label`
 display: flex;
 align-items: center;
 flex-direction: column;
-margin: 2rem 0;
+margin-top: 2rem;
 font-size: 0.8rem;
 color: #888;
 `;
@@ -141,11 +140,18 @@ background: #fafafa;
 }
 `;
 
+const ErrorMessage = styled.div`
+font-size: 0.8rem;
+padding-left: 4rem;
+margin-top: 0.4rem;
+color: #888;
+`;
+
 const ButtonWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  margin: 1rem 0;
+  margin-top: 2rem;
 `;
 
 const Button = styled.button`
@@ -215,8 +221,8 @@ function Header() {
     setIsClick(!isClick);
   };
 
-  const onSubmit = () => { // login form
-
+  const onSubmit = (data) => { // login form
+    console.log(data);
   }
 
   useEffect(() => {
@@ -278,8 +284,8 @@ function Header() {
               Challenge {challengeMatch && <Circle layoutId="circle" />}
             </Link>
           </Item>
-          <Item>
-            <Link to="/login" onClick={handleLoginModal}>
+          <Item onClick={handleLoginModal}>
+            {/* <Link to="/login"> */}
               <motion.svg
                 data-bbox="0 0 50 50"
                 data-type="shape"
@@ -295,43 +301,55 @@ function Header() {
                 </g>
               </motion.svg>
               Login {loginMatch && <Circle layoutId="circle" />}
-              <AnimatePresence>
-                {
-                  isClick && 
-                  <Backdrop
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <Modal>
-                      <Form onSubmit={handleSubmit(onSubmit)}>
-                        <Label>
-                          <Input type='text' placeholder='ID'></Input>
-                        </Label>
-                        <Label>
-                          <Input type='password' placeholder='PASSWORD'></Input>
-                        </Label>
-                        <ButtonWrapper>
-                          <Button>
-                            Login
-                          </Button>
-                          <Button
-                            padding={'0.5rem 1rem'}
-                            marginLeft={'2rem'}
-                            backgroundColor={"#373737"}
-                            hoverColor={"linear-gradient(315deg, #8e8e8e, #373737 74%)"}
-                          >
-                            close
-                          </Button>
-                        </ButtonWrapper>
-                      </Form>
-                    </Modal>
-                  </Backdrop>
-                }
-              </AnimatePresence>
-            </Link>
+            {/* </Link> */}
           </Item>
+          <AnimatePresence>
+            {
+              isClick && 
+              <Backdrop
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Modal>
+                  <Form onSubmit={handleSubmit(onSubmit)}>
+                    <Label>
+                      <Input type='text' placeholder='ID' {...register('id', {
+                        required: true
+                      })}></Input>
+                    </Label>
+                    <ErrorMessage>
+                      {errors.id?.type === 'required' && 'ID를 입력해주세요.'}
+                    </ErrorMessage>
+                    <Label>
+                      <Input type='password' placeholder='PASSWORD'  {...register('password', {
+                        required: true
+                      })}></Input>
+                    </Label>
+                    <ErrorMessage>
+                      {errors.password?.type === 'required' && 'Password를 입력해주세요.'}
+                    </ErrorMessage>
+                    <ButtonWrapper>
+                      <Button>
+                        Login
+                      </Button>
+                      <Button
+                        type='button'
+                        padding={'0.5rem 1rem'}
+                        marginLeft={'2rem'}
+                        backgroundColor={"#373737"}
+                        hoverColor={"linear-gradient(315deg, #8e8e8e, #373737 74%)"}
+                        onClick={handleLoginModal}
+                      >
+                        close
+                      </Button>
+                    </ButtonWrapper>
+                  </Form>
+                </Modal>
+              </Backdrop>
+            }
+          </AnimatePresence>
         </Items>
       </Col>
     </Nav>
