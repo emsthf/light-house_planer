@@ -6,7 +6,7 @@ const Container = styled.div`
   width: 1280px;
   margin: 20vh auto;
   min-height: 100vh;
-  margin-bottom: 240px;
+  margin-bottom: 600px;
 `;
 
 const Wrapper = styled.div`
@@ -20,6 +20,7 @@ const Wrapper = styled.div`
   margin-left: 5px;
   margin-right: 5px;
   margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 const AuthboardFrame = styled.form`
@@ -30,7 +31,7 @@ const AuthboardFrame = styled.form`
   width: 98%;
   height: 85vh;
   box-shadow: 4px 7px 10px #a6a6a6;
-  min-height: 10vh;
+  min-height: 90vh;
   display: flex;
   border-radius: 4%;
   text-align: center;
@@ -43,8 +44,8 @@ const AuthboardFrame = styled.form`
 
 const Writer = styled.div`
   // background-color: #74b9ff;
-  background-color: #416dea;
-  color: white;
+  background-color: #f7f6f6;
+  color: black;
   width: 7%;
   border-radius: 7px;
   text-align: center;
@@ -88,7 +89,7 @@ const Title = styled.div`
 `;
 
 const TitleContent = styled.input`
-  background-color: #ebf7ff;
+  background-color: #f7f6f6;
   width: 98%;
   height: 65px;
   border-radius: 7px;
@@ -101,7 +102,7 @@ const TitleContent = styled.input`
 `;
 
 const Content = styled.input`
-  background-color: #ebf7ff;
+  background-color: #f7f6f6;
   width: 98%;
   height: 600px;
   border-radius: 7px;
@@ -114,7 +115,7 @@ const Content = styled.input`
 `;
 
 const PictureUploadBox = styled.input`
-  background-color: #ebf7ff;
+  background-color: #f7f6f6;
   width: 99%;
   height: 65px;
   border-radius: 7px;
@@ -127,7 +128,7 @@ const PictureUploadBox = styled.input`
 `;
 
 const PictureUploadBtn = styled.button`
-  background-color: white;
+  background-color: #f7f6f6;
   width: 90%;
   border-radius: 7px;
   text-align: center;

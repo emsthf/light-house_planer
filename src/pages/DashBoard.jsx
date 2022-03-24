@@ -1,9 +1,13 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate, useMatch } from "react-router-dom";
 import styled from "styled-components";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 import PieChart from "../components/PieChart";
 import TimelineChart from "../components/TimelineChart";
+import axios from "axios";
+import GoalDetail from "./GoalDetail";
+import { useRecoilState } from "recoil";
+import { goalId } from "../Atom";
 
 const Wrapper = styled.div`
   height: auto;
@@ -122,6 +126,14 @@ const GoalBox = styled.div`
   justify-content: center;
   /* align-items: center; */
   margin-bottom: 52px;
+`;
+
+const OrEmpty = styled.span`
+  font-size: 50px;
+  font-weight: 600;
+  text-align: center;
+  margin: 25px 0px;
+  line-height: 2;
 `;
 
 const BoxTitle = styled.span`
@@ -337,202 +349,252 @@ const modalVariants = {
 };
 
 function DashBoard() {
-  const [id, setId] = useState(null);
+  const [isGoalId, setIsGoalId] = useRecoilState(goalId);
+  const [id, setId] = useState(null); // 모달용 임시 state
+  const [goals, setGoals] = useState([]);
+  const navigate = useNavigate();
   const { scrollY } = useViewportScroll();
   console.log(scrollY);
 
-  const navigate = useNavigate();
-  const onClicked = () => {
+  const goalMatch = useMatch("/badge/:badgeId");
+  const clickedBadge =
+    goalMatch?.params.goalId &&
+    goals.find((goal) => String(goal.id) === goalMatch.params.goalId);
+
+  const clickedBadgeList = () => {
     navigate("/badge");
   };
 
+  // 모달용 옵션
+  const onClicked = (id) => {
+    setIsGoalId(id);
+    navigate(`/goal/${id}`);
+  };
+  // 모달 배경 클릭시 이전 화면으로
+  const onOverlayClick = () => {
+    navigate("/dash");
+  };
+
+  useEffect(() => {
+    axios.get("http://localhost:8080/api/goal").then((Response) => {
+      setGoals(Response.data);
+      console.log(Response.data);
+    });
+  }, []);
+
   return (
-    <Wrapper>
-      <GridBox>
-        <Container>
-          <ProfileImg />
-          <ProfileBox>
-            <Name>Kevin</Name>
-            <InfoBox>
-              <Email>alone@gmail.com</Email>
-              <Phone>010-0000-0000</Phone>
-              <Motto>no pain, no gain</Motto>
-              <Grade>🕊️ 갈매기</Grade>
-            </InfoBox>
-            <Link to="/signup">
-              <EditBtn>Edit profile</EditBtn>
-            </Link>
-          </ProfileBox>
-        </Container>
-        <ContentBox>
-          <GoalBox>
-            <BoxTitle>현재 진행중인 목표</BoxTitle>
-            <Goal onClick={() => setId("1")} layoutId="1">
-              <div>
-                <i className="fa-regular fa-calendar-check"></i>
-                <GoalTitle>숨 쉬기</GoalTitle>
-                <Status>진행 중</Status>
-              </div>
-              <div>
-                <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
-              </div>
-            </Goal>
-            <Goal onClick={() => setId("2")} layoutId="2">
-              <div>
-                <i className="fa-regular fa-calendar-check"></i>
-                <GoalTitle>밥 먹기</GoalTitle>
-                <Status>진행 중</Status>
-              </div>
-              <div>
-                <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
-              </div>
-            </Goal>
-            <Goal onClick={() => setId("3")} layoutId="3">
-              <div>
-                <i className="fa-regular fa-calendar-check"></i>
-                <GoalTitle>걷기</GoalTitle>
-                <Status>진행 중</Status>
-              </div>
-              <div>
-                <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
-              </div>
-            </Goal>
-            <Link to={"/set/1"}>
-              <CreateBtn>새 목표 생성</CreateBtn>
-            </Link>
-          </GoalBox>
-          <BadgeBox>
-            <BoxTitle style={{ marginBottom: "10px" }}>최근 획득 배지</BoxTitle>
-            <BadgeList>
-              <Badge />
-              <Badge />
-              <Badge />
-              <Badge />
-              <Badge />
-            </BadgeList>
-            <MoreBadge onClick={() => onClicked()}>+더보기</MoreBadge>
-          </BadgeBox>
-          <StatisticsBox>
-            <PieChart />
-            <TimelineChart />
-          </StatisticsBox>
-          <DoneGoalBox>
-            <BoxTitle>최근 완료 목표</BoxTitle>
-            <Goal onClick={() => setId("4")} layoutId="4">
-              <div>
-                <i className="fa-regular fa-calendar-check"></i>
-                <GoalTitle>숨 쉬기</GoalTitle>
-                <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
-              </div>
-              <div>
-                <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
-              </div>
-            </Goal>
-            <Goal onClick={() => setId("5")} layoutId="5">
-              <div>
-                <i className="fa-regular fa-calendar-check"></i>
-                <GoalTitle>숨 쉬기</GoalTitle>
-                <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
-              </div>
-              <div>
-                <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
-              </div>
-            </Goal>
-            <Goal onClick={() => setId("6")} layoutId="6">
-              <div>
-                <i className="fa-regular fa-calendar-check"></i>
-                <GoalTitle>숨 쉬기</GoalTitle>
-                <Status style={{ backgroundColor: "tomato" }}>실패</Status>
-              </div>
-              <div>
-                <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
-              </div>
-            </Goal>
-          </DoneGoalBox>
-          <BoardBox>
-            <BoxTitle>내 작성 글</BoxTitle>
-            <Table>
-              <thead>
-                <tr>
-                  <TH>Category</TH>
-                  <TH>Title</TH>
-                  <TH>Created date</TH>
-                  <TH>View</TH>
-                  <TH style={{ textAlign: "center" }}>Delete</TH>
-                </tr>
-              </thead>
-              <tbody>
-                <TR>
-                  <TD>인증</TD>
-                  <TD>3.15 공부 인증</TD>
-                  <TD>22.03.15</TD>
-                  <TD>123</TD>
-                  <TD style={{ textAlign: "center", padding: 0 }}>
-                    <IconBox>
-                      <i className="fa-solid fa-trash-can" />
-                    </IconBox>
-                  </TD>
-                </TR>
-                <TR>
-                  <TD>인증</TD>
-                  <TD>3.16 공부 인증</TD>
-                  <TD>22.03.16</TD>
-                  <TD>127</TD>
-                  <TD style={{ textAlign: "center", padding: 0 }}>
-                    <IconBox>
-                      <i className="fa-solid fa-trash-can" />
-                    </IconBox>
-                  </TD>
-                </TR>
-                <TR>
-                  <TD>인증</TD>
-                  <TD>3.17 공부 인증</TD>
-                  <TD>22.03.17</TD>
-                  <TD>162</TD>
-                  <TD style={{ textAlign: "center", padding: 0 }}>
-                    <IconBox>
-                      <i className="fa-solid fa-trash-can" />
-                    </IconBox>
-                  </TD>
-                </TR>
-                <TR>
-                  <TD>인증</TD>
-                  <TD>3.18 공부 인증</TD>
-                  <TD>22.03.18</TD>
-                  <TD>134</TD>
-                  <TD style={{ textAlign: "center", padding: 0 }}>
-                    <IconBox>
-                      <i className="fa-solid fa-trash-can" />
-                    </IconBox>
-                  </TD>
-                </TR>
-                <TR>
-                  <TD>자랑</TD>
-                  <TD>공부 포기</TD>
-                  <TD>22.03.19</TD>
-                  <TD>2340</TD>
-                  <TD style={{ textAlign: "center", padding: 0 }}>
-                    <IconBox>
-                      <i className="fa-solid fa-trash-can" />
-                    </IconBox>
-                  </TD>
-                </TR>
-              </tbody>
-            </Table>
-          </BoardBox>
-        </ContentBox>
-      </GridBox>
+    <>
+      <Wrapper>
+        <GridBox>
+          <Container>
+            <ProfileImg />
+            <ProfileBox>
+              <Name>Kevin</Name>
+              <InfoBox>
+                <Email>alone@gmail.com</Email>
+                <Phone>010-0000-0000</Phone>
+                <Motto>no pain, no gain</Motto>
+                <Grade>🕊️ 갈매기</Grade>
+              </InfoBox>
+              <Link to="/signup">
+                <EditBtn>Edit profile</EditBtn>
+              </Link>
+            </ProfileBox>
+          </Container>
+          <ContentBox>
+            <GoalBox>
+              <BoxTitle>현재 진행중인 목표</BoxTitle>
+              {goals.length === 0 ? (
+                <OrEmpty>
+                  진행중인 목표가 없습니다.😥
+                  <br /> 목표를 설정해 주세요.
+                </OrEmpty>
+              ) : (
+                goals.slice(-3).map((item) => (
+                  <Goal
+                    key={item.id}
+                    onClick={() => onClicked(item.id)}
+                    layoutId={item.id}
+                  >
+                    <div>
+                      <i className="fa-regular fa-calendar-check"></i>
+                      <GoalTitle>{item.goalTitle}</GoalTitle>
+                      <Status>진행 중</Status>
+                    </div>
+                    <div>
+                      <Explanation>{item.goalDesc}</Explanation>
+                    </div>
+                  </Goal>
+                ))
+              )}
+              {}
+
+              {/* <Goal onClick={() => setId("1")} layoutId="1">
+                <div>
+                  <i className="fa-regular fa-calendar-check"></i>
+                  <GoalTitle>숨 쉬기</GoalTitle>
+                  <Status>진행 중</Status>
+                </div>
+                <div>
+                  <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
+                </div>
+              </Goal>
+              <Goal onClick={() => setId("2")} layoutId="2">
+                <div>
+                  <i className="fa-regular fa-calendar-check"></i>
+                  <GoalTitle>밥 먹기</GoalTitle>
+                  <Status>진행 중</Status>
+                </div>
+                <div>
+                  <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
+                </div>
+              </Goal>
+              <Goal onClick={() => setId("3")} layoutId="3">
+                <div>
+                  <i className="fa-regular fa-calendar-check"></i>
+                  <GoalTitle>걷기</GoalTitle>
+                  <Status>진행 중</Status>
+                </div>
+                <div>
+                  <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
+                </div>
+              </Goal> */}
+              <Link to={"/set/1"}>
+                <CreateBtn>새 목표 생성</CreateBtn>
+              </Link>
+            </GoalBox>
+            <BadgeBox>
+              <BoxTitle style={{ marginBottom: "10px" }}>최근 획득 배지</BoxTitle>
+              <BadgeList>
+                <Badge onClick={() => setId("1")} layoutId={"1"} />
+                <Badge onClick={() => setId("2")} layoutId={"2"} />
+                <Badge onClick={() => setId("3")} layoutId={"3"} />
+                <Badge onClick={() => setId("4")} layoutId={"4"} />
+                <Badge onClick={() => setId("5")} layoutId={"5"} />
+              </BadgeList>
+              <MoreBadge onClick={() => clickedBadgeList()}>+더보기</MoreBadge>
+            </BadgeBox>
+            <StatisticsBox>
+              <PieChart />
+              <TimelineChart />
+            </StatisticsBox>
+            <DoneGoalBox>
+              <BoxTitle>최근 완료 목표</BoxTitle>
+              <Goal>
+                <div>
+                  <i className="fa-regular fa-calendar-check"></i>
+                  <GoalTitle>숨 쉬기</GoalTitle>
+                  <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
+                </div>
+                <div>
+                  <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
+                </div>
+              </Goal>
+              <Goal>
+                <div>
+                  <i className="fa-regular fa-calendar-check"></i>
+                  <GoalTitle>숨 쉬기</GoalTitle>
+                  <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
+                </div>
+                <div>
+                  <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
+                </div>
+              </Goal>
+              <Goal>
+                <div>
+                  <i className="fa-regular fa-calendar-check"></i>
+                  <GoalTitle>숨 쉬기</GoalTitle>
+                  <Status style={{ backgroundColor: "tomato" }}>실패</Status>
+                </div>
+                <div>
+                  <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
+                </div>
+              </Goal>
+            </DoneGoalBox>
+            <BoardBox>
+              <BoxTitle>내 작성 글</BoxTitle>
+              <Table>
+                <thead>
+                  <tr>
+                    <TH>Category</TH>
+                    <TH>Title</TH>
+                    <TH>Created date</TH>
+                    <TH>View</TH>
+                    <TH style={{ textAlign: "center" }}>Delete</TH>
+                  </tr>
+                </thead>
+                <tbody>
+                  <TR>
+                    <TD>인증</TD>
+                    <TD>3.15 공부 인증</TD>
+                    <TD>22.03.15</TD>
+                    <TD>123</TD>
+                    <TD style={{ textAlign: "center", padding: 0 }}>
+                      <IconBox>
+                        <i className="fa-solid fa-trash-can" />
+                      </IconBox>
+                    </TD>
+                  </TR>
+                  <TR>
+                    <TD>인증</TD>
+                    <TD>3.16 공부 인증</TD>
+                    <TD>22.03.16</TD>
+                    <TD>127</TD>
+                    <TD style={{ textAlign: "center", padding: 0 }}>
+                      <IconBox>
+                        <i className="fa-solid fa-trash-can" />
+                      </IconBox>
+                    </TD>
+                  </TR>
+                  <TR>
+                    <TD>인증</TD>
+                    <TD>3.17 공부 인증</TD>
+                    <TD>22.03.17</TD>
+                    <TD>162</TD>
+                    <TD style={{ textAlign: "center", padding: 0 }}>
+                      <IconBox>
+                        <i className="fa-solid fa-trash-can" />
+                      </IconBox>
+                    </TD>
+                  </TR>
+                  <TR>
+                    <TD>인증</TD>
+                    <TD>3.18 공부 인증</TD>
+                    <TD>22.03.18</TD>
+                    <TD>134</TD>
+                    <TD style={{ textAlign: "center", padding: 0 }}>
+                      <IconBox>
+                        <i className="fa-solid fa-trash-can" />
+                      </IconBox>
+                    </TD>
+                  </TR>
+                  <TR>
+                    <TD>자랑</TD>
+                    <TD>공부 포기</TD>
+                    <TD>22.03.19</TD>
+                    <TD>2340</TD>
+                    <TD style={{ textAlign: "center", padding: 0 }}>
+                      <IconBox>
+                        <i className="fa-solid fa-trash-can" />
+                      </IconBox>
+                    </TD>
+                  </TR>
+                </tbody>
+              </Table>
+            </BoardBox>
+          </ContentBox>
+        </GridBox>
+      </Wrapper>
 
       <AnimatePresence>
         {/* Box를 클릭해서 setId()로 해당 박스 id가 저장되어 id가 존재하면 Overlay를 보여준다 */}
         {id ? (
-          <Overlay
-            // Overlay를 클릭 시 id에 null을 저장해서 Overlay를 숨긴다
-            onClick={() => setId(null)}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            {/* Overlay에 있는 Box 컴포넌트와 하나로 여겨지는 것은 Grid에서 id가 선택된 Box */}
+          <>
+            <Overlay
+              onClick={() => setId(null)}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            />
             <Box
               layoutId={id}
               variants={modalVariants}
@@ -541,12 +603,12 @@ function DashBoard() {
               exit="exit"
               style={{ top: scrollY.get() + 100 }}
             >
-              {id}
+              배지 상세 페이지 {id}
             </Box>
-          </Overlay>
+          </>
         ) : null}
       </AnimatePresence>
-    </Wrapper>
+    </>
   );
 }
 

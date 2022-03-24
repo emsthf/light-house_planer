@@ -118,7 +118,7 @@ function App() {
           <Route path="/set/3" element={<SetGoalStep3 />} />
           <Route path="/set/4" element={<SetGoalStep4 />} />
           <Route path="/set/5" element={<SetGoalStep5 />} />
-          <Route path="/goal" element={<GoalDetail />} />
+          <Route path="/goal/*" element={<GoalDetail />} />
           <Route path="/badge" element={<BadgeList />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/board" element={<Board />} />

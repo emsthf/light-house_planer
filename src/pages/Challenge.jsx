@@ -11,8 +11,8 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20vh auto;
-  margin-bottom: 240px;
+  padding: 100px 250px 150px 100px;
+  margin: auto;
   @media screen and (min-width: 768px) {
     padding-right: 24px !important;
     padding-left: 24px !important;
@@ -24,30 +24,35 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  border-radius: 4%;
+  border-radius: 3%;
   background-color: #f0f8ff;
-  height: 600px;
-  max-width: 1270px;
-  box-shadow: 10px 8px 5px rgba(0, 0, 0, 0.2);
-  margin-right: 30px;
+  height: 80vh;
+  width: 1200px;
+  box-shadow: 10px 8px 5px rgba(0, 0, 0, 0.5);
+  margin: 40px 40px 40px 40px;
 `;
 
 const ChallengeNameBox = styled.div`
-  border-radius: 3%;
-  display: block;
+  // background-color: #ffcccc;
+  // background-color: #90afff;
   background-color: #d9e5ff;
-  height: 45px;
-  width: 41em;
-  margin: auto;
-  margin-top: 15px;
+  width: 96%;
+  // width: 42em;
+  height: 60px;
+  border-radius: 7px;
+  display: flex;
+  // margin: auto;
+  margin-top: 20px;
   margin-bottom: 15px;
+  margin-right: 15px;
+  margin-left: 25px;
 `;
 
 const ChallengeName = styled.span`
   margin: 15px;
   width: 40em;
   display: block;
-  color: BLACK;
+  color: #6e2fc7;
   font-size: 30px;
   font-weight: bold;
 `;
@@ -67,11 +72,12 @@ const ContentBox = styled.div`
 
 const GridBox = styled.div`
   display: grid;
-  height: 87%;
-  max-width: 1280px;
+  height: 90%;
+  // max-width: 1280px;
+  width: 97%;
   // grid-template-columns: repeat(2, 1fr);
-  grid-template-columns: 6fr 2fr;
-  color: ${props => props.theme.titleColor};
+  grid-template-columns: 8fr 3fr;
+  margin: 15px 15px 15px 15px;
 `;
 
 const InfoBox = styled.div`
@@ -83,53 +89,59 @@ const InfoBox = styled.div`
 `;
 
 const ChallengePeriod = styled.span`
-  font-size: 17px;
+  color: #4a0ba3;
+  font-size: 23px;
   font-weight: bold !important;
-  margin-left: 10px;
+  margin-left: 20px;
   margin-bottom: 8px !important;
 `;
 
 const ChallengePeople = styled.span`
-  font-size: 17px;
+  color: #4a0ba3;
+  font-size: 23px;
   font-weight: bold;
-  margin-left: 10px;
+  margin-left: 20px;
   margin-right: 6px;
 `;
 
 const ChallengeImg = styled.div`
   border-radius: 4%;
-  width: 31em;
-  height: 17em;
+  // width: 31em;
+  // width: 45em;
+  // height: 30em;
+  width: 94%;
+  height: 98%;
   // border: 3px solid navy;
-  margin: 2px 2px 2px 2px;
+  margin: 2px 5px 20px 0px;
   background: no-repeat
     url(https://health.chosun.com/site/data/img_dir/2018/09/10/2018091003038_0.jpg);
   background-size: cover;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: left;
 `;
 
 const ChallengeNotice = styled.span`
-  font-size: 17px;
+  color: #4a0ba3;
+  font-size: 23px;
   font-weight: bold;
-  margin-left: 10px;
+  margin-left: 20px;
   margin-right: 6px;
 `;
 
 const ChallengeExplanation = styled.div`
-  margin-left: 10px;
-  font-size: 10px;
+  margin-left: 23px;
+  font-size: 21px;
   margin-top: 5px;
 `;
 
 const ChallengeRewardImg = styled.div`
 border-radius: 50%;
-width: 5.5em;
-height: 5.5em;
+width: 12em;
+height: 12em;
 border: 7px solid grey:
 margin: auto;
-margin-left: 20px;
+margin-left: 50px;
 background: no-repeat
     url(https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F2266204454D8A84F32);
   background-size: cover;
@@ -142,24 +154,28 @@ const ChallengeRewardBox = styled.div`
   border-radius: 10%;
   display: block;
   background-color: #d9e5ff;
-  height: 150px;
-  width: 10em;
-  margin: auto;
+  // height: 150px;
+  // width: 10em;
+  height: 270px;
+  width: 98%;
+  // margin: auto;
   padding: 15px;
-  margin-left: 3.4px;
-  margin-right: 6px;
+  margin-left: 3px;
+  margin-right: 12px;
 `;
 
 const EnrollBtn = styled.button`
   margin-top: 15px;
-  margin-left: 25px;
+  margin-left: 90px;
+  width: 100px;
+  height: 30px;
   border-radius: 7px;
   border: none;
   box-shadow: 3px 4px 8px #b7b7b7;
   background: ${(props) => props.backgroundColor || "#416dea"};
   color: #fff;
   font-weight: bold;
-  border-radius: 30px;
+  // border-radius: 30px;
   // margin: 1rem 0;
   margin-left: ${(props) => props.marginLeft && "2rem"};
   &:hover {
@@ -194,14 +210,14 @@ function Challenge() {
             <ChallengeImg></ChallengeImg>
             <InfoBox>
               <ChallengePeriod>
-                챌린지기간: 5월1일(일)~6월31일(목)
+                ◎ 챌린지기간: 5월1일(일)~6월31일(목)
               </ChallengePeriod>
             </InfoBox>
             <InfoBox>
-              <ChallengePeople>참여인원:4,871</ChallengePeople>
+              <ChallengePeople>◎ 참여인원:4,871</ChallengePeople>
             </InfoBox>
             <InfoBox>
-              <ChallengeNotice>인증방법 및 주의사항</ChallengeNotice>
+              <ChallengeNotice>◎ 인증방법 및 주의사항</ChallengeNotice>
               <br />
               <ChallengeExplanation>
                 60일동안 하루에 1번 인증샷을 촬영하셔야 합니다.

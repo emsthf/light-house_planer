@@ -30,7 +30,7 @@ const AuthboardFrame = styled.form`
   width: 98%;
   min-height: 90vh;
   box-shadow: 4px 7px 10px #a6a6a6;
-  min-height: 10vh;
+  min-height: 90vh;
   display: flex;
   border-radius: 4%;
   text-align: center;
@@ -50,7 +50,7 @@ const GridBox116 = styled.div`
 `;
 
 const Writer = styled.button`
-  background-color: white;
+  background-color: #f7f6f6;
   width: 90%;
   border-radius: 7px;
   text-align: center;
@@ -110,7 +110,7 @@ const Title = styled.div`
 `;
 
 const TitleContent = styled.input`
-  background-color: #ebf7ff;
+  background-color: #f7f6f6;
   width: 98%;
   height: 65px;
   border-radius: 7px;
@@ -123,7 +123,7 @@ const TitleContent = styled.input`
 `;
 
 const Content = styled.input`
-  background-color: #ebf7ff;
+  background-color: #f7f6f6;
   width: 98%;
   height: 600px;
   border-radius: 7px;
