@@ -134,7 +134,7 @@ function GoalDetail() {
       .catch((Error) => {
         console.log(Error);
       });
-  }, [now]);
+  }, [checked]);
 
   // const now = 60;
 

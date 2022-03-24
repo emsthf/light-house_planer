@@ -410,7 +410,7 @@ function DashBoard() {
                   <br /> 목표를 설정해 주세요.
                 </OrEmpty>
               ) : (
-                goals.map((item) => (
+                goals.slice(-3).map((item) => (
                   <Goal
                     key={item.id}
                     onClick={() => onClicked(item.id)}
