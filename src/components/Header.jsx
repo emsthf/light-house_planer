@@ -1,4 +1,4 @@
-import { motion, useAnimation, useViewportScroll } from "framer-motion";
+import { motion, useAnimation, useViewportScroll, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useMatch, useNavigate } from "react-router-dom";
@@ -47,8 +47,9 @@ const Item = styled.li`
   position: relative;
   display: flex;
   justify-content: center;
-  flex-direction: column;
+  /* flex-direction: column; */
   font-weight: 600;
+  cursor: pointer;
 `;
 
 const Search = styled.form`
@@ -90,11 +91,98 @@ const navVariants = {
   scroll: { backgroundColor: "rgba(0, 0, 0, 1)" },
 };
 
+const Backdrop = styled(motion.div)`
+width: 100%;
+height: 100vh;
+background: rgba(0, 0, 0, 0.4);
+position: fixed;
+top: 0;
+left: 0;
+`;
+
+const Modal = styled(motion.div)`
+width: 500px;
+height: 300px;
+background: #fafafa;
+border-radius: 20px;
+color: ${props => props.theme.titleColor};
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+`;
+
+const Form = styled.form`
+width: 100%;
+height: 100%;
+`;
+
+const Label = styled.label`
+display: flex;
+align-items: center;
+flex-direction: column;
+margin-top: 2rem;
+font-size: 0.8rem;
+color: #888;
+`;
+
+const Input = styled.input`
+padding: 1rem;
+width: 400px;
+border: 1px solid #888;
+border-radius: 20px;
+background: #fafafa;
+::placeholder {
+    color: #888;
+}
+&:focus {
+    outline: none;
+}
+`;
+
+const ErrorMessage = styled.div`
+font-size: 0.8rem;
+padding-left: 4rem;
+margin-top: 0.4rem;
+color: #888;
+`;
+
+const ButtonWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+`;
+
+const Button = styled.button`
+  padding: ${props => props.padding || '0.5rem 3rem'};
+  border: none;
+  box-shadow: ${props => props.theme.boxShadow};
+  background: ${(props) => props.backgroundColor || "#416dea"};
+  color: #fff;
+  border-radius: 30px;
+  margin-left: ${(props) => props.marginLeft && "2rem"};
+  &:hover {
+    box-shadow: none;
+    background: ${(props) =>
+      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
+  }
+  &:active {
+    box-shadow: none;
+    background: ${(props) =>
+      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
+    box-shadow: 3px 4px 10px #bbb;
+  }
+`;
+
+
 function Header() {
-  const [searchOpen, setSearchOpen] = useState(false);
+  // const [searchOpen, setSearchOpen] = useState(false);
   // const [isDarkMode, setIsDarkMode] = useState(() => false);
   const [isDarkMode, setIsDarkMode] = useRecoilState(darkModeState);
   const toggleDarkAtom = () => setIsDarkMode((prev) => !prev);
+
+  const [isClick, setIsClick] = useState(false); // 로그인 클릭
 
   // useMatch는 react router의 기능으로, 해당 router 안에 있는지 알려준다
   const homeMatch = useMatch("/dash");
@@ -102,32 +190,47 @@ function Header() {
   const notiMatch = useMatch("/noti");
   const challengeMatch = useMatch("/challenge");
   const loginMatch = useMatch("/login");
-  const inputAnumation = useAnimation();
+  // const inputAnumation = useAnimation();
   const navAnimation = useAnimation();
   // useViewPortScroll은 제일 아래로부터 얼마나 멀리 있는지를 알려준다.
   // srcollX, scrollY는 픽셀이 단위고, srcollXProgress, srcollYProgress는 백분율로 나타낸다
   const { scrollY } = useViewportScroll();
 
-  const toggleSearch = () => {
-    if (searchOpen) {
-      // trigger the close animation
-      inputAnumation.start({
-        scaleX: 0,
-      });
-    } else {
-      // trigger the open animation
-      inputAnumation.start({
-        scaleX: 1,
-      });
-    }
-    setSearchOpen((prev) => !prev);
-  };
+  // const toggleSearch = () => {
+  //   if (searchOpen) {
+  //     // trigger the close animation
+  //     inputAnumation.start({
+  //       scaleX: 0,
+  //     });
+  //   } else {
+  //     // trigger the open animation
+  //     inputAnumation.start({
+  //       scaleX: 1,
+  //     });
+  //   }
+  //   setSearchOpen((prev) => !prev);
+  // };
   const navigate = useNavigate();
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm();
   const onValid = (data) => {
     navigate(`/search?keyword=${data.keyword}`);
     setValue("keyword", "");
   };
+
+  const handleLoginModal = () => { // 로그인 모달
+    setIsClick(!isClick);
+  };
+
+  const onSubmit = (data) => { // login form
+    console.log(data);
+  }
+
+  const resetForm = () => {
+    reset({
+        id : '',
+        password: ''
+    })
+}
 
   useEffect(() => {
     scrollY.onChange(() => {
@@ -188,8 +291,8 @@ function Header() {
               Challenge {challengeMatch && <Circle layoutId="circle" />}
             </Link>
           </Item>
-          <Item>
-            <Link to="/login">
+          <Item onClick={handleLoginModal}>
+            {/* <Link to="/login"> */}
               <motion.svg
                 data-bbox="0 0 50 50"
                 data-type="shape"
@@ -205,8 +308,58 @@ function Header() {
                 </g>
               </motion.svg>
               Login {loginMatch && <Circle layoutId="circle" />}
-            </Link>
+            {/* </Link> */}
           </Item>
+          <AnimatePresence>
+            {
+              isClick && 
+              <Backdrop
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Modal>
+                  <Form onSubmit={handleSubmit(onSubmit)}>
+                    <Label>
+                      <Input type='text' placeholder='ID' {...register('id', {
+                        required: true
+                      })}></Input>
+                    </Label>
+                    <ErrorMessage>
+                      {errors.id?.type === 'required' && 'ID를 입력해주세요.'}
+                    </ErrorMessage>
+                    <Label>
+                      <Input type='password' placeholder='PASSWORD'  {...register('password', {
+                        required: true
+                      })}></Input>
+                    </Label>
+                    <ErrorMessage>
+                      {errors.password?.type === 'required' && 'Password를 입력해주세요.'}
+                    </ErrorMessage>
+                    <ButtonWrapper>
+                      <Button>
+                        Login
+                      </Button>
+                      <Button
+                        type='button'
+                        padding={'0.5rem 1rem'}
+                        marginLeft={'2rem'}
+                        backgroundColor={"#373737"}
+                        hoverColor={"linear-gradient(315deg, #8e8e8e, #373737 74%)"}
+                        onClick={() => {
+                          handleLoginModal();
+                          resetForm();
+                        }}
+                      >
+                        close
+                      </Button>
+                    </ButtonWrapper>
+                  </Form>
+                </Modal>
+              </Backdrop>
+            }
+          </AnimatePresence>
         </Items>
       </Col>
     </Nav>
