@@ -211,7 +211,7 @@ function Header() {
   //   setSearchOpen((prev) => !prev);
   // };
   const navigate = useNavigate();
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const { register, handleSubmit, setValue, formState: { errors }, reset } = useForm();
   const onValid = (data) => {
     navigate(`/search?keyword=${data.keyword}`);
     setValue("keyword", "");
@@ -224,6 +224,13 @@ function Header() {
   const onSubmit = (data) => { // login form
     console.log(data);
   }
+
+  const resetForm = () => {
+    reset({
+        id : '',
+        password: ''
+    })
+}
 
   useEffect(() => {
     scrollY.onChange(() => {
@@ -340,7 +347,10 @@ function Header() {
                         marginLeft={'2rem'}
                         backgroundColor={"#373737"}
                         hoverColor={"linear-gradient(315deg, #8e8e8e, #373737 74%)"}
-                        onClick={handleLoginModal}
+                        onClick={() => {
+                          handleLoginModal();
+                          resetForm();
+                        }}
                       >
                         close
                       </Button>
