@@ -376,7 +376,7 @@ function DashBoard() {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/goal").then((Response) => {
+    axios.get("/api/goal").then((Response) => {
       setGoals(Response.data);
       console.log(Response.data);
     });
