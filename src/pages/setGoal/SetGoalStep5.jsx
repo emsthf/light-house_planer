@@ -109,7 +109,7 @@ const Textarea = styled.textarea`
 `;
 
 function SetGoalStep5() {
-  const url = "http://localhost:8080/api/goal";
+  const url = "/api/goal";
   const navigate = useNavigate();
   const setGoal = useSetRecoilState(goalState);
   const goal = useRecoilValue(goalState);
