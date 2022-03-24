@@ -4,7 +4,7 @@ module.exports = function (app) {
   app.use(
     "/api",
     createProxyMiddleware({
-      target: "http://54.84.184.35/:8080",
+      target: "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com",
       changeOrigin: true,
     })
   );
