@@ -147,7 +147,7 @@ const Textarea = styled.textarea`
 `;
 
 function SetGoal({ step }) {
-  const url = "http://localhost:8080/api/goal";
+  const url = "/api/goal";
 
   const navigate = useNavigate();
 
