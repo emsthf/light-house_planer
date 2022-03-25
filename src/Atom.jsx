@@ -21,3 +21,13 @@ export const goalId = atom({
   key: "gId",
   default: 0,
 });
+
+export const goalStartDay = atom({
+  key: "gStartDay",
+  default: [],
+});
+
+export const goalEndDay = atom({
+  key: "gEndDay",
+  default: [],
+});

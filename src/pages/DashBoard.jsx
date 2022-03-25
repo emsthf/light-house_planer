@@ -7,7 +7,7 @@ import TimelineChart from "../components/TimelineChart";
 import axios from "axios";
 import GoalDetail from "./GoalDetail";
 import { useRecoilState } from "recoil";
-import { goalId } from "../Atom";
+import { goalId, goalStartDay } from "../Atom";
 
 const Wrapper = styled.div`
   height: auto;
@@ -350,11 +350,12 @@ const modalVariants = {
 
 function DashBoard() {
   const [isGoalId, setIsGoalId] = useRecoilState(goalId);
+  const [isGoalStartDay, setIsGoalStartDay] = useRecoilState(goalStartDay);
   const [id, setId] = useState(null); // 모달용 임시 state
   const [goals, setGoals] = useState([]);
+
   const navigate = useNavigate();
   const { scrollY } = useViewportScroll();
-  console.log(scrollY);
 
   const goalMatch = useMatch("/badge/:badgeId");
   const clickedBadge =
@@ -368,7 +369,7 @@ function DashBoard() {
   // 모달용 옵션
   const onClicked = (id) => {
     setIsGoalId(id);
-    navigate(`Springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/goal/${id}`);
+    navigate(`/goal/${id}`);
   };
   // 모달 배경 클릭시 이전 화면으로
   const onOverlayClick = () => {
