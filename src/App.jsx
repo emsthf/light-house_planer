@@ -31,7 +31,6 @@ import ContactUs from "./pages/ContactUs";
 import BoardDetail from "./pages/BoardDetail";
 import GoalList from "./pages/GoalList";
 
-
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -119,15 +118,18 @@ function App() {
           <Route path="/set/3" element={<SetGoalStep3 />} />
           <Route path="/set/4" element={<SetGoalStep4 />} />
           <Route path="/set/5" element={<SetGoalStep5 />} />
-          <Route path="/goal" element={<GoalDetail />} />
+          <Route path="/goal/*" element={<GoalDetail />} />
           <Route path="/badge" element={<BadgeList />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/board" element={<Board />} />
+          <Route path="/boarddetail" element={<BoardDetail />} />
           <Route path="/" element={<Landing />} />
           <Route path="/challenge" element={<Challenge />} />
           <Route path="/challenges" element={<Challenges />} />
           <Route path="/authboard" element={<AuthBoard />} />
           <Route path="/authdetail" element={<AuthBoardDetail />} />
+          <Route path="/site-rule" element={<SiteRule />} />
+          <Route path="/contact-us" element={<ContactUs />} />
         </Routes>
         <Footer />
       </BrowserRouter>

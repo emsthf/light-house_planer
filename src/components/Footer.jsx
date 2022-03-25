@@ -41,7 +41,7 @@ function Footer() {
           <a href="https://app.slack.com/client/T0315A0TSJV/C030L19Q6UW" target="_blank">
             <i className="fa-brands fa-slack" style={{ margin: "0px 10px 10px 0px" }}></i>
           </a>
-          <a href="https://github.com/emsthf" target="_blank">
+          <a href="https://github.com/emsthf/light-house_planer" target="_blank">
             <i className="fab fa-github" style={{ margin: "0px 10px 10px 0px" }}></i>
           </a>
         </IconBox>

@@ -131,7 +131,7 @@ function SetGoalStep1() {
                         </SubTitle>
                         <InputText type='text' placeholder='목표를 입력하세요' {...register('goalTitle', {
                             required : true,
-                            pattern : /^[A-Za-z가-힣0-9]{2,40}$/
+                            pattern : /^[\sA-Za-z가-힣0-9]{2,40}$/
                         })}></InputText>
                         <ErrorMessage>
                             {errors.goalTitle?.type === 'required' && '목표를 반드시 입력해주세요.'}
