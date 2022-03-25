@@ -5,8 +5,8 @@ const Container = styled.div`
   // background-color: #e8ffe2;
   width: 1280px;
   margin: 20vh auto;
-  min-height: 100vh;
-  margin-bottom: 600px;
+  // min-height: 100vh;
+  margin-bottom: 270px;
 `;
 
 const Wrapper = styled.div`
@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   border-radius: 4px;
   border: 2px #878787;
   // height: 900px;
-  height: 98vh;
+  // height: 98vh;
   width: 99%;
   padding: 5px;
   margin-left: 5px;
@@ -28,9 +28,8 @@ const AuthboardFrame = styled.form`
   // background-color: #ebf7ff;
   background-color: #fdffff;
   width: 98%;
-  height: 90vh;
   box-shadow: 4px 7px 10px #a6a6a6;
-  min-height: 90vh;
+  // min-height: 90vh;
   display: flex;
   border-radius: 4%;
   text-align: center;
@@ -47,6 +46,37 @@ const GridBox116 = styled.div`
   max-width: 100%;
   grid-template-columns: repeat(2, 1fr);
   grid-template-columns: 1fr 1fr 6fr;
+`;
+
+const Title = styled.div`
+  background-color: gray;
+  width: 90%;
+  border-radius: 7px;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+`;
+
+const Label = styled.label`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 0.7rem 0;
+  font-size: 0.8rem;
+  color: #888;
+`;
+
+const TitleContent = styled.input`
+  background-color: #f7f6f6;
+  width: 98%;
+  height: 65px;
+  border-radius: 7px;
+  text-align: left;
+  font-weight: bold;
+  padding: 10px;
 `;
 
 const Writer = styled.button`
@@ -95,31 +125,6 @@ const ContentBox = styled.form`
   margin-top: 3px;
   margin-left: 0px;
   margin-bottom: 3px;
-`;
-
-const Title = styled.div`
-  background-color: gray;
-  width: 90%;
-  border-radius: 7px;
-  text-align: center;
-  font-weight: bold;
-  padding: 10px;
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-bottom: 10px;
-`;
-
-const TitleContent = styled.input`
-  background-color: #f7f6f6;
-  width: 98%;
-  height: 65px;
-  border-radius: 7px;
-  text-align: left;
-  font-weight: bold;
-  padding: 10px;
-  margin-top: 10px;
-  margin-left: 0px;
-  margin-bottom: 10px;
 `;
 
 const Content = styled.input`
@@ -180,13 +185,14 @@ const Reply = styled.input`
   background-color: white;
   border: 2px #8d8d8d;
   width: 98%;
+  height: 42px;
   border-radius: 7px;
   text-align: center;
   font-weight: bold;
   padding: 10px;
-  margin-top: 10px;
-  margin-left: 13px;
-  margin-bottom: 10px;
+  // margin-top: 10px;
+  margin-left: 10px;
+  // margin-bottom: 10px;
 `;
 
 const ReplyEdit = styled.button`
@@ -235,12 +241,13 @@ const RightSideGridBox = styled.div`
 `;
 
 const EditBtn = styled.button`
-  height: 40px;
+  height: 45px;
   width: 15%;
   padding: 10px;
   margin-top: 25px;
   margin-left: 870px;
   margin-right: 5px;
+  margin-bottom: 20px;
   border-radius: 7px;
   border: none;
   box-shadow: 3px 4px 8px #b7b7b7;
@@ -263,7 +270,7 @@ const EditBtn = styled.button`
 `;
 
 const DeleteBtn = styled.button`
-  height: 40px;
+  height: 45px;
   margin-top: 25px;
   margin-left: 25px;
   margin-right: 5px;
@@ -317,13 +324,18 @@ function AuthBoardDetail() {
       <Wrapper>
         <AuthboardFrame>
           <ContentBox>
-            <TitleContent></TitleContent>
+            <Label>
+              <TitleContent></TitleContent>
+            </Label>
             <GridBox116>
               <Writer>작성자</Writer>
               <RecordDate>2022.03.21</RecordDate>
               <Views>views: 3,210</Views>
             </GridBox116>
-            <Content type="content" name="content" />
+            <Label>
+              <Content type="content" name="content" />
+            </Label>
+
             <ReplyForm>
               <GridBox1611>
                 <ReplyWriterId>
@@ -332,10 +344,14 @@ function AuthBoardDetail() {
                     아이디
                   </GridBox12>
                 </ReplyWriterId>
-                <Reply></Reply>
+                <Label>
+                  <Reply></Reply>
+                </Label>
                 <ReplyEdit>댓글수정</ReplyEdit>
                 <ReplyDate>2022.03.22</ReplyDate>
               </GridBox1611>
+            </ReplyForm>
+            <ReplyForm>
               <GridBox181>
                 <ReplyWriterId>
                   <GridBox12>
@@ -343,19 +359,9 @@ function AuthBoardDetail() {
                     아이디
                   </GridBox12>
                 </ReplyWriterId>
-                <Reply></Reply>
-                {/* <ReplyEdit>댓글수정</ReplyEdit> */}
-                <ReplyDate>2022.03.22</ReplyDate>
-              </GridBox181>
-              <GridBox181>
-                <ReplyWriterId>
-                  <GridBox12>
-                    <ReplyWiterProfileRound></ReplyWiterProfileRound>
-                    아이디
-                  </GridBox12>
-                </ReplyWriterId>
-                <Reply></Reply>
-                {/* <ReplyEdit>댓글수정</ReplyEdit> */}
+                <Label>
+                  <Reply></Reply>
+                </Label>
                 <ReplyDate>2022.03.22</ReplyDate>
               </GridBox181>
             </ReplyForm>

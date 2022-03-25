@@ -1,4 +1,5 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -6,7 +7,7 @@ const Container = styled.div`
   width: 1280px;
   margin: 20vh auto;
   min-height: 100vh;
-  margin-bottom: 600px;
+  margin-bottom: 100px;
 `;
 
 const Wrapper = styled.div`
@@ -29,9 +30,8 @@ const AuthboardFrame = styled.form`
   // background-color: #ebf7ff;
   background-color: #fdffff;
   width: 98%;
-  height: 85vh;
   box-shadow: 4px 7px 10px #a6a6a6;
-  min-height: 90vh;
+  // min-height: 90vh;
   display: flex;
   border-radius: 4%;
   text-align: center;
@@ -88,6 +88,15 @@ const Title = styled.div`
   margin-bottom: 10px;
 `;
 
+const Label = styled.label`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 0.7rem 0;
+  font-size: 0.8rem;
+  color: #888;
+`;
+
 const TitleContent = styled.input`
   background-color: #f7f6f6;
   width: 98%;
@@ -96,9 +105,9 @@ const TitleContent = styled.input`
   text-align: left;
   font-weight: bold;
   padding: 10px;
-  margin-top: 10px;
+  margin-top: 5px;
   margin-left: 0px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 `;
 
 const Content = styled.input`
@@ -109,31 +118,31 @@ const Content = styled.input`
   text-align: left;
   font-weight: bold;
   padding: 10px;
-  margin-top: 10px;
+  margin-top: 5px;
   margin-left: 0px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 `;
 
 const PictureUploadBox = styled.input`
   background-color: #f7f6f6;
   width: 99%;
-  height: 65px;
+  height: 60px;
   border-radius: 7px;
   text-align: left;
   font-weight: bold;
   padding: 10px;
-  margin-top: 10px;
-  margin-left: 0px;
-  margin-bottom: 10px;
+  margin-top: 0px;
+  margin-right: 10px;
 `;
 
 const PictureUploadBtn = styled.button`
   background-color: #f7f6f6;
-  width: 90%;
+  width: 89%;
+  height: 60px;
   border-radius: 7px;
   text-align: center;
   font-weight: bold;
-  padding: 10px;
+  padding: 5px;
   margin-top: 10px;
   margin-left: 10px;
   margin-bottom: 10px;
@@ -148,12 +157,13 @@ const RightSideGridBox = styled.div`
 `;
 
 const CancleBtn = styled.button`
-  height: 40px;
+  height: 45px;
   width: 15%;
   padding: 10px;
   margin-top: 25px;
   margin-left: 870px;
   margin-right: 5px;
+  margin-bottom: 20px;
   border-radius: 7px;
   border: none;
   box-shadow: 3px 4px 8px #b7b7b7;
@@ -176,10 +186,11 @@ const CancleBtn = styled.button`
 `;
 
 const EnrollEditBtn = styled.button`
-  height: 40px;
+  height: 44px;
   margin-top: 25px;
   margin-left: 25px;
   margin-right: 5px;
+  margin-bottom: 20px;
   padding: 10px;
   border-radius: 7px;
   border: none;
@@ -203,17 +214,31 @@ const EnrollEditBtn = styled.button`
 `;
 
 function AuthBoard() {
+  const onSubmit = (data) => {
+    console.log("submit");
+    console.log(data);
+  };
+
+  const { handleSubmit } = useForm();
+
   return (
     <Container>
       <Wrapper>
-        <AuthboardFrame>
+        <AuthboardFrame onSubmit={handleSubmit(onSubmit)}>
           <ContentBox>
             <Writer>작성자</Writer>
-            <TitleContent></TitleContent>
-            <Content type="content" name="content" />
+            <Label>
+              <TitleContent></TitleContent>
+            </Label>
+            <Label>
+              <Content type="content" name="content" />
+            </Label>
+
             <GridBox>
               <PictureUploadBtn>사진업로드버튼</PictureUploadBtn>
-              <PictureUploadBox></PictureUploadBox>
+              <Label>
+                <PictureUploadBox></PictureUploadBox>
+              </Label>
             </GridBox>
             <RightSideGridBox>
               <CancleBtn>취소버튼</CancleBtn>
