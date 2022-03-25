@@ -7,7 +7,7 @@ import TimelineChart from "../components/TimelineChart";
 import axios from "axios";
 import GoalDetail from "./GoalDetail";
 import { useRecoilState } from "recoil";
-import { goalId, goalStartDay } from "../Atom";
+import { goalId, goalPeriod } from "../Atom";
 
 const Wrapper = styled.div`
   height: auto;
@@ -350,9 +350,10 @@ const modalVariants = {
 
 function DashBoard() {
   const [isGoalId, setIsGoalId] = useRecoilState(goalId);
-  const [isGoalStartDay, setIsGoalStartDay] = useRecoilState(goalStartDay);
+  const [isGoalPeriod, setIsGoalPeriod] = useRecoilState(goalPeriod);
   const [id, setId] = useState(null); // 모달용 임시 state
-  const [goals, setGoals] = useState([]);
+  const [doingGoals, setDoingGoals] = useState([]);
+  const [doneGoals, setDoneGoals] = useState([]);
 
   const navigate = useNavigate();
   const { scrollY } = useViewportScroll();
@@ -360,7 +361,7 @@ function DashBoard() {
   const goalMatch = useMatch("/badge/:badgeId");
   const clickedBadge =
     goalMatch?.params.goalId &&
-    goals.find((goal) => String(goal.id) === goalMatch.params.goalId);
+    doingGoals.find((goal) => String(goal.id) === goalMatch.params.goalId);
 
   const clickedBadgeList = () => {
     navigate("/badge");
@@ -377,8 +378,14 @@ function DashBoard() {
   };
 
   useEffect(() => {
-    axios.get("/api/goal").then((Response) => {
-      setGoals(Response.data);
+    axios.get("/api/dGoal/0").then((Response) => {
+      setDoingGoals(Response.data);
+      console.log(Response.data);
+      setIsGoalPeriod(Response.data);
+    });
+
+    axios.get("/api/dGoal/1").then((Response) => {
+      setDoneGoals(Response.data);
       console.log(Response.data);
     });
   }, []);
@@ -405,13 +412,13 @@ function DashBoard() {
           <ContentBox>
             <GoalBox>
               <BoxTitle>현재 진행중인 목표</BoxTitle>
-              {goals.length === 0 ? (
+              {doingGoals.length === 0 ? (
                 <OrEmpty>
                   진행중인 목표가 없습니다.😥
                   <br /> 목표를 설정해 주세요.
                 </OrEmpty>
               ) : (
-                goals.slice(-3).map((item) => (
+                doingGoals.slice(-3).map((item) => (
                   <Goal
                     key={item.id}
                     onClick={() => onClicked(item.id)}
@@ -428,7 +435,6 @@ function DashBoard() {
                   </Goal>
                 ))
               )}
-              {}
 
               {/* <Goal onClick={() => setId("1")} layoutId="1">
                 <div>
@@ -481,7 +487,28 @@ function DashBoard() {
             </StatisticsBox>
             <DoneGoalBox>
               <BoxTitle>최근 완료 목표</BoxTitle>
-              <Goal>
+              {doneGoals.length === 0 ? (
+                <OrEmpty>완료된 목표가 없습니다.😏</OrEmpty>
+              ) : (
+                doneGoals.slice(-3).map((item) => (
+                  <Goal
+                    key={item.id}
+                    onClick={() => onClicked(item.id)}
+                    layoutId={item.id}
+                  >
+                    <div>
+                      <i className="fa-regular fa-calendar-check"></i>
+                      <GoalTitle>{item.goalTitle}</GoalTitle>
+                      <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
+                    </div>
+                    <div>
+                      <Explanation>{item.goalDesc}</Explanation>
+                    </div>
+                  </Goal>
+                ))
+              )}
+
+              {/* <Goal>
                 <div>
                   <i className="fa-regular fa-calendar-check"></i>
                   <GoalTitle>숨 쉬기</GoalTitle>
@@ -510,7 +537,7 @@ function DashBoard() {
                 <div>
                   <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
                 </div>
-              </Goal>
+              </Goal> */}
             </DoneGoalBox>
             <BoardBox>
               <BoxTitle>내 작성 글</BoxTitle>

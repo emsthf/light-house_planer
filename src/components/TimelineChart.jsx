@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ApexChart from "react-apexcharts";
-import { useRecoilValue } from "recoil";
-import { darkModeState } from "../Atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { darkModeState, goalPeriod } from "../Atom";
 
 function TimelineChart() {
   const isDark = useRecoilValue(darkModeState);
