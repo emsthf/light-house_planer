@@ -102,7 +102,7 @@ left: 0;
 
 const Modal = styled(motion.div)`
 width: 500px;
-height: 300px;
+height: 340px;
 background: #fafafa;
 border-radius: 20px;
 color: ${props => props.theme.titleColor};
@@ -173,6 +173,24 @@ const Button = styled.button`
       props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
     box-shadow: 3px 4px 10px #bbb;
   }
+`;
+
+const LoginInfo = styled.div`
+  width: 100%;
+  margin-top: 1.4rem;
+  display: flex;
+  align-items: center;
+ justify-content: center;
+`;
+
+const InfoText = styled.p`
+  font-size: 0.9rem;
+  display: inline-block;
+  cursor: pointer;
+`;
+
+const Strong = styled.strong`
+  font-weight: bold;
 `;
 
 
@@ -341,20 +359,14 @@ function Header() {
                       <Button>
                         Login
                       </Button>
-                      <Button
-                        type='button'
-                        padding={'0.5rem 1rem'}
-                        marginLeft={'2rem'}
-                        backgroundColor={"#373737"}
-                        hoverColor={"linear-gradient(315deg, #8e8e8e, #373737 74%)"}
-                        onClick={() => {
-                          handleLoginModal();
-                          resetForm();
-                        }}
-                      >
-                        close
-                      </Button>
                     </ButtonWrapper>
+                    <LoginInfo>
+                      <InfoText>SignUp</InfoText>&nbsp;&nbsp;&nbsp;
+                      <InfoText onClick={() => {
+                        handleLoginModal();
+                        resetForm();
+                      }}><Strong>Close</Strong></InfoText>
+                    </LoginInfo>
                   </Form>
                 </Modal>
               </Backdrop>
