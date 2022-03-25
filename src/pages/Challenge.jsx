@@ -133,6 +133,7 @@ const ChallengeExplanation = styled.div`
   margin-left: 23px;
   font-size: 21px;
   margin-top: 5px;
+  color: ${(props) => props.theme.titleColor};
 `;
 
 const ChallengeRewardImg = styled.div`

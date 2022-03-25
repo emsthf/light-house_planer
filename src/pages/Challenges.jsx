@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 
 const Container = styled.div`
   //   background-color: #e8ffe2;
@@ -9,6 +8,7 @@ const Container = styled.div`
   margin: 20vh auto;
   min-height: 100vh;
   margin-bottom: 240px;
+  color: ${(props) => props.theme.titleColor};
 `;
 
 const Wrapper = styled.div`
@@ -100,7 +100,7 @@ const ToNotice = styled.div`
   margin-left: 380px;
   border-radius: 5px;
   border: none;
-  box-shadow: 3px 4px 8px #b7b7b7;
+  box-shadow: ${(props) => props.theme.boxShadow};
   background: ${(props) => props.backgroundColor || "#416dea"};
   color: #fff;
   font-weight: bold;
@@ -127,7 +127,7 @@ const ToAuthentication = styled.div`
   margin-left: 25px;
   border-radius: 7px;
   border: none;
-  box-shadow: 3px 4px 8px #b7b7b7;
+  box-shadow: ${(props) => props.theme.boxShadow};
   background: ${(props) => props.backgroundColor || "#416dea"};
   color: #fff;
   font-weight: bold;
@@ -147,18 +147,14 @@ const ToAuthentication = styled.div`
 `;
 
 const ChallengesTable = styled.div`
-  dispaly: flex;
   border-radius: 4%;
   border: 2px #878787;
-  // background-color: #dcebff;
-  //   background-color: #f0f8ff;
   background-color: #ebf7ff;
-  // background-color: #d9e5ff;
   height: 700px;
   max-width: 1100px;
-  box-shadow: 4px 7px 10px #a6a6a6;
+  box-shadow: ${(props) => props.theme.boxShadow};
   padding: 15px;
-  //   margin-right: 30px;
+  margin: auto;
 `;
 
 function Challenges() {
