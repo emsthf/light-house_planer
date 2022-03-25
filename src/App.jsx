@@ -30,6 +30,7 @@ import SiteRule from "./pages/SiteRule";
 import ContactUs from "./pages/ContactUs";
 import BoardDetail from "./pages/BoardDetail";
 import GoalList from "./pages/GoalList";
+import TopScroll from "./components/TopScroll";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -111,6 +112,7 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Header />
+        <TopScroll />
         <Routes>
           <Route path="/dash" element={<DashBoard />} />
           <Route path="/set/1" element={<SetGoalStep1 />} />

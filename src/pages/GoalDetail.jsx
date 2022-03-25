@@ -32,11 +32,17 @@ const Title = styled.div`
   align-items: center;
   justify-content: center;
   margin: 2rem auto;
+  font-weight: bold;
+  font-size: 1.3em;
 `;
 
-const Desc = styled(Title)``;
+const Desc = styled(Title)`
+  font-weight: 400;
+`;
 
-const Date = styled(Title)``;
+const Date = styled(Title)`
+  font-weight: 400;
+`;
 
 const Check = styled.form`
   width: 400px;
@@ -119,6 +125,7 @@ const Stamp = styled(motion.div)`
   justify-content: center;
   align-items: center;
   font-weight: bold;
+  font-size: 1rem;
   position: absolute;
   margin-left: 560px;
 `;
