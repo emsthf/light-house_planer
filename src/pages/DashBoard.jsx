@@ -5,9 +5,8 @@ import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 import PieChart from "../components/PieChart";
 import TimelineChart from "../components/TimelineChart";
 import axios from "axios";
-import GoalDetail from "./GoalDetail";
 import { useRecoilState } from "recoil";
-import { goalId } from "../Atom";
+import { goalId, goalPeriod } from "../Atom";
 
 const Wrapper = styled.div`
   height: auto;
@@ -31,7 +30,6 @@ const Wrapper = styled.div`
 
 const GridBox = styled.div`
   display: grid;
-  /* height: 100%; */
   max-width: 1280px;
   grid-template-columns: repeat(2, 1fr);
   grid-template-columns: 1fr 4fr;
@@ -52,9 +50,6 @@ const ProfileImg = styled.div`
   background: no-repeat
     url(http://jjal.today/data/file/gallery/1028612757_tfzgnpT0_8b425806e9bc8770ee9926f757d5ff046f92f11e.png);
   background-size: cover;
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
 `;
 
 const ProfileBox = styled.div`
@@ -124,7 +119,6 @@ const GoalBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
   margin-bottom: 52px;
 `;
 
@@ -177,11 +171,6 @@ const Goal = styled(motion.div)`
       font-size: 20px;
       color: #95afc0;
     }
-    /* ${GoalTitle} {
-      font-size: 20px;
-      font-weight: bold;
-      margin-right: 6px;
-    } */
     div {
       border: 1px solid gray;
       border-radius: 10px;
@@ -198,7 +187,21 @@ const Goal = styled(motion.div)`
 `;
 
 const CreateBtn = styled.button`
-  border-radius: 5px;
+  padding: 0.5rem 2rem;
+  border: none;
+  box-shadow: 3px 4px 8px #b7b7b7;
+  background: #416dea;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 15px;
+  &:hover {
+    box-shadow: none;
+    background: linear-gradient(315deg, #89d8d3, #416dea 74%);
+  }
+  &:active {
+    background: linear-gradient(315deg, #89d8d3, #416dea 74%);
+    box-shadow: 3px 4px 10px #bbb;
+  }
 `;
 
 const BadgeBox = styled.div`
@@ -237,12 +240,16 @@ const MoreBadge = styled.span`
   cursor: pointer;
 `;
 
+const StatisticsCon = styled(GoalBox)``;
+
 const StatisticsBox = styled(GoalBox)`
+  width: 100%;
   border: 1px solid gray;
   border-radius: 15px;
   flex-direction: row;
   /* justify-content: space-between; */
   align-items: center;
+  margin-bottom: 0;
 `;
 
 const DoneGoalBox = styled(GoalBox)``;
@@ -350,16 +357,18 @@ const modalVariants = {
 
 function DashBoard() {
   const [isGoalId, setIsGoalId] = useRecoilState(goalId);
+  const [isGoalPeriod, setIsGoalPeriod] = useRecoilState(goalPeriod);
   const [id, setId] = useState(null); // 모달용 임시 state
-  const [goals, setGoals] = useState([]);
+  const [doingGoals, setDoingGoals] = useState([]);
+  const [doneGoals, setDoneGoals] = useState([]);
+
   const navigate = useNavigate();
   const { scrollY } = useViewportScroll();
-  console.log(scrollY);
 
   const goalMatch = useMatch("/badge/:badgeId");
   const clickedBadge =
     goalMatch?.params.goalId &&
-    goals.find((goal) => String(goal.id) === goalMatch.params.goalId);
+    doingGoals.find((goal) => String(goal.id) === goalMatch.params.goalId);
 
   const clickedBadgeList = () => {
     navigate("/badge");
@@ -376,10 +385,26 @@ function DashBoard() {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/goal").then((Response) => {
-      setGoals(Response.data);
-      console.log(Response.data);
-    });
+    // 최근 진행중 목표 3개 불러오기
+    axios
+      .get(
+        "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/0"
+      )
+      .then((Response) => {
+        setDoingGoals(Response.data);
+        console.log(Response.data);
+        setIsGoalPeriod(Response.data);
+      });
+
+    // 최근 완료된 목표 3개 불러오기
+    axios
+      .get(
+        "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/1"
+      )
+      .then((Response) => {
+        setDoneGoals(Response.data);
+        console.log(Response.data);
+      });
   }, []);
 
   return (
@@ -404,13 +429,13 @@ function DashBoard() {
           <ContentBox>
             <GoalBox>
               <BoxTitle>현재 진행중인 목표</BoxTitle>
-              {goals.length === 0 ? (
+              {doingGoals.length === 0 ? (
                 <OrEmpty>
                   진행중인 목표가 없습니다.😥
                   <br /> 목표를 설정해 주세요.
                 </OrEmpty>
               ) : (
-                goals.slice(-3).map((item) => (
+                doingGoals.slice(-3).map((item) => (
                   <Goal
                     key={item.id}
                     onClick={() => onClicked(item.id)}
@@ -427,39 +452,14 @@ function DashBoard() {
                   </Goal>
                 ))
               )}
-              {}
-
-              {/* <Goal onClick={() => setId("1")} layoutId="1">
-                <div>
-                  <i className="fa-regular fa-calendar-check"></i>
-                  <GoalTitle>숨 쉬기</GoalTitle>
-                  <Status>진행 중</Status>
-                </div>
-                <div>
-                  <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
-                </div>
-              </Goal>
-              <Goal onClick={() => setId("2")} layoutId="2">
-                <div>
-                  <i className="fa-regular fa-calendar-check"></i>
-                  <GoalTitle>밥 먹기</GoalTitle>
-                  <Status>진행 중</Status>
-                </div>
-                <div>
-                  <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
-                </div>
-              </Goal>
-              <Goal onClick={() => setId("3")} layoutId="3">
-                <div>
-                  <i className="fa-regular fa-calendar-check"></i>
-                  <GoalTitle>걷기</GoalTitle>
-                  <Status>진행 중</Status>
-                </div>
-                <div>
-                  <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
-                </div>
-              </Goal> */}
-              <Link to={"/set/1"}>
+              <Link
+                to={"/set/1"}
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <CreateBtn>새 목표 생성</CreateBtn>
               </Link>
             </GoalBox>
@@ -474,42 +474,35 @@ function DashBoard() {
               </BadgeList>
               <MoreBadge onClick={() => clickedBadgeList()}>+더보기</MoreBadge>
             </BadgeBox>
-            <StatisticsBox>
-              <PieChart />
-              <TimelineChart />
-            </StatisticsBox>
+            <StatisticsCon>
+              <BoxTitle>나의 목표 통계</BoxTitle>
+              <StatisticsBox>
+                <PieChart />
+                <TimelineChart />
+              </StatisticsBox>
+            </StatisticsCon>
             <DoneGoalBox>
               <BoxTitle>최근 완료 목표</BoxTitle>
-              <Goal>
-                <div>
-                  <i className="fa-regular fa-calendar-check"></i>
-                  <GoalTitle>숨 쉬기</GoalTitle>
-                  <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
-                </div>
-                <div>
-                  <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
-                </div>
-              </Goal>
-              <Goal>
-                <div>
-                  <i className="fa-regular fa-calendar-check"></i>
-                  <GoalTitle>숨 쉬기</GoalTitle>
-                  <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
-                </div>
-                <div>
-                  <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
-                </div>
-              </Goal>
-              <Goal>
-                <div>
-                  <i className="fa-regular fa-calendar-check"></i>
-                  <GoalTitle>숨 쉬기</GoalTitle>
-                  <Status style={{ backgroundColor: "tomato" }}>실패</Status>
-                </div>
-                <div>
-                  <Explanation>동해물과 백두산이 마르고 닯도록 하느님이</Explanation>
-                </div>
-              </Goal>
+              {doneGoals.length === 0 ? (
+                <OrEmpty>완료된 목표가 없습니다.😏</OrEmpty>
+              ) : (
+                doneGoals.slice(-3).map((item) => (
+                  <Goal
+                    key={item.id}
+                    onClick={() => onClicked(item.id)}
+                    layoutId={item.id}
+                  >
+                    <div>
+                      <i className="fa-regular fa-calendar-check"></i>
+                      <GoalTitle>{item.goalTitle}</GoalTitle>
+                      <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
+                    </div>
+                    <div>
+                      <Explanation>{item.goalDesc}</Explanation>
+                    </div>
+                  </Goal>
+                ))
+              )}
             </DoneGoalBox>
             <BoardBox>
               <BoxTitle>내 작성 글</BoxTitle>

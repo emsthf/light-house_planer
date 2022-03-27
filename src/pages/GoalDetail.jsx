@@ -1,9 +1,11 @@
 import axios from "axios";
+import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { ProgressBar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { keyframes } from "styled-components";
 import { goalId } from "../Atom";
 import HeatMapChart from "../components/HeatMapChart";
 import HeatmapChart2 from "../components/HeatmapChart2";
@@ -30,11 +32,17 @@ const Title = styled.div`
   align-items: center;
   justify-content: center;
   margin: 2rem auto;
+  font-weight: bold;
+  font-size: 1.3em;
 `;
 
-const Desc = styled(Title)``;
+const Desc = styled(Title)`
+  font-weight: 400;
+`;
 
-const Date = styled(Title)``;
+const Date = styled(Title)`
+  font-weight: 400;
+`;
 
 const Check = styled.form`
   width: 400px;
@@ -106,6 +114,26 @@ const StyledLink = styled(Link)`
     background: #fafafa;
   }
 `;
+
+const Stamp = styled(motion.div)`
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  border: 3px double #e74c3c;
+  color: #e74c3c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1rem;
+  position: absolute;
+  margin-left: 560px;
+`;
+
+const myVars = {
+  start: { scale: 0 },
+  end: { scale: 1, rotateZ: 360, transition: { type: "spring", damping: 5 } },
+};
 
 function GoalDetail() {
   const [isGoalId, setIsGoalId] = useRecoilState(goalId);
@@ -217,7 +245,14 @@ function GoalDetail() {
   return (
     <Container>
       <Wrapper>
-        <Title>{goal.goalTitle ? goal.goalTitle : "목표 명"}</Title>
+        <Title>
+          {goal.goalTitle ? goal.goalTitle : "목표 명"}
+          {goal.state === 0 ? null : (
+            <Stamp variants={myVars} initial="start" animate="end">
+              Success!
+            </Stamp>
+          )}
+        </Title>
         <Desc>{goal.goalDesc ? goal.goalDesc : "목표 설명"}</Desc>
         <Date>
           {goal.startDay
@@ -226,11 +261,14 @@ function GoalDetail() {
               }회`
             : "목표 기간"}
         </Date>
-        <Check>
-          <label>오늘의 목표 체크</label>
-          <Input type="checkbox" onChange={() => onChecked()} />
-          <Button marginLeft>인증글 쓰기</Button>
-        </Check>
+        {goal.state === 1 ? null : ( // 완료된 목표는 체크, 인증글 이용 못하도록
+          <Check>
+            <label>오늘의 목표 체크</label>
+            <Input type="checkbox" onChange={() => onChecked()} />
+            <Button marginLeft>인증글 쓰기</Button>
+          </Check>
+        )}
+
         <ProgressBox>
           <ProgressBar animated now={now} label={`${now}%`} style={{ height: "25px" }} />
         </ProgressBox>

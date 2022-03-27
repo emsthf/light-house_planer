@@ -22,3 +22,13 @@ export const goalId = atom({
   key: "gId",
   default: 0,
 });
+
+export const goalPeriod = atom({
+  key: "gPeriod",
+  default: [
+    {
+      startDay: "",
+      endDay: "",
+    },
+  ],
+});
