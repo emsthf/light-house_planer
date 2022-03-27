@@ -109,7 +109,7 @@ const Textarea = styled.textarea`
 `;
 
 function SetGoalStep5() {
-  const url = "/api/goal";
+  const url = "http://localhost:8080/api/goal";
   const navigate = useNavigate();
   const setGoal = useSetRecoilState(goalState);
   const goal = useRecoilValue(goalState);
@@ -118,6 +118,8 @@ function SetGoalStep5() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const totalCount = Math.floor(goal.period / 7) * goal.weekCount;
 
   const onSubmit = (data) => {
     // console.log(data);
@@ -131,6 +133,7 @@ function SetGoalStep5() {
       .post(url, {
         ...goal,
         goalDesc: data.goalDesc,
+        totalCount : goal.period % 7 >= goal.weekCount ? parseInt(totalCount) + parseInt(goal.weekCount) : totalCount
       })
       .then((Response) => {
         console.log("Success");
@@ -161,7 +164,7 @@ function SetGoalStep5() {
             <GoalTitle>- 나의 목표 기간</GoalTitle>
             <Content>
               <p>
-                {goal.startDay} ~ {goal.endDay} (총 <Strong>{goal.totalCount}</Strong>일)
+                {goal.startDay} ~ {goal.endDay} (총 <Strong>{goal.period}</Strong>일)
               </p>
             </Content>
             <GoalTitle>- 나의 목표 실행횟수</GoalTitle>

@@ -4,10 +4,11 @@ export const goalState = atom({
   key: "goalState",
   default: {
     goalTitle: "",
-    totalCount: "",
+    period: "",
     startDay: "",
     endDay: "",
     weekCount: "",
+    totalCount: "",
     goalDesc: "",
   },
 });
