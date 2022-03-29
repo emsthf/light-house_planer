@@ -140,7 +140,7 @@ function GoalDetail() {
   const [goal, setGoal] = useState({});
   const [now, setNow] = useState();
   const [checked, setChecked] = useState(false);
-  const url = `/api/goal/${isGoalId}`;
+  const url = `http://localhost:8080/api/goal/${isGoalId}`;
   const navigate = useNavigate();
 
   // 목표 세부 조회
@@ -170,7 +170,7 @@ function GoalDetail() {
   const onChecked = () => {
     if (checked === false) {
       axios
-        .put("/api/goal", {
+        .put("http://localhost:8080/api/goal", {
           id: goal.id,
           goalTitle: goal.goalTitle,
           goalDesc: goal.goalDesc,
@@ -199,7 +199,7 @@ function GoalDetail() {
         });
     } else {
       axios
-        .put("/api/goal", {
+        .put("http://localhost:8080/api/goal", {
           id: goal.id,
           goalTitle: goal.goalTitle,
           goalDesc: goal.goalDesc,
@@ -232,7 +232,7 @@ function GoalDetail() {
   const goalDelete = (id) => {
     if (window.confirm("정말 이 목표를 지우시겠습니까?")) {
       axios
-        .delete(`/api/goal/${id}`)
+        .delete(`http://localhost:8080/api/goal/${id}`)
         .then((Response) => {
           navigate("/dash");
         })

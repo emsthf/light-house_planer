@@ -7,7 +7,7 @@ const Container = styled.div`
   width: 1280px;
   margin: 20vh auto;
   min-height: 100vh;
-  margin-bottom: 100px;
+  margin-bottom: 500px;
 `;
 
 const Wrapper = styled.div`

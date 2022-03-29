@@ -128,7 +128,7 @@ function SetGoalStep3() {
     const startDate = new Date(watchStartDay); // 사용자가 선택한 목표 시작일
 
     // endDay validation
-    const basicEndTime = startDate.getTime() + (60 * 24 * 60 * 60 * 1000); // 60일 * 시 * 분 * 초 * 밀리세컨
+    const basicEndTime = startDate.getTime() + (59 * 24 * 60 * 60 * 1000); // 60일 * 시 * 분 * 초 * 밀리세컨
     const basicEndDay = new Date(basicEndTime);
     const month = basicEndDay.getMonth() >= 9 ? `${basicEndDay.getMonth() + 1}` : `0${basicEndDay.getMonth() + 1}`;
     const day = basicEndDay.getDate() > 9 ? `${basicEndDay.getDate()}` : `0${basicEndDay.getDate()}`;
@@ -136,7 +136,12 @@ function SetGoalStep3() {
     
     const endDayMin = new Date(`${startDate.getFullYear()}-${startDate.getMonth() + 1}-${startDate.getDate() + 6}`);
     const endDayMinDate = `${endDayMin.getFullYear()}-${endDayMin.getMonth() + 1}-${endDayMin.getDate()}`; // 선택 가능한 종료일의 최소 시작일, 시작일 7일 이후
-    const maxDate = `${startDate.getFullYear() + 1}-${startDate.getMonth() + 1}-${startDate.getDate()}`; // 시작일부터 최대 1년 이내 종료일
+    
+    const endDayTime = startDate.getTime() + (179 * 24 * 60 * 60 * 1000);
+    const customEndDay = new Date(endDayTime);
+    const endMonth = customEndDay.getMonth() >= 9 ? `${customEndDay.getMonth() + 1}` : `0${customEndDay.getMonth() + 1}`;
+    const endDate = customEndDay.getDate() > 9 ? `${customEndDay.getDate()}` : `0${customEndDay.getDate()}`;
+    const maxDate = `${customEndDay.getFullYear()}-${endMonth}-${endDate}`; // 시작일부터 최대 180일 이내 종료일
 
     const totalTime = new Date(watchEndDay) - new Date(watchStartDay); // 목표 종료일 - 목표 시작일
     const totalDate = (totalTime / 1000 / 60 / 60 / 24) + 1; // 목표 기간(밀리세컨, 초, 분, 시)
@@ -145,9 +150,9 @@ function SetGoalStep3() {
         // console.log(data);
         setGoal({
             ...goal,
-            totalCount : goal.totalCount === '' ? totalDate : goal.totalCount,
+            period : goal.period === '' ? totalDate : goal.period,
             startDay : data.startDay,
-            endDay : goal.totalCount === '60' ? basicEndDate : data.endDay,
+            endDay : goal.period === '60' ? basicEndDate : data.endDay,
         });
         
         navigate('/set/4');
@@ -161,7 +166,7 @@ function SetGoalStep3() {
                     <Wrapper>
                         <MainTitle>목표 설정</MainTitle>
                         {
-                            goal.totalCount === '' && <>
+                            goal.period === '' && <>
                                 <SubTitle>
                                     3 / 5 단계
                                     <br />
@@ -187,12 +192,12 @@ function SetGoalStep3() {
                                     {errors.startDay?.type === 'max' && '시작일은 오늘부터 한달 이내로 설정해주세요.'}<br/>
                                     {errors.endDay?.type === 'required' && '종료일을 선택해 주세요.'}
                                     {errors.endDay?.type === 'min' && '최소 기간은 7일 입니다.'}
-                                    {errors.endDay?.type === 'max' && '종료일은 1년 이내로 지정해 주세요.'}
+                                    {errors.endDay?.type === 'max' && '종료일은 180일 이내로 지정해 주세요.'}
                                     {(watchStartDay && watchEndDay && totalDate < 7) && ' 목표 기간을 다시 확인하세요.'}
                                 </ErrorMessage>
                                 <Desc>
                                     실행 시작일과 종료일의 날짜를 선택하세요.<br/>
-                                    최소 기간은 7일 이며 최대 365일까지 가능합니다.
+                                    최소 기간은 7일 이며 최대 180일까지 가능합니다.
                                 </Desc>
                                 <ButtonWrapper>
                                     <Button disabled={totalDate < 7}>다 음</Button>
@@ -200,7 +205,7 @@ function SetGoalStep3() {
                             </>
                         }
                         {
-                            goal.totalCount === '60' && <>
+                            goal.period === '60' && <>
                                 <SubTitle>
                                     3 / 5 단계
                                     <br />

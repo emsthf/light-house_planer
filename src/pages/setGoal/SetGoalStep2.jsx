@@ -103,7 +103,7 @@ function SetGoalStep2() {
         // console.log(data);
         setGoal({
             ...goal,
-            totalCount : data.totalCount
+            period : data.period
         });
         
         navigate('/set/3');
@@ -128,13 +128,13 @@ function SetGoalStep2() {
                             목표 기간을 선택하세요.
                         </SubTitle>
                         <Label>
-                            <InputRadio type='radio' value='60' {...register('totalCount', { required: true })} />60일
+                            <InputRadio type='radio' value='60' {...register('period', { required: true })} />60일
                         </Label>
                         <Label>
-                            <InputRadio type='radio' value='' {...register('totalCount', { required: true })} />사용자 지정
+                            <InputRadio type='radio' value='' {...register('period', { required: true })} />사용자 지정
                         </Label>
                         <ErrorMessage>
-                            {errors.totalCount?.type === 'required' && '기간을 선택해 주세요.'}
+                            {errors.period?.type === 'required' && '기간을 선택해 주세요.'}
                         </ErrorMessage>
                         <Desc>
                             의사 존 맥스웰은 우리의 뇌가 새로운 행동에 익숙해지는데 걸리는 
