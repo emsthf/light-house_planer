@@ -189,7 +189,7 @@ const Goal = styled(motion.div)`
 const CreateBtn = styled.button`
   padding: 0.5rem 2rem;
   border: none;
-  box-shadow: 3px 4px 8px #b7b7b7;
+  box-shadow: ${(props) => props.theme.boxShadow};
   background: #416dea;
   color: #fff;
   font-weight: bold;
