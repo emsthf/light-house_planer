@@ -388,7 +388,7 @@ function DashBoard() {
     // 최근 진행중 목표 3개 불러오기
     axios
       .get(
-        "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/0"
+        "http://localhost:8080/api/dGoal/0"
       )
       .then((Response) => {
         setDoingGoals(Response.data);
@@ -399,7 +399,7 @@ function DashBoard() {
     // 최근 완료된 목표 3개 불러오기
     axios
       .get(
-        "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/1"
+        "http://localhost:8080/api/dGoal/1"
       )
       .then((Response) => {
         setDoneGoals(Response.data);
