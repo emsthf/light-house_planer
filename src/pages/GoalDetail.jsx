@@ -19,6 +19,7 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
   width: 100%;
+  margin-bottom: 4rem;
 `;
 
 const Title = styled.div`
@@ -102,7 +103,6 @@ const Post = styled.div`
   width: 80%;
   margin: 0 auto;
   border-top: 1px solid #bbb;
-  border-bottom: 1px solid #bbb;
   box-sizing: border-box;
 `;
 
@@ -143,6 +143,9 @@ function GoalDetail() {
   const url = `http://localhost:8080/api/goal/${isGoalId}`;
   const navigate = useNavigate();
 
+  const [post, setPost] = useState([]); // 인증글
+  const [limit, setLimit] = useState(5); // 처음 화면에 보여지는 인증글 수
+
   // 목표 세부 조회
   useEffect(() => {
     axios
@@ -162,6 +165,11 @@ function GoalDetail() {
       .catch((Error) => {
         console.log(Error);
       });
+
+      // axios.get('https://jsonplaceholder.typicode.com/posts') //test data
+      // .then(Response => {
+      //   setPost(Response.data);
+      // }).catch(Error => console.log(Error));
   }, [checked]);
 
   // const now = 60;
@@ -283,12 +291,26 @@ function GoalDetail() {
           </Button>
         </ButtonWrapper>
       </Wrapper>
-      <Post>
-        <StyledLink to="/">
-          <h4>post title</h4>
-          <p>post date</p>
-        </StyledLink>
-      </Post>
+        {/* {
+          post &&
+          post.slice(0, limit).map(post => (
+            <Post>
+              <StyledLink to="/">
+                <h4>{post.title}</h4>
+                <p>post date</p>
+              </StyledLink>
+            </Post>
+          ))
+        } */}
+        <Post>
+          <StyledLink to="/">
+            <h4>post title</h4>
+            <p>post date</p>
+          </StyledLink>
+        </Post>
+      <ButtonWrapper>
+        <Button onClick={() => setLimit(prev => prev + 5)}>더 보기</Button>
+      </ButtonWrapper>
     </Container>
   );
 }
