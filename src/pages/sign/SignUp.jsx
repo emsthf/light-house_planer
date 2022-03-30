@@ -60,6 +60,12 @@ margin-bottom: 0.5rem;
 
 const InputFile = styled.input``;
 
+const ImagePreview = styled.img`
+margin-top: 1rem;
+width: 480px;
+height: auto;
+`;
+
 const ButtonWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -92,7 +98,7 @@ const Button = styled.button`
 function SignUp() {
 
     const [user, setUser] = useState({});
-    const [img, setImg] = useState();
+    const [img, setImg] = useState('');
 
     const { register, handleSubmit, formState: { errors }, reset, watch, getValues } = useForm();
 
@@ -100,7 +106,7 @@ function SignUp() {
         const reader = new FileReader();
         reader.readAsDataURL(e.target.files[0]);
         reader.onload = function(e) {
-            setImg(e.target.result);
+            setImg(reader.result);
         }
     }
     
@@ -124,6 +130,7 @@ function SignUp() {
             phone: ''
         })
     }
+
 
     return ( 
         <Container>
@@ -179,7 +186,11 @@ function SignUp() {
                     </Label>
                     <Label>
                         <SubTitle>프로필 이미지</SubTitle>
-                        <InputFile type='file' accept='image/*' {...register('img')} onClick={e => console.log(e)}></InputFile>
+                        <InputFile type='file' accept='image/*' {...register('img')} onChange={(e) => {readFile(e)}}></InputFile>
+                        {
+                            img &&
+                            <ImagePreview src={img} alt='preview' />
+                        }
                     </Label>
                     <ButtonWrapper>
                         <Button>가입</Button>
