@@ -386,25 +386,17 @@ function DashBoard() {
 
   useEffect(() => {
     // 최근 진행중 목표 3개 불러오기
-    axios
-      .get(
-        "http://localhost:8080/api/dGoal/0"
-      )
-      .then((Response) => {
-        setDoingGoals(Response.data);
-        console.log(Response.data);
-        setIsGoalPeriod(Response.data);
-      });
+    axios.get("/api/dGoal/0").then((Response) => {
+      setDoingGoals(Response.data);
+      console.log(Response.data);
+      setIsGoalPeriod(Response.data);
+    });
 
     // 최근 완료된 목표 3개 불러오기
-    axios
-      .get(
-        "http://localhost:8080/api/dGoal/1"
-      )
-      .then((Response) => {
-        setDoneGoals(Response.data);
-        console.log(Response.data);
-      });
+    axios.get("/api/dGoal/1").then((Response) => {
+      setDoneGoals(Response.data);
+      console.log(Response.data);
+    });
   }, []);
 
   return (
