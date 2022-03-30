@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
@@ -30,7 +30,7 @@ const AuthboardFrame = styled.form`
   // background-color: #ebf7ff;
   background-color: #fdffff;
   width: 98%;
-  box-shadow: 4px 7px 10px #a6a6a6;
+  box-shadow: ${(props) => props.theme.boxShadow};
   // min-height: 90vh;
   display: flex;
   border-radius: 4%;
@@ -60,8 +60,8 @@ const GridBox = styled.div`
   display: grid;
   /* height: 100%; */
   max-width: 100%;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-columns: 1fr 6fr;
+  /* grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr 6fr; */
 `;
 
 const ContentBox = styled.form`
@@ -110,23 +110,26 @@ const TitleContent = styled.input`
   margin-bottom: 5px;
 `;
 
-const Content = styled.input`
+const Content = styled.textarea`
   background-color: #f7f6f6;
   width: 98%;
   height: 600px;
   border-radius: 7px;
   text-align: left;
-  font-weight: bold;
+  /* font-weight: bold; */
   padding: 10px;
   margin-top: 5px;
   margin-left: 0px;
   margin-bottom: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  padding: 2rem;
 `;
 
 const PictureUploadBox = styled.input`
   background-color: #f7f6f6;
-  width: 99%;
-  height: 60px;
+  width: 98%;
+  height: 48px;
   border-radius: 7px;
   text-align: left;
   font-weight: bold;
@@ -135,18 +138,18 @@ const PictureUploadBox = styled.input`
   margin-right: 10px;
 `;
 
-const PictureUploadBtn = styled.button`
-  background-color: #f7f6f6;
-  width: 89%;
-  height: 60px;
-  border-radius: 7px;
-  text-align: center;
-  font-weight: bold;
-  padding: 5px;
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-bottom: 10px;
-`;
+// const PictureUploadBtn = styled.button`
+//   background-color: #f7f6f6;
+//   width: 99%;
+//   height: 60px;
+//   border-radius: 7px;
+//   text-align: left;
+//   font-weight: bold;
+//   padding: 10px;
+//   margin-top: 0px;
+//   margin-right: 10px;
+// `;
+
 
 const RightSideGridBox = styled.div`
   display: grid;
@@ -214,12 +217,19 @@ const EnrollEditBtn = styled.button`
 `;
 
 function AuthBoard() {
+
+  const [post, setPost] = useState({});
+
+  const { register, handleSubmit } = useForm();
+
   const onSubmit = (data) => {
     console.log("submit");
     console.log(data);
+    setPost({
+      title : data.title,
+      content : data.content
+    })
   };
-
-  const { handleSubmit } = useForm();
 
   return (
     <Container>
@@ -228,20 +238,20 @@ function AuthBoard() {
           <ContentBox>
             <Writer>작성자</Writer>
             <Label>
-              <TitleContent></TitleContent>
+              <TitleContent type='text' {...register('title', { required: true })}></TitleContent>
             </Label>
             <Label>
-              <Content type="content" name="content" />
+              <Content {...register('content', { required: true })} />
             </Label>
 
             <GridBox>
-              <PictureUploadBtn>사진업로드버튼</PictureUploadBtn>
+              {/* <PictureUploadBtn>사진업로드버튼</PictureUploadBtn> */}
               <Label>
-                <PictureUploadBox></PictureUploadBox>
+                <PictureUploadBox type='file' accept='image/*' {...register('img')}></PictureUploadBox>
               </Label>
             </GridBox>
             <RightSideGridBox>
-              <CancleBtn>취소버튼</CancleBtn>
+              <CancleBtn type='reset'>취소버튼</CancleBtn>
               <EnrollEditBtn>등록/수정버튼</EnrollEditBtn>
             </RightSideGridBox>
           </ContentBox>

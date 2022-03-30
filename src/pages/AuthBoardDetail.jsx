@@ -28,7 +28,7 @@ const AuthboardFrame = styled.form`
   // background-color: #ebf7ff;
   background-color: #fdffff;
   width: 98%;
-  box-shadow: 4px 7px 10px #a6a6a6;
+  box-shadow: ${(props) => props.theme.boxShadow};
   // min-height: 90vh;
   display: flex;
   border-radius: 4%;

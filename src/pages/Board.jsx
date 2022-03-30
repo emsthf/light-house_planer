@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import styled from "styled-components";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Pagination } from "react-bootstrap";
+import Pagination from "../components/Pagination";
 
 const Container = styled.div`
 width: 80vw;
@@ -12,7 +13,7 @@ margin: auto;
 const Wrapper = styled.div`
   /* background-color: #74b9ff; */
   height: auto;
-  min-height: 100vh;
+  min-height: 140vh;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -36,7 +37,7 @@ const BoardBox = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
-  height: 300px;
+  height: 100%;
 `;
 
 const BoxTitle = styled.span`
@@ -96,26 +97,21 @@ const PageWrapper = styled.div`
 margin-top: 4rem;
 `;
 
-const Nav = styled.nav`
-display: flex;
-`;
-
-const PageBtn = styled.button`
-padding: 0.4rem 0.8rem;
-border: none;
-background: #416dea;
-color: #fff;
-&:hover {
-    background: linear-gradient(315deg, #89d8d3, #416dea 74%);
-}
-&:active {
-    background: linear-gradient(315deg, #89d8d3, #416dea 74%);
-    box-shadow: 0 3px 10px #999;
-}
-margin: ${props => props.margin || '0'};
-`;
 
 function Board() {
+
+  const [post, setPost] = useState([]);
+  const [limit, setLimit] = useState(10); // 한 페이지당 게시물 수
+  const [page, setPage] = useState(1); // 현재 페이지 번호
+  const offset = (page - 1) * limit; // 게시물의 위치
+
+  // useEffect(() => {
+  //   axios.get('https://jsonplaceholder.typicode.com/posts') // test data
+  //   .then(Response => {
+  //     console.log(Response.data);
+  //     setPost(Response.data);
+  //   }).catch(Error => console.log(Error));
+  // }, []);
 
   return (
     <Container>
@@ -133,6 +129,18 @@ function Board() {
               </tr>
             </thead>
             <tbody>
+              {/* {
+                post &&
+                post.slice(offset, offset + limit).map(post => (
+                  <TR>
+                    <TD textAlign={'center'}>인증</TD>
+                    <TD>{post.title}</TD>
+                    <TD textAlign={'center'}>케빈</TD>
+                    <TD textAlign={'center'}>22.03.15</TD>
+                    <TD textAlign={'center'}>123</TD>
+                  </TR>
+                ))
+              } */}
               <TR>
                 <TD textAlign={'center'}>인증</TD>
                 <TD>3.15 공부 인증</TD>
@@ -171,13 +179,7 @@ function Board() {
             </tbody>
           </Table>
           <PageWrapper>
-            <Nav>
-              {/* <PageBtn margin={'0 8px'}>Prev</PageBtn> */}
-              <ul>
-
-              </ul>
-              {/* <PageBtn margin={'0 8px'}>Next</PageBtn> */}
-            </Nav>
+            <Pagination total={post.length} limit={limit} page={page} setPage={setPage} />
           </PageWrapper>
         </BoardBox>
       </Wrapper>

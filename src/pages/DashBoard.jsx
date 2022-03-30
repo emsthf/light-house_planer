@@ -189,7 +189,7 @@ const Goal = styled(motion.div)`
 const CreateBtn = styled.button`
   padding: 0.5rem 2rem;
   border: none;
-  box-shadow: 3px 4px 8px #b7b7b7;
+  box-shadow: ${(props) => props.theme.boxShadow};
   background: #416dea;
   color: #fff;
   font-weight: bold;
@@ -388,7 +388,7 @@ function DashBoard() {
     // 최근 진행중 목표 3개 불러오기
     axios
       .get(
-        "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/0"
+        "http://localhost:8080/api/dGoal/0"
       )
       .then((Response) => {
         setDoingGoals(Response.data);
@@ -399,7 +399,7 @@ function DashBoard() {
     // 최근 완료된 목표 3개 불러오기
     axios
       .get(
-        "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/1"
+        "http://localhost:8080/api/dGoal/1"
       )
       .then((Response) => {
         setDoneGoals(Response.data);
