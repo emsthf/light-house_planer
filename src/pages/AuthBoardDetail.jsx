@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   margin-top: 10px;
 `;
 
-const AuthboardFrame = styled.form`
+const AuthboardFrame = styled.div`
   // background-color: pink;
   // background-color: #74b9ff;
   // background-color: #ebf7ff;

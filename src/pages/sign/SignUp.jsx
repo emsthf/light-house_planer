@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { getValue } from '@testing-library/user-event/dist/utils';
 
 const Container = styled.div`
   width: 1200px;
@@ -60,7 +59,7 @@ margin-bottom: 0.5rem;
 
 const InputFile = styled.input``;
 
-const ImagePreview = styled.img`
+const ImageThumbnail = styled.img`
 margin-top: 1rem;
 width: 480px;
 height: auto;
@@ -100,7 +99,7 @@ function SignUp() {
     const [user, setUser] = useState({});
     const [img, setImg] = useState('');
 
-    const { register, handleSubmit, formState: { errors }, reset, watch, getValues } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset, watch } = useForm();
 
     const readFile = (e) => {
         const reader = new FileReader();
@@ -189,7 +188,7 @@ function SignUp() {
                         <InputFile type='file' accept='image/*' {...register('img')} onChange={(e) => {readFile(e)}}></InputFile>
                         {
                             img &&
-                            <ImagePreview src={img} alt='preview' />
+                            <ImageThumbnail src={img} alt='thumbnail' />
                         }
                     </Label>
                     <ButtonWrapper>
