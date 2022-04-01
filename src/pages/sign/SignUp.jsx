@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { getValue } from '@testing-library/user-event/dist/utils';
 
 const Container = styled.div`
   width: 1200px;
@@ -60,6 +59,12 @@ margin-bottom: 0.5rem;
 
 const InputFile = styled.input``;
 
+const ImageThumbnail = styled.img`
+margin-top: 1rem;
+width: 480px;
+height: auto;
+`;
+
 const ButtonWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -92,15 +97,15 @@ const Button = styled.button`
 function SignUp() {
 
     const [user, setUser] = useState({});
-    const [img, setImg] = useState();
+    const [img, setImg] = useState('');
 
-    const { register, handleSubmit, formState: { errors }, reset, watch, getValues } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset, watch } = useForm();
 
     const readFile = (e) => {
         const reader = new FileReader();
         reader.readAsDataURL(e.target.files[0]);
         reader.onload = function(e) {
-            setImg(e.target.result);
+            setImg(reader.result);
         }
     }
     
@@ -109,7 +114,8 @@ function SignUp() {
         //     name : data.name,
         //     email: data.email,
         //     password: data.password,
-        //     phone: data.phone
+        //     phone: data.phone,
+        //     img: data.img
         // });
         console.log('submit');
         console.log(data);
@@ -125,11 +131,12 @@ function SignUp() {
         })
     }
 
+
     return ( 
         <Container>
             <FormWrapper>
                 <Title>SIgnUp</Title>
-                <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
                     <Label>
                         <Input type='text' placeholder='이름' {...register('name', {
                             required : true,
@@ -179,7 +186,11 @@ function SignUp() {
                     </Label>
                     <Label>
                         <SubTitle>프로필 이미지</SubTitle>
-                        <InputFile type='file' accept='image/*' {...register('img')} onClick={e => console.log(e)}></InputFile>
+                        <InputFile type='file' accept='image/*' {...register('img')} onChange={(e) => {readFile(e)}}></InputFile>
+                        {
+                            img &&
+                            <ImageThumbnail src={img} alt='thumbnail' />
+                        }
                     </Label>
                     <ButtonWrapper>
                         <Button>가입</Button>

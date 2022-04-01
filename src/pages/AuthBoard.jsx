@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
@@ -11,7 +12,6 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  // background-color: white;
   border-radius: 4px;
   border: 2px #878787;
   // height: 900px;
@@ -24,10 +24,7 @@ const Wrapper = styled.div`
   margin-bottom: 10px;
 `;
 
-const AuthboardFrame = styled.form`
-  // background-color: pink;
-  // background-color: #74b9ff;
-  // background-color: #ebf7ff;
+const AuthboardFrame = styled.div`
   background-color: #fdffff;
   width: 98%;
   box-shadow: ${(props) => props.theme.boxShadow};
@@ -43,7 +40,7 @@ const AuthboardFrame = styled.form`
 `;
 
 const Writer = styled.div`
-  // background-color: #74b9ff;
+  /* // background-color: #74b9ff; */
   background-color: #f7f6f6;
   color: black;
   width: 7%;
@@ -225,17 +222,26 @@ function AuthBoard() {
   const onSubmit = (data) => {
     console.log("submit");
     console.log(data);
-    setPost({
-      title : data.title,
-      content : data.content
-    })
+    // setPost({
+    //   title : data.title,
+    //   content : data.content,
+    //   postImg : data.img
+    // });
+    // axios.post({
+    //   method: 'post',
+    //   url: '',
+    //   data: post,
+    //   headers: {
+    //     'Content-Type' : 'multiprat/form-data'
+    //   }
+    // })
   };
 
   return (
     <Container>
       <Wrapper>
-        <AuthboardFrame onSubmit={handleSubmit(onSubmit)}>
-          <ContentBox>
+        <AuthboardFrame>
+          <ContentBox onSubmit={handleSubmit(onSubmit)}>
             <Writer>작성자</Writer>
             <Label>
               <TitleContent type='text' {...register('title', { required: true })}></TitleContent>
