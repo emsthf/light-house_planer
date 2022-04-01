@@ -386,7 +386,7 @@ function DashBoard() {
 
   useEffect(() => {
     // 최근 진행중 목표 3개 불러오기
-    axios.get("http://localhost:8080/api/dGoal/0").then((Response) => {
+    axios.get("/api/dGoal/0").then((Response) => {
       setDoingGoals(Response.data);
       console.log(Response.data);
       setIsGoalPeriod(Response.data);

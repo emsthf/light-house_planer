@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
@@ -221,10 +222,19 @@ function AuthBoard() {
   const onSubmit = (data) => {
     console.log("submit");
     console.log(data);
-    setPost({
-      title : data.title,
-      content : data.content
-    })
+    // setPost({
+    //   title : data.title,
+    //   content : data.content,
+    //   postImg : data.img
+    // });
+    // axios.post({
+    //   method: 'post',
+    //   url: '',
+    //   data: post,
+    //   headers: {
+    //     'Content-Type' : 'multiprat/form-data'
+    //   }
+    // })
   };
 
   return (

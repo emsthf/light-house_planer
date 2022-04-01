@@ -114,7 +114,8 @@ function SignUp() {
         //     name : data.name,
         //     email: data.email,
         //     password: data.password,
-        //     phone: data.phone
+        //     phone: data.phone,
+        //     img: data.img
         // });
         console.log('submit');
         console.log(data);
@@ -135,7 +136,7 @@ function SignUp() {
         <Container>
             <FormWrapper>
                 <Title>SIgnUp</Title>
-                <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
                     <Label>
                         <Input type='text' placeholder='이름' {...register('name', {
                             required : true,
