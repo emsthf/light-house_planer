@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import styled from "styled-components";
-import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Pagination from "../components/Pagination";
 
 const Container = styled.div`
-width: 80vw;
-margin: auto;
+  width: 80vw;
+  margin: auto;
 `;
 
 const Wrapper = styled.div`
@@ -85,7 +85,7 @@ const TR = styled(motion.tr)`
 
 const TD = styled.td`
   /* border: 1px solid; */
-  text-align: ${props => props.textAlign || 'left'};
+  text-align: ${(props) => props.textAlign || "left"};
   padding: 8px;
   vertical-align: middle; // 테이블 수직 중앙 정렬
   @media screen and (max-width: 500px) {
@@ -94,12 +94,10 @@ const TD = styled.td`
 `;
 
 const PageWrapper = styled.div`
-margin-top: 4rem;
+  margin-top: 4rem;
 `;
 
-
 function Board() {
-
   const [post, setPost] = useState([]);
   const [limit, setLimit] = useState(10); // 한 페이지당 게시물 수
   const [page, setPage] = useState(1); // 현재 페이지 번호
@@ -142,39 +140,39 @@ function Board() {
                 ))
               } */}
               <TR>
-                <TD textAlign={'center'}>인증</TD>
+                <TD textAlign={"center"}>인증</TD>
                 <TD>3.15 공부 인증</TD>
-                <TD textAlign={'center'}>케빈</TD>
-                <TD textAlign={'center'}>22.03.15</TD>
-                <TD textAlign={'center'}>123</TD>
+                <TD textAlign={"center"}>케빈</TD>
+                <TD textAlign={"center"}>22.03.15</TD>
+                <TD textAlign={"center"}>123</TD>
               </TR>
               <TR>
-                <TD textAlign={'center'}>인증</TD>
+                <TD textAlign={"center"}>인증</TD>
                 <TD>3.16 공부 인증</TD>
-                <TD textAlign={'center'}>케빈</TD>
-                <TD textAlign={'center'}>22.03.16</TD>
-                <TD textAlign={'center'}>127</TD>
+                <TD textAlign={"center"}>케빈</TD>
+                <TD textAlign={"center"}>22.03.16</TD>
+                <TD textAlign={"center"}>127</TD>
               </TR>
               <TR>
-                <TD textAlign={'center'}>인증</TD>
+                <TD textAlign={"center"}>인증</TD>
                 <TD>3.17 공부 인증</TD>
-                <TD textAlign={'center'}>케빈</TD>
-                <TD textAlign={'center'}>22.03.17</TD>
-                <TD textAlign={'center'}>162</TD>
+                <TD textAlign={"center"}>케빈</TD>
+                <TD textAlign={"center"}>22.03.17</TD>
+                <TD textAlign={"center"}>162</TD>
               </TR>
               <TR>
-                <TD textAlign={'center'}>인증</TD>
+                <TD textAlign={"center"}>인증</TD>
                 <TD>3.18 공부 인증</TD>
-                <TD textAlign={'center'}>케빈</TD>
-                <TD textAlign={'center'}>22.03.18</TD>
-                <TD textAlign={'center'}>134</TD>
+                <TD textAlign={"center"}>케빈</TD>
+                <TD textAlign={"center"}>22.03.18</TD>
+                <TD textAlign={"center"}>134</TD>
               </TR>
               <TR>
-                <TD textAlign={'center'}>자랑</TD>
+                <TD textAlign={"center"}>자랑</TD>
                 <TD>공부 포기</TD>
-                <TD textAlign={'center'}>케빈</TD>
-                <TD textAlign={'center'}>22.03.19</TD>
-                <TD textAlign={'center'}>2340</TD>
+                <TD textAlign={"center"}>케빈</TD>
+                <TD textAlign={"center"}>22.03.19</TD>
+                <TD textAlign={"center"}>2340</TD>
               </TR>
             </tbody>
           </Table>
