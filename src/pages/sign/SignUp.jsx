@@ -110,7 +110,7 @@ function SignUp() {
     const reader = new FileReader(); // 파일 미리보기 객체
     reader.readAsDataURL(e.target.files[0]);
     reader.onload = function (e) {
-      setImg(reader.result); // 미리보기
+      setImg(reader.result); // 미리보기1
     };
   };
 
