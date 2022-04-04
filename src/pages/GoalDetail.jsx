@@ -164,16 +164,16 @@ function GoalDetail() {
         //     100
         //   ).toFixed(2)
         // );
-        setNow((Response.data.count / Response.data.totalCount * 100).toFixed(2));
+        setNow(((Response.data.count / Response.data.totalCount) * 100).toFixed(2));
       })
       .catch((Error) => {
         console.log(Error);
       });
 
-      // axios.get('https://jsonplaceholder.typicode.com/posts') //test data
-      // .then(Response => {
-      //   setPost(Response.data);
-      // }).catch(Error => console.log(Error));
+    // axios.get('https://jsonplaceholder.typicode.com/posts') //test data
+    // .then(Response => {
+    //   setPost(Response.data);
+    // }).catch(Error => console.log(Error));
   }, [checked]);
 
   // const now = 60;
@@ -189,7 +189,7 @@ function GoalDetail() {
 
   // 목표 일일 체크
   const onChecked = () => {
-    console.log('check');
+    console.log("check");
     if (checked === false) {
       axios
         .put(`http://localhost:8080/api/goal/${goal.id}`, {
@@ -214,7 +214,7 @@ function GoalDetail() {
           //     100
           //   ).toFixed(2)
           // );
-          setNow((Response.data.count / Response.data.totalCount * 100).toFixed(2));
+          setNow(((Response.data.count / Response.data.totalCount) * 100).toFixed(2));
         })
         .catch((Error) => {
           console.log(Error);
@@ -243,7 +243,7 @@ function GoalDetail() {
           //     100
           //   ).toFixed(2)
           // );
-          setNow((Response.data.count / Response.data.totalCount * 100).toFixed(2));
+          setNow(((Response.data.count / Response.data.totalCount) * 100).toFixed(2));
         })
         .catch((Error) => {
           console.log(Error);
@@ -309,7 +309,7 @@ function GoalDetail() {
           </Button>
         </ButtonWrapper>
       </Wrapper>
-        {/* {
+      {/* {
           post &&
           post.slice(0, limit).map(post => (
             <Post>
@@ -320,14 +320,14 @@ function GoalDetail() {
             </Post>
           ))
         } */}
-        <Post>
-          <StyledLink to="/">
-            <h4>post title</h4>
-            <p>post date</p>
-          </StyledLink>
-        </Post>
+      <Post>
+        <StyledLink to="/">
+          <h4>post title</h4>
+          <p>post date</p>
+        </StyledLink>
+      </Post>
       <ButtonWrapper>
-        <Button onClick={() => setLimit(prev => prev + 5)}>더 보기</Button>
+        <Button onClick={() => setLimit((prev) => prev + 5)}>더 보기</Button>
       </ButtonWrapper>
     </Container>
   );
