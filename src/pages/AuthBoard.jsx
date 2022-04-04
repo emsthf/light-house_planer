@@ -1,7 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { goalState } from "../Atom";
 
 const Container = styled.div`
   // background-color: #e8ffe2;
@@ -216,17 +218,29 @@ const EnrollEditBtn = styled.button`
 function AuthBoard() {
 
   const [post, setPost] = useState({});
+  const goal = useRecoilValue(goalState); // count check할 goalId
 
   const { register, handleSubmit } = useForm();
+
+  const today = new Date();
+  const todayYear = today.getFullYear();
+  const todayMonth = today.getMonth() >= 9 ? `${today.getMonth() + 1}` : `0${today.getMonth() + 1}`
+  const todayDate = today.getDate() > 9 ? `${today.getDate()}` : `0${today.getDate()}`;
+  const now = `${todayYear}-${todayMonth}-${todayDate}`;
 
   const onSubmit = (data) => {
     console.log("submit");
     console.log(data);
+    console.log(`goalId : ${goal.id}`);
     // setPost({
     //   title : data.title,
     //   content : data.content,
     //   postImg : data.img
     // });
+    axios.put(`http://localhost:8080/api/goal/${goal.id}`,{
+      ...goal,
+      checkDate: now
+    }).then(console.log('ok'));
     // axios.post({
     //   method: 'post',
     //   url: '',

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
+import axios from "axios";
 
 const Container = styled.div`
   width: 1200px;
@@ -111,6 +112,15 @@ const modalVariants = {
 function BadgeList() {
   const { scrollY } = useViewportScroll();
   const [id, setId] = useState(null); // 모달용 임시 state
+  const [badge, setBadge] = useState();
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/api/badge')
+    .then(Response => {
+      setBadge(Response.data);
+      console.log(Response.data);
+    })
+  }, []);
 
   return (
     <Container>
@@ -119,7 +129,15 @@ function BadgeList() {
         <Section>
           <Title>특별 한정</Title>
           <BadgeWrapper>
-            <Badge onClick={() => setId("1")} layoutId={"1"}>
+            {
+              badge && badge.map(badge => (
+                <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
+                  <div>{badge.badgeName}</div>
+                  <BadgeCount>1</BadgeCount>
+                </Badge>
+              ))
+            }
+            {/* <Badge onClick={() => setId("1")} layoutId={"1"}>
               <BadgeCount>1</BadgeCount>
             </Badge>
             <Badge onClick={() => setId("2")} layoutId={"2"}>
@@ -127,7 +145,7 @@ function BadgeList() {
             </Badge>
             <Badge onClick={() => setId("3")} layoutId={"3"}>
               <BadgeCount>1</BadgeCount>
-            </Badge>
+            </Badge> */}
           </BadgeWrapper>
         </Section>
         <Section>

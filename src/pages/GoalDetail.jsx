@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { keyframes } from "styled-components";
-import { goalId } from "../Atom";
+import { goalId, goalState } from "../Atom";
 import HeatMapChart from "../components/HeatMapChart";
 import HeatmapChart2 from "../components/HeatmapChart2";
 
@@ -45,7 +45,7 @@ const Date = styled(Title)`
   font-weight: 400;
 `;
 
-const Check = styled.form`
+const Check = styled.div`
   width: 400px;
   height: 80px;
   margin: 0 auto;
@@ -143,8 +143,11 @@ function GoalDetail() {
   const url = `http://localhost:8080/api/goal/${isGoalId}`;
   const navigate = useNavigate();
 
+  const [checkGoal, setCheckGoal] = useRecoilState(goalState);
+
   const [post, setPost] = useState([]); // 인증글
   const [limit, setLimit] = useState(5); // 처음 화면에 보여지는 인증글 수
+
 
   // 목표 세부 조회
   useEffect(() => {
@@ -174,6 +177,15 @@ function GoalDetail() {
   }, [checked]);
 
   // const now = 60;
+
+  // 인증글쓰기로 목표 일일 체크
+  const handleCheck = () => {
+    setCheckGoal({
+      id: goal.id,
+      count: goal.count + 1,
+    });
+    navigate('/authboard')
+  }
 
   // 목표 일일 체크
   const onChecked = () => {
@@ -242,6 +254,7 @@ function GoalDetail() {
   // 목표 삭제
   const goalDelete = (id) => {
     if (window.confirm("정말 이 목표를 지우시겠습니까?")) {
+      console.log(id);
       axios
         .delete(`http://localhost:8080/api/goal/${id}`)
         .then((Response) => {
@@ -253,30 +266,32 @@ function GoalDetail() {
     }
   };
 
+
   return (
     <Container>
       <Wrapper>
         <Title>
           {goal.goalTitle ? goal.goalTitle : "목표 명"}
-          {goal.state === 0 ? null : (
+          {goal.state === 0 || (goal.state === 1 && goal.result === false) ? null : (
             <Stamp variants={myVars} initial="start" animate="end">
               Success!
             </Stamp>
           )}
         </Title>
-        <Desc>{goal.goalDesc ? goal.goalDesc : "목표 설명"}</Desc>
+        {/* <Desc>{goal.goalDesc ? goal.goalDesc : "목표 설명"}</Desc> */}
+        <Desc>{goal ? `현재 ${goal.count} / ${goal.totalCount}회 실행` : "목표 설명"}</Desc>
         <Date>
           {goal.startDay
-            ? `${goal.startDay.substring(0, 10)} ~ ${goal.endDay.substring(0, 10)} 주 ${
+            ? `${goal.startDay.substring(0, 10)}부터 ~ ${goal.endDay.substring(0, 10)}까지 ( 주 ${
                 goal.weekCount
-              }회`
+              }회 )`
             : "목표 기간"}
         </Date>
         {goal.state === 1 ? null : ( // 완료된 목표는 체크, 인증글 이용 못하도록
           <Check>
-            <label>오늘의 목표 체크</label>
-            <Input type="checkbox" onChange={() => onChecked()} />
-            <Button marginLeft>인증글 쓰기</Button>
+            <span>오늘의 목표 체크</span>
+            {/* <Input type="checkbox" onChange={() => onChecked()} /> */}
+            <Button marginLeft onClick={handleCheck}>인증글 쓰기</Button>
           </Check>
         )}
 

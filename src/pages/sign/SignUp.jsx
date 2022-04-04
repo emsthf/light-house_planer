@@ -96,6 +96,9 @@ const Button = styled.button`
 
 function SignUp() {
 
+    const now = new Date();
+    console.log(now.getDay());
+
     const [user, setUser] = useState({});
     const [img, setImg] = useState('');
 
