@@ -95,35 +95,6 @@ const Button = styled.button`
 `;
 
 function SignUp() {
-<<<<<<< HEAD
-
-    const now = new Date();
-    console.log(now.getDay());
-
-    const [user, setUser] = useState({});
-    const [img, setImg] = useState('');
-
-    const { register, handleSubmit, formState: { errors }, reset, watch } = useForm();
-
-    const readFile = (e) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(e.target.files[0]);
-        reader.onload = function(e) {
-            setImg(reader.result);
-        }
-    }
-    
-    const onSubmit = data => {
-        // setUser({
-        //     name : data.name,
-        //     email: data.email,
-        //     password: data.password,
-        //     phone: data.phone,
-        //     img: data.img
-        // });
-        console.log('submit');
-        console.log(data);
-=======
   const [user, setUser] = useState({});
   const [img, setImg] = useState("");
 
@@ -140,7 +111,6 @@ function SignUp() {
     reader.readAsDataURL(e.target.files[0]);
     reader.onload = function (e) {
       setImg(reader.result); // 미리보기1
->>>>>>> e7166ea2cb96a4d4c2bd8c0bb600eaba5e41cf43
     };
   };
 

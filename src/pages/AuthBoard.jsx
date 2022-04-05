@@ -231,7 +231,6 @@ function AuthBoard() {
   const onSubmit = (data) => {
     console.log("submit");
     console.log(data);
-    console.log(`goalId : ${goal.id}`);
     // setPost({
     //   title : data.title,
     //   content : data.content,
@@ -240,7 +239,8 @@ function AuthBoard() {
     axios.put(`http://localhost:8080/api/goal/${goal.id}`,{
       ...goal,
       checkDate: now
-    }).then(console.log('ok'));
+    }).then(console.log('ok'))
+    .catch(Error => console.log(Error));
     // axios.post({
     //   method: 'post',
     //   url: '',
