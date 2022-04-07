@@ -52,6 +52,8 @@ const Badge = styled.div`
   width: 120px;
   height: 120px;
   background: #fafafa;
+  background-size: 80%;
+  background-position: center center;
   box-shadow: ${(props) => props.theme.boxShadow};
   border-radius: 50%;
   margin: 24px;
@@ -67,7 +69,7 @@ const BadgeCount = styled.div`
   font-weight: bold;
   position: absolute;
   left: 50%;
-  bottom: -1.8rem;
+  bottom: -1.6rem;
   transform: translateX(-50%);
   color: ${(props) => props.theme.textColor};
 `;
@@ -139,8 +141,8 @@ function BadgeList() {
             {
               specialBadge && specialBadge.map(badge => (
                 <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
-                  <div>{badge.badgeName}</div>
-                  <BadgeCount>1</BadgeCount>
+                  <img src={badge.badgeImgUrl} alt='special badge' />
+                  <BadgeCount>{badge.badgeName}</BadgeCount>
                 </Badge>
               ))
             }
