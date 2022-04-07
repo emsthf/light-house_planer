@@ -6,18 +6,30 @@ import styled from "styled-components";
 import { goalState } from "../Atom";
 
 const Container = styled.div`
-  // background-color: #e8ffe2;
-  width: 1280px;
-  margin: 20vh auto;
-  min-height: 100vh;
-  margin-bottom: 500px;
+  height: auto;
+  min-height: 100%;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 250px 150px 100px;
+  margin: auto;
+  margin-top: 5vh;
+  @media screen and (min-width: 768px) {
+    padding-right: 24px !important;
+    padding-left: 24px !important;
+  }
+  @media screen and (min-width: 768px) {
+    padding-right: 24px !important;
+    padding-left: 24px !important;
+  }
 `;
 
 const Wrapper = styled.div`
   border-radius: 4px;
   border: 2px #878787;
   // height: 900px;
-  height: 98vh;
+  /* height: 98vh; */
   width: 99%;
   padding: 5px;
   margin-left: 5px;
@@ -149,7 +161,6 @@ const PictureUploadBox = styled.input`
 //   margin-right: 10px;
 // `;
 
-
 const RightSideGridBox = styled.div`
   display: grid;
   /* height: 100%; */
@@ -215,17 +226,23 @@ const EnrollEditBtn = styled.button`
   }
 `;
 
-function AuthBoard() {
+const ImageThumbnail = styled.img`
+  margin-top: 1rem;
+  width: 480px;
+  height: auto;
+`;
 
+function AuthBoard() {
   const [post, setPost] = useState({});
-  const [postImg, setPostImg] = useState();
-  const goal = useRecoilValue(goalState); // count check할 goal
+  const [img, setImg] = useState("");
+  const goal = useRecoilValue(goalState); // count check할 goalId
 
   const { register, handleSubmit } = useForm();
 
   const today = new Date();
   const todayYear = today.getFullYear();
-  const todayMonth = today.getMonth() >= 9 ? `${today.getMonth() + 1}` : `0${today.getMonth() + 1}`
+  const todayMonth =
+    today.getMonth() >= 9 ? `${today.getMonth() + 1}` : `0${today.getMonth() + 1}`;
   const todayDate = today.getDate() > 9 ? `${today.getDate()}` : `0${today.getDate()}`;
   const now = `${todayYear}-${todayMonth}-${todayDate}`;
 
@@ -257,6 +274,14 @@ function AuthBoard() {
     }).catch(Error => console.log(Error))
   };
 
+  const readFile = (e) => {
+    const reader = new FileReader(); // 파일 미리보기 객체
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = function (e) {
+      setImg(reader.result); // 미리보기1
+    };
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -264,20 +289,31 @@ function AuthBoard() {
           <ContentBox onSubmit={handleSubmit(onSubmit)}>
             <Writer>작성자</Writer>
             <Label>
-              <TitleContent type='text' {...register('title', { required: true })}></TitleContent>
+              <TitleContent
+                type="text"
+                {...register("title", { required: true })}
+              ></TitleContent>
             </Label>
             <Label>
-              <Content {...register('content', { required: true })} />
+              <Content {...register("content", { required: true })} />
             </Label>
 
             <GridBox>
               {/* <PictureUploadBtn>사진업로드버튼</PictureUploadBtn> */}
               <Label>
-                <PictureUploadBox type='file' accept='image/*' {...register('img')}></PictureUploadBox>
+                <PictureUploadBox
+                  type="file"
+                  accept="image/*"
+                  {...register("img")}
+                  onChange={(e) => {
+                    readFile(e);
+                  }}
+                ></PictureUploadBox>
+                {img && <ImageThumbnail src={img} alt="thumbnail" />}
               </Label>
             </GridBox>
             <RightSideGridBox>
-              <CancleBtn type='reset'>취소버튼</CancleBtn>
+              <CancleBtn type="reset">취소버튼</CancleBtn>
               <EnrollEditBtn>등록/수정버튼</EnrollEditBtn>
             </RightSideGridBox>
           </ContentBox>
