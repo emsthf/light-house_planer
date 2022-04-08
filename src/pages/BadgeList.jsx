@@ -52,6 +52,8 @@ const Badge = styled.div`
   width: 120px;
   height: 120px;
   background: #fafafa;
+  /* background-size: 80%;
+  background-position: center center; */
   box-shadow: ${(props) => props.theme.boxShadow};
   border-radius: 50%;
   margin: 24px;
@@ -62,12 +64,21 @@ const Badge = styled.div`
   }
 `;
 
+const Img = styled.img`
+width: 90%;
+height: auto;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+`;
+
 const BadgeCount = styled.div`
   font-size: 0.9rem;
   font-weight: bold;
   position: absolute;
   left: 50%;
-  bottom: -1.8rem;
+  bottom: -1.6rem;
   transform: translateX(-50%);
   color: ${(props) => props.theme.textColor};
 `;
@@ -115,6 +126,31 @@ function BadgeList() {
   const [specialBadge, setSpecialBadge] = useState();
   const [badge, setBadge] = useState();
 
+  const findBadgeName = (badge) => {
+    if(badge.badgeName === "100") {
+      return (
+        <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
+          <Img src='../assets/images/badge100.png ' alt='goal badge' />
+          <BadgeCount>{badge.badgeName}</BadgeCount>
+        </Badge>
+      )
+    } else if(badge.badgeName === "90") {
+      return (
+        <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
+          <Img src='../assets/images/badge90.png ' alt='goal badge' />
+          <BadgeCount>{badge.badgeName}</BadgeCount>
+        </Badge>
+      )
+    } else if(badge.badgeName === "80") {
+      return (
+        <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
+          <Img src='../assets/images/badge80.png ' alt='goal badge' />
+          <BadgeCount>{badge.badgeName}</BadgeCount>
+        </Badge>
+      )
+    }
+  }
+
   useEffect(() => {
     axios.get('http://localhost:8080/api/badge/list?type=special') // 특별 한정 배지 리스트
     .then(Response => {
@@ -139,8 +175,8 @@ function BadgeList() {
             {
               specialBadge && specialBadge.map(badge => (
                 <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
-                  <div>{badge.badgeName}</div>
-                  <BadgeCount>1</BadgeCount>
+                  {badge.badgeName.includes("First Badge") ? <Img src='../assets/images/special_reward.png ' alt='special_badge' /> : null}
+                  <BadgeCount>{badge.badgeName}</BadgeCount>
                 </Badge>
               ))
             }
@@ -158,26 +194,11 @@ function BadgeList() {
         <Section>
           <Title>목표 달성</Title>
           <BadgeWrapper>
-          {
+            {
               badge && badge.map(badge => (
-                <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
-                  <div>{badge.type}</div>
-                  <BadgeCount>1</BadgeCount>
-                </Badge>
+                findBadgeName(badge)
               ))
             }
-            {/* <Badge onClick={() => setId("4")} layoutId={"4"}>
-              <BadgeCount>1</BadgeCount>
-            </Badge>
-            <Badge onClick={() => setId("5")} layoutId={"5"}>
-              <BadgeCount>1</BadgeCount>
-            </Badge>
-            <Badge onClick={() => setId("6")} layoutId={"6"}>
-              <BadgeCount>1</BadgeCount>
-            </Badge>
-            <Badge onClick={() => setId("7")} layoutId={"7"}>
-              <BadgeCount>1</BadgeCount>
-            </Badge> */}
           </BadgeWrapper>
         </Section>
       </Wrapper>

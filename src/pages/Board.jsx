@@ -103,13 +103,13 @@ function Board() {
   const [page, setPage] = useState(1); // 현재 페이지 번호
   const offset = (page - 1) * limit; // 게시물의 위치
 
-  // useEffect(() => {
-  //   axios.get('https://jsonplaceholder.typicode.com/posts') // test data
-  //   .then(Response => {
-  //     console.log(Response.data);
-  //     setPost(Response.data);
-  //   }).catch(Error => console.log(Error));
-  // }, []);
+  useEffect(() => {
+    axios.get('http://localhost:8081/api/post')
+    .then(Response => {
+      // console.log(Response.data);
+      setPost(Response.data);
+    }).catch(Error => console.log(Error));
+  }, []);
 
   return (
     <Container>
@@ -127,7 +127,7 @@ function Board() {
               </tr>
             </thead>
             <tbody>
-              {/* {
+              {
                 post &&
                 post.slice(offset, offset + limit).map(post => (
                   <TR>
@@ -138,8 +138,8 @@ function Board() {
                     <TD textAlign={'center'}>123</TD>
                   </TR>
                 ))
-              } */}
-              <TR>
+              }
+              {/* <TR>
                 <TD textAlign={"center"}>인증</TD>
                 <TD>3.15 공부 인증</TD>
                 <TD textAlign={"center"}>케빈</TD>
@@ -173,7 +173,7 @@ function Board() {
                 <TD textAlign={"center"}>케빈</TD>
                 <TD textAlign={"center"}>22.03.19</TD>
                 <TD textAlign={"center"}>2340</TD>
-              </TR>
+              </TR> */}
             </tbody>
           </Table>
           <PageWrapper>
