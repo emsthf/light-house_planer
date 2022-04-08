@@ -124,7 +124,7 @@ function App() {
           <Route path="/badge" element={<BadgeList />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/board" element={<Board />} />
-          <Route path="/boarddetail" element={<BoardDetail />} />
+          <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/" element={<Landing />} />
           <Route path="/challenge" element={<Challenge />} />
           <Route path="/challenges" element={<Challenges />} />
