@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { goalState } from "../Atom";
@@ -186,7 +187,33 @@ const CancleBtn = styled.button`
   }
 `;
 
-const EnrollEditBtn = styled.button(CancleBtn)`
+const EnrollEditBtn = styled.button`
+  height: 45px;
+  width: 15%;
+  padding: 10px;
+  margin-top: 25px;
+  margin-left: 870px;
+  margin-right: 5px;
+  margin-bottom: 20px;
+  border-radius: 7px;
+  border: none;
+  box-shadow: 3px 4px 8px #b7b7b7;
+  background: ${(props) => props.backgroundColor || "#416dea"};
+  color: #fff;
+  font-weight: bold;
+  // margin: 1rem 0;
+  margin-left: ${(props) => props.marginLeft && "2rem"};
+  &:hover {
+    box-shadow: none;
+    background: ${(props) =>
+      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
+  }
+  &:active {
+    box-shadow: none;
+    background: ${(props) =>
+      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
+    box-shadow: 3px 4px 10px #bbb;
+  }
 `;
 
 const ImageThumbnail = styled.img`
@@ -199,6 +226,7 @@ function AuthBoard() {
   const [post, setPost] = useState({});
   const [img, setImg] = useState("");
   const goal = useRecoilValue(goalState); // count check할 goalId
+  const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm();
 
@@ -229,7 +257,7 @@ function AuthBoard() {
           postId : Response.data
         })
       }
-    }).catch(Error => console.log(Error))
+    }).then(navigate('/dash')).catch(Error => console.log(Error))
   };
 
   const readFile = (e) => {
@@ -241,10 +269,10 @@ function AuthBoard() {
   };
 
   useEffect(() => { // 해당 일자에 작성한 일일 인증글이 있는 경우
-    axios.get(`http://localhost:8081/api/post/auth/find?goalId=${goal.id}&created=${now}`)
-    .then(Response => {
-      setPost(Response.data)
-    }).catch(Error => console.log(Error));
+    // axios.get(`http://localhost:8081/api/post/auth/find?goalId=${goal.id}&created=${now}`)
+    // .then(Response => {
+    //   setPost(Response.data)
+    // }).catch(Error => console.log(Error));
   }, []);
 
   return (
