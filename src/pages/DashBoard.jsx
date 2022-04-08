@@ -7,6 +7,7 @@ import TimelineChart from "../components/TimelineChart";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { goalId, goalPeriod } from "../Atom";
+import ImageUpload from "../components/ImageUpload";
 
 const Wrapper = styled.div`
   height: auto;
@@ -416,6 +417,7 @@ function DashBoard() {
               <Link to="/signup">
                 <EditBtn>Edit profile</EditBtn>
               </Link>
+              <ImageUpload />
             </ProfileBox>
           </Container>
           <ContentBox>
