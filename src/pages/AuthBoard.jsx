@@ -249,26 +249,29 @@ function AuthBoard() {
   const onSubmit = (data) => {
     console.log("submit");
     console.log(data);
-    // setPost({
-    //   title : data.title,
-    //   content : data.content,
-    //   postImg : data.img
-    // });
-    axios
-      .put(`http://localhost:8080/api/goal/${goal.id}`, {
-        ...goal,
-        checkDate: now,
-      })
-      .then(console.log("ok"))
-      .catch((Error) => console.log(Error));
-    // axios.post({
-    //   method: 'post',
-    //   url: '',
-    //   data: post,
-    //   headers: {
-    //     'Content-Type' : 'multiprat/form-data'
-    //   }
-    // })
+    
+    // axios.put(`http://localhost:8080/api/goal/${goal.id}`,{
+    //   ...goal,
+    //   checkDate: now
+    // }).then(console.log('ok')).catch(Error => console.log(Error));
+
+    axios.post('http://localhost:8081/api/post', {
+      categoryId : 1,
+      title : data.title,
+      content : data.content,
+      created : now,
+      goalId : goal.id
+      // postImg : data.img
+    }).then(Response => {
+      console.log(Response.data);
+      if(Response.data != null) {
+        axios.put(`http://localhost:8080/api/goal/${goal.id}`, {
+          ...goal,
+          checkDate : now,
+          postId : Response.data
+        })
+      }
+    }).catch(Error => console.log(Error))
   };
 
   const readFile = (e) => {

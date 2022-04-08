@@ -7,6 +7,7 @@ import TimelineChart from "../components/TimelineChart";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { goalId, goalPeriod } from "../Atom";
+import Badge from "./Badge";
 
 const Wrapper = styled.div`
   height: auto;
@@ -222,17 +223,17 @@ const BadgeList = styled.div`
   width: 100%;
 `;
 
-const Badge = styled.div`
-  width: 7em;
-  height: 7em;
-  border-radius: 50%;
-  /* border: 1px solid black; */
-  margin: auto;
-  background: no-repeat
-    url(https://cdn.pixabay.com/photo/2019/12/01/09/08/logo-4664978__480.png);
-  background-size: cover;
-  cursor: pointer;
-`;
+// const Badge = styled.div`
+//   width: 7em;
+//   height: 7em;
+//   border-radius: 50%;
+//   /* border: 1px solid black; */
+//   margin: auto;
+//   background: no-repeat
+//     url(https://cdn.pixabay.com/photo/2019/12/01/09/08/logo-4664978__480.png);
+//   background-size: cover;
+//   cursor: pointer;
+// `;
 
 const MoreBadge = styled.span`
   margin-top: 15px;
@@ -361,6 +362,7 @@ function DashBoard() {
   const [id, setId] = useState(null); // 모달용 임시 state
   const [doingGoals, setDoingGoals] = useState([]);
   const [doneGoals, setDoneGoals] = useState([]);
+  const [badge, setBadge] = useState([]);
 
   const navigate = useNavigate();
   const { scrollY } = useViewportScroll();
@@ -388,16 +390,22 @@ function DashBoard() {
     // 최근 진행중 목표 3개 불러오기
     axios.get("http://localhost:8080/api/dGoal/0").then((Response) => {
       setDoingGoals(Response.data);
-      console.log(Response.data);
+      // console.log(Response.data);
       setIsGoalPeriod(Response.data);
     });
 
     // 최근 완료된 목표 3개 불러오기
     axios.get("http://localhost:8080/api/dGoal/1").then((Response) => {
       setDoneGoals(Response.data);
-      console.log(Response.data);
+      // console.log(Response.data);
     });
-  }, []);
+
+    // 획득한 배지 가져오기
+    axios.get("http://localhost:8080/api/badge")
+    .then(Response => {
+      setBadge(Response.data.slice(0, 5));
+    }).catch(Error => console.log(Error));
+  }, [setBadge]);
 
   return (
     <>
@@ -458,11 +466,17 @@ function DashBoard() {
             <BadgeBox>
               <BoxTitle style={{ marginBottom: "10px" }}>최근 획득 배지</BoxTitle>
               <BadgeList>
-                <Badge onClick={() => setId("1")} layoutId={"1"} />
+                {
+                  badge &&
+                  badge.map(badge => (
+                    <Badge badge={badge} setId={setId} />
+                  ))
+                }
+                {/* <Badge onClick={() => setId("1")} layoutId={"1"} />
                 <Badge onClick={() => setId("2")} layoutId={"2"} />
                 <Badge onClick={() => setId("3")} layoutId={"3"} />
                 <Badge onClick={() => setId("4")} layoutId={"4"} />
-                <Badge onClick={() => setId("5")} layoutId={"5"} />
+                <Badge onClick={() => setId("5")} layoutId={"5"} /> */}
               </BadgeList>
               <MoreBadge onClick={() => clickedBadgeList()}>+더보기</MoreBadge>
             </BadgeBox>
