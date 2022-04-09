@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
-  //   background-color: #e8ffe2;
   width: 1200px;
   margin: 20vh auto;
   min-height: 100vh;
@@ -12,7 +12,6 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  //   background-color: #74b9ff;
   width: 100%;
 `;
 
@@ -40,21 +39,14 @@ const ChallengeCondition = styled.div`
   margin-right: 6px;
 `;
 
-const TitleGridBox = styled.div`
-  display: flex;
-  display: grid;
-  height: 70%;
-  max-width: 1100px;
-  // grid-template-columns: repeat(2, 1fr);
-  grid-template-columns: 4fr 2fr;
-`;
-
 const GridBox = styled.div`
-  display: grid;
   height: 20%;
-  max-width: 850px;
-  // grid-template-columns: repeat(2, 1fr);
-  grid-template-columns: 4fr 2fr;
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 `;
 
 const Paging = styled.span`
@@ -63,24 +55,19 @@ const Paging = styled.span`
   height: 30px;
   border-radius: 5px;
   box-shadow: 2px 5px 10px #d7d7d7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 2rem auto;
-  margin-left: 460px;
+  text-align: center;
+  line-height: 30px;
 `;
 
-const NewChallengeEnroll = styled.span`
+const NewChallengeEnroll = styled.button`
   background-color: #fafafa;
   width: 150px;
   height: 30px;
   border-radius: 5px;
   box-shadow: 2px 5px 10px #d7d7d7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 2rem auto;
-  margin-left: 160px;
+  position: absolute;
+  right: 100px;
+  top: 16px;
 `;
 
 const HalfGridBox = styled.div`
@@ -91,7 +78,7 @@ const HalfGridBox = styled.div`
   grid-template-columns: 1fr 1fr;
 `;
 
-const ToNotice = styled.div`
+const ToNotice = styled.button`
   padding: 10px;
   text-align: center;
   width: 160px;
@@ -118,7 +105,7 @@ const ToNotice = styled.div`
     box-shadow: 3px 4px 10px #bbb;
   }
 `;
-const ToAuthentication = styled.div`
+const ToAuthentication = styled.button`
   text-align: center;
   width: 160px;
   height: 40px;
@@ -158,10 +145,29 @@ const ChallengesTable = styled.div`
 `;
 
 function Challenges() {
+
+  const [challenge, setChallenge] = useState();
+
+  // useEffect(() => {
+  //   axios.get('http://localhost:8082/api/challenge')
+  //   .then(Response => {
+  //     // console.log(Response.data)
+  //     setChallenge(Response.data);
+  //   })
+  // }, []);
+
   return (
     <Container>
       <Wrapper>
         <ChallengesTable>
+          {/* {
+            challenge.map(challenge => (
+              <Title>
+                {challenge.challengeTitle}
+                <ChallengeCondition></ChallengeCondition>
+              </Title>
+            ))
+          } */}
           <Title>
             챌린지1<ChallengeCondition></ChallengeCondition>
           </Title>
@@ -173,7 +179,9 @@ function Challenges() {
           </Title>
           <GridBox>
             <Paging>1/2/3/4/5</Paging>
-            <NewChallengeEnroll>새로운챌린지등록</NewChallengeEnroll>
+            <Link to='/set/challenge'>
+              <NewChallengeEnroll type='button'>새로운챌린지등록</NewChallengeEnroll>
+            </Link>
           </GridBox>
         </ChallengesTable>
 

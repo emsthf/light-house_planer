@@ -7,15 +7,10 @@ import styled from "styled-components";
 import { goalState } from "../Atom";
 
 const Container = styled.div`
-  height: auto;
-  min-height: 100%;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 100px 250px 150px 100px;
-  margin: auto;
-  margin-top: 5vh;
+  width: 1200px;
+  margin: 20vh auto;
+  min-height: 100vh;
+  margin-bottom: 240px;
   @media screen and (min-width: 768px) {
     padding-right: 24px !important;
     padding-left: 24px !important;
@@ -27,35 +22,20 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  border-radius: 4px;
-  border: 2px #878787;
-  // height: 900px;
-  /* height: 98vh; */
-  width: 99%;
-  padding: 5px;
-  margin-left: 5px;
-  margin-right: 5px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  width: 100%;
 `;
 
 const AuthboardFrame = styled.div`
   background-color: #fdffff;
   width: 98%;
-  box-shadow: ${(props) => props.theme.boxShadow};
-  // min-height: 90vh;
   display: flex;
   border-radius: 4%;
   text-align: center;
   font-weight: bold;
   padding: 20px;
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-bottom: 10px;
 `;
 
 const Writer = styled.div`
-  /* // background-color: #74b9ff; */
   background-color: #f7f6f6;
   color: black;
   width: 7%;
@@ -63,21 +43,14 @@ const Writer = styled.div`
   text-align: center;
   font-weight: bold;
   padding: 10px;
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0 10px 10px;
 `;
 
 const GridBox = styled.div`
-  display: grid;
-  /* height: 100%; */
-  max-width: 100%;
-  /* grid-template-columns: repeat(2, 1fr);
-  grid-template-columns: 1fr 6fr; */
+  width: 100%;
 `;
 
 const ContentBox = styled.form`
-  // background-color: white;
   width: 100%;
   border-radius: 7px;
   text-align: center;
@@ -151,69 +124,34 @@ const PictureUploadBox = styled.input`
 `;
 
 const RightSideGridBox = styled.div`
-  display: grid;
-  /* height: 100%; */
-  max-width: 99%;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-columns: 6fr 1fr;
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  margin-top: 2rem;
 `;
 
 const CancleBtn = styled.button`
-  height: 45px;
-  width: 15%;
-  padding: 10px;
-  margin-top: 25px;
-  margin-left: 870px;
-  margin-right: 5px;
-  margin-bottom: 20px;
-  border-radius: 7px;
+  padding: 0.5rem 2rem;
   border: none;
-  box-shadow: 3px 4px 8px #b7b7b7;
-  background: ${(props) => props.backgroundColor || "#416dea"};
+  box-shadow: 4px 8px 24px #d7d7d7;
+  background: #416dea;
   color: #fff;
-  font-weight: bold;
-  // margin: 1rem 0;
-  margin-left: ${(props) => props.marginLeft && "2rem"};
+  border-radius: 10px;
+  margin: 1rem;
   &:hover {
-    box-shadow: none;
-    background: ${(props) =>
-      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
+      box-shadow: none;
+      background: ${(props) =>
+        props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
   }
   &:active {
-    box-shadow: none;
-    background: ${(props) =>
-      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
-    box-shadow: 3px 4px 10px #bbb;
+      background: linear-gradient(315deg, #89d8d3, #416dea 74%);
+      background: ${(props) =>
+        props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
+      box-shadow: 2px 3px 10px #888;
   }
 `;
 
-const EnrollEditBtn = styled.button`
-  height: 45px;
-  width: 15%;
-  padding: 10px;
-  margin-top: 25px;
-  margin-left: 870px;
-  margin-right: 5px;
-  margin-bottom: 20px;
-  border-radius: 7px;
-  border: none;
-  box-shadow: 3px 4px 8px #b7b7b7;
-  background: ${(props) => props.backgroundColor || "#416dea"};
-  color: #fff;
-  font-weight: bold;
-  // margin: 1rem 0;
-  margin-left: ${(props) => props.marginLeft && "2rem"};
-  &:hover {
-    box-shadow: none;
-    background: ${(props) =>
-      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
-  }
-  &:active {
-    box-shadow: none;
-    background: ${(props) =>
-      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
-    box-shadow: 3px 4px 10px #bbb;
-  }
+const EnrollEditBtn = styled(CancleBtn)`
 `;
 
 const ImageThumbnail = styled.img`
@@ -268,12 +206,12 @@ function AuthBoard() {
     };
   };
 
-  useEffect(() => { // 해당 일자에 작성한 일일 인증글이 있는 경우
-    // axios.get(`http://localhost:8081/api/post/auth/find?goalId=${goal.id}&created=${now}`)
-    // .then(Response => {
-    //   setPost(Response.data)
-    // }).catch(Error => console.log(Error));
-  }, []);
+  // useEffect(() => { // 해당 일자에 작성한 일일 인증글이 있는 경우
+  //   axios.get(`http://localhost:8081/api/post/auth/find?goalId=${goal.id}&created=${now}`)
+  //   .then(Response => {
+  //     setPost(Response.data)
+  //   }).catch(Error => console.log(Error));
+  // }, []);
 
   return (
     <Container>
@@ -285,11 +223,10 @@ function AuthBoard() {
               <TitleContent
                 type="text"
                 {...register("title", { required: true })}
-                value={post.title || ''}
               ></TitleContent>
             </Label>
             <Label>
-              <Content {...register("content", { required: true })} value={post.content || ''} />
+              <Content {...register("content", { required: true })} />
             </Label>
 
             <GridBox>
@@ -307,7 +244,7 @@ function AuthBoard() {
             </GridBox>
             <RightSideGridBox>
               <CancleBtn type="reset">취소버튼</CancleBtn>
-              <EnrollEditBtn>등록/수정버튼</EnrollEditBtn>
+              <EnrollEditBtn marginLeft>등록/수정버튼</EnrollEditBtn>
             </RightSideGridBox>
           </ContentBox>
         </AuthboardFrame>
