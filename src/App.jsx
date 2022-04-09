@@ -31,6 +31,7 @@ import ContactUs from "./pages/ContactUs";
 import BoardDetail from "./pages/BoardDetail";
 import GoalList from "./pages/GoalList";
 import TopScroll from "./components/TopScroll";
+import SetChallenge from "./pages/SetChallenge";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -124,10 +125,11 @@ function App() {
           <Route path="/badge" element={<BadgeList />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/board" element={<Board />} />
-          <Route path="/boarddetail" element={<BoardDetail />} />
+          <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/" element={<Landing />} />
           <Route path="/challenge" element={<Challenge />} />
           <Route path="/challenges" element={<Challenges />} />
+          <Route path="/set/challenge" element={<SetChallenge />} />
           <Route path="/authboard" element={<AuthBoard />} />
           <Route path="/authdetail" element={<AuthBoardDetail />} />
           <Route path="/site-rule" element={<SiteRule />} />

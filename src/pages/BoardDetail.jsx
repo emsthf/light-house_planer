@@ -1,4 +1,6 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -108,11 +110,23 @@ margin: 1rem;
 
 
 function BoardDetail() {
+
+    const {id} = useParams();
+
+    const [post, setPost] = useState({});
+
+    useEffect(() => {
+        axios.get(`http://localhost:8081/api/post/${id}`)
+        .then(Response => {
+            setPost(Response.data)
+        }).catch(Error => console.log(Error));
+    }, []);
+
     return ( 
         <Container>
             <Wrapper>
                 <TitleWrapper>
-                    <Title>Title</Title>
+                    <Title>{post.title}</Title>
                     <InfoWrapper>
                         <Info>작성자</Info>
                         <Info>작성일자</Info>
@@ -121,8 +135,7 @@ function BoardDetail() {
                 </TitleWrapper>
                 <ContentWrapper>
                     <Content>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet tristique accumsan. Aenean hendrerit maximus tincidunt. Vivamus mollis ipsum a lacus sagittis interdum. Curabitur aliquet libero ac augue imperdiet, quis dignissim lectus tempor. Curabitur pulvinar, ex semper commodo euismod, turpis mi feugiat nisi, non tempor nulla leo eget odio. Fusce commodo commodo convallis. Phasellus nec placerat dolor. Nullam a eros lobortis, egestas nunc ullamcorper, volutpat elit. Nulla laoreet semper mi eget finibus.
-                    Etiam egestas venenatis purus, quis vulputate eros bibendum ultricies. Suspendisse enim est, vestibulum a purus vel, iaculis blandit velit. Pellentesque a auctor mauris. Mauris id tristique tortor. Nulla ultricies justo nec dictum fringilla. Sed bibendum, libero at accumsan efficitur, mauris sapien ullamcorper turpis, in ullamcorper nunc arcu et tortor. Fusce convallis non dolor vulputate auctor. Nullam at ante libero.
+                        {post.content}
                     </Content>
                     <Comment>
                         <CommentForm>
@@ -151,7 +164,9 @@ function BoardDetail() {
                         </CommentForm>
                 </ContentWrapper>
                 <ButtonWrapper>
-                    <Button>글 목록</Button>
+                    <Link to='/board'>
+                        <Button>글 목록</Button>
+                    </Link>
                     <Button>수정</Button>
                     <Button backgroundColor={"#373737"}>삭제</Button>
                 </ButtonWrapper>

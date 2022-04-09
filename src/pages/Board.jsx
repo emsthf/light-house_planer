@@ -70,7 +70,7 @@ const TH = styled.th`
 `;
 
 const TR = styled(motion.tr)`
-  cursor: pointer;
+  /* cursor: pointer; */
   height: 45px;
   &:nth-child(even) {
     background-color: rgba(154, 170, 192, 0.2);
@@ -96,6 +96,7 @@ const TD = styled.td`
 const PageWrapper = styled.div`
   margin-top: 4rem;
 `;
+
 
 function Board() {
   const [post, setPost] = useState([]);
@@ -130,13 +131,15 @@ function Board() {
               {
                 post &&
                 post.slice(offset, offset + limit).map(post => (
-                  <TR>
-                    <TD textAlign={'center'}>인증</TD>
-                    <TD>{post.title}</TD>
-                    <TD textAlign={'center'}>케빈</TD>
-                    <TD textAlign={'center'}>22.03.15</TD>
-                    <TD textAlign={'center'}>123</TD>
-                  </TR>
+                    <TR key={post.id}>
+                      <TD textAlign={'center'}>인증</TD>
+                      <Link to={`/board/${post.id}`}>
+                        <TD>{post.title}</TD>
+                      </Link>
+                      <TD textAlign={'center'}>케빈</TD>
+                      <TD textAlign={'center'}>22.03.15</TD>
+                      <TD textAlign={'center'}>123</TD>
+                    </TR>
                 ))
               }
               {/* <TR>

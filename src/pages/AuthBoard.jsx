@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { goalState } from "../Atom";
@@ -149,18 +150,6 @@ const PictureUploadBox = styled.input`
   margin-right: 10px;
 `;
 
-// const PictureUploadBtn = styled.button`
-//   background-color: #f7f6f6;
-//   width: 99%;
-//   height: 60px;
-//   border-radius: 7px;
-//   text-align: left;
-//   font-weight: bold;
-//   padding: 10px;
-//   margin-top: 0px;
-//   margin-right: 10px;
-// `;
-
 const RightSideGridBox = styled.div`
   display: grid;
   /* height: 100%; */
@@ -199,12 +188,13 @@ const CancleBtn = styled.button`
 `;
 
 const EnrollEditBtn = styled.button`
-  height: 44px;
+  height: 45px;
+  width: 15%;
+  padding: 10px;
   margin-top: 25px;
-  margin-left: 25px;
+  margin-left: 870px;
   margin-right: 5px;
   margin-bottom: 20px;
-  padding: 10px;
   border-radius: 7px;
   border: none;
   box-shadow: 3px 4px 8px #b7b7b7;
@@ -236,6 +226,7 @@ function AuthBoard() {
   const [post, setPost] = useState({});
   const [img, setImg] = useState("");
   const goal = useRecoilValue(goalState); // count check할 goalId
+  const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm();
 
@@ -249,18 +240,13 @@ function AuthBoard() {
   const onSubmit = (data) => {
     console.log("submit");
     console.log(data);
-    
-    // axios.put(`http://localhost:8080/api/goal/${goal.id}`,{
-    //   ...goal,
-    //   checkDate: now
-    // }).then(console.log('ok')).catch(Error => console.log(Error));
 
     axios.post('http://localhost:8081/api/post', {
       categoryId : 1,
       title : data.title,
       content : data.content,
       created : now,
-      goalId : goal.id
+      goalId : goal.id,
       // postImg : data.img
     }).then(Response => {
       console.log(Response.data);
@@ -271,7 +257,7 @@ function AuthBoard() {
           postId : Response.data
         })
       }
-    }).catch(Error => console.log(Error))
+    }).then(navigate('/dash')).catch(Error => console.log(Error))
   };
 
   const readFile = (e) => {
@@ -281,6 +267,13 @@ function AuthBoard() {
       setImg(reader.result); // 미리보기1
     };
   };
+
+  useEffect(() => { // 해당 일자에 작성한 일일 인증글이 있는 경우
+    // axios.get(`http://localhost:8081/api/post/auth/find?goalId=${goal.id}&created=${now}`)
+    // .then(Response => {
+    //   setPost(Response.data)
+    // }).catch(Error => console.log(Error));
+  }, []);
 
   return (
     <Container>
@@ -292,14 +285,14 @@ function AuthBoard() {
               <TitleContent
                 type="text"
                 {...register("title", { required: true })}
+                value={post.title || ''}
               ></TitleContent>
             </Label>
             <Label>
-              <Content {...register("content", { required: true })} />
+              <Content {...register("content", { required: true })} value={post.content || ''} />
             </Label>
 
             <GridBox>
-              {/* <PictureUploadBtn>사진업로드버튼</PictureUploadBtn> */}
               <Label>
                 <PictureUploadBox
                   type="file"
