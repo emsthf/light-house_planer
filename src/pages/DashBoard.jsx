@@ -484,7 +484,7 @@ function DashBoard() {
               <BoxTitle>나의 목표 통계</BoxTitle>
               <StatisticsBox>
                 <PieChart />
-                <TimelineChart />
+                <TimelineChart doingGoals={doingGoals} />
               </StatisticsBox>
             </StatisticsCon>
             <DoneGoalBox>
