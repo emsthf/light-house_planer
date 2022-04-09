@@ -179,23 +179,27 @@ function AuthBoard() {
     console.log("submit");
     console.log(data);
 
-    axios.post('http://localhost:8081/api/post', {
-      categoryId : 1,
-      title : data.title,
-      content : data.content,
-      created : now,
-      goalId : goal.id,
-      // postImg : data.img
-    }).then(Response => {
-      console.log(Response.data);
-      if(Response.data != null) {
-        axios.put(`http://localhost:8080/api/goal/${goal.id}`, {
-          ...goal,
-          checkDate : now,
-          postId : Response.data
-        })
-      }
-    }).then(navigate('/dash')).catch(Error => console.log(Error))
+    axios
+      .post("http://localhost:8081/api/post", {
+        categoryId: 1,
+        title: data.title,
+        content: data.content,
+        created: now,
+        goalId: goal.id,
+        // postImg : data.img
+      })
+      .then((Response) => {
+        console.log(Response.data);
+        if (Response.data != null) {
+          axios.put(`http://localhost:8080/api/goal/${goal.id}`, {
+            ...goal,
+            checkDate: now,
+            postId: Response.data,
+          });
+        }
+      })
+      .then(navigate("/dash"))
+      .catch((Error) => console.log(Error));
   };
 
   const readFile = (e) => {
@@ -204,6 +208,20 @@ function AuthBoard() {
     reader.onload = function (e) {
       setImg(reader.result); // 미리보기1
     };
+
+    let files = e.target.photo.files;
+    const formData = new FormData();
+    formData.append("files", files.length && files[0].uploadedFile);
+
+    axios({
+      method: "post",
+      url: "http://localhost:8081/postImg",
+      mode: "cors",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: formData,
+    });
   };
 
   // useEffect(() => { // 해당 일자에 작성한 일일 인증글이 있는 경우
@@ -217,7 +235,7 @@ function AuthBoard() {
     <Container>
       <Wrapper>
         <AuthboardFrame>
-          <ContentBox onSubmit={handleSubmit(onSubmit)}>
+          <ContentBox encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>
             <Writer>작성자</Writer>
             <Label>
               <TitleContent
@@ -228,10 +246,10 @@ function AuthBoard() {
             <Label>
               <Content {...register("content", { required: true })} />
             </Label>
-
             <GridBox>
               <Label>
                 <PictureUploadBox
+                  name="photo"
                   type="file"
                   accept="image/*"
                   {...register("img")}

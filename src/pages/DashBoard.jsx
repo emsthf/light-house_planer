@@ -401,11 +401,73 @@ function DashBoard() {
     });
 
     // 획득한 배지 가져오기
-    axios.get("http://localhost:8080/api/badge")
-    .then(Response => {
-      setBadge(Response.data.slice(0, 5));
-    }).catch(Error => console.log(Error));
+    axios
+      .get("http://localhost:8080/api/badge")
+      .then((Response) => {
+        setBadge(Response.data.slice(0, 5));
+      })
+      .catch((Error) => console.log(Error));
+
+    // 이미지 조회
+    axios.get("http://localhost:8081/postImg").then((Response) => {
+      setFiles(Response.data);
+    });
   }, [setBadge]);
+
+  // const [files, setFiles] = useState([]);
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   // let files = e.target.photo.files;
+  //   const formData = new FormData();
+  //   formData.append("files", files.length && files[0].uploadedFile);
+
+  //   axios
+  //     .post("http://localhost:8081/postImg", {
+  //       mode: "cors",
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //       data: formData,
+  //     })
+  //     .then((Response) =>
+  //       console.log("image upload success!!!!!!!!!!").catch((Err) => console.log(Err))
+  //     );
+  // };
+
+  // const handleUpload = (e) => {
+  //   e.preventDefault();
+  //   console.log(e.target.files[0]);
+  //   const file = e.target.files[0];
+  //   setFiles([...files, { uploadedFile: file }]);
+
+  //   const formData = new FormData();
+  //   formData.append("files", files[0]);
+  //   axios
+  //     .post("http://localhost:8081/postImg", {
+  //       mode: "cors",
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //       data: formData,
+  //     })
+  //     .then((Response) =>
+  //       console.log("image upload success!!!!!!!!!!").catch((Err) => console.log(Err))
+  //     );
+  // };
+  const fileDataDownloadUrl = "/api/download/";
+  const [files, setFiles] = useState([]);
+
+  const upload = () => {
+    if (document.getElementById("uploadFile").files.length) {
+      const formData = new FormData();
+      formData.append("file", document.getElementById("uploadFile").files[0]);
+      axios.post("http://localhost:8081/postImg", formData).then((Response) => {
+        document.getElementById("uploadFile").value = "";
+        alert("업로드 완료!");
+        setFiles(files.concat([Response.data]));
+      });
+    }
+  };
 
   return (
     <>
@@ -424,6 +486,10 @@ function DashBoard() {
               <Link to="/signup">
                 <EditBtn>Edit profile</EditBtn>
               </Link>
+              <div>
+                <input id="uploadFile" type="file" accept="image/*" />
+                <button onClick={upload}>upLoad</button>
+              </div>
             </ProfileBox>
           </Container>
           <ContentBox>
@@ -466,12 +532,8 @@ function DashBoard() {
             <BadgeBox>
               <BoxTitle style={{ marginBottom: "10px" }}>최근 획득 배지</BoxTitle>
               <BadgeList>
-                {
-                  badge &&
-                  badge.map(badge => (
-                    <Badge badge={badge} setId={setId} />
-                  ))
-                }
+                {badge &&
+                  badge.map((badge) => <Badge key={badge} badge={badge} setId={setId} />)}
                 {/* <Badge onClick={() => setId("1")} layoutId={"1"} />
                 <Badge onClick={() => setId("2")} layoutId={"2"} />
                 <Badge onClick={() => setId("3")} layoutId={"3"} />
