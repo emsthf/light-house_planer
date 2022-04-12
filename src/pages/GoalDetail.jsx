@@ -174,10 +174,12 @@ function GoalDetail() {
         console.log(Error);
       });
 
-    axios.get(`http://localhost:8081/api/post/auth/${isGoalId}`)
-    .then(Response => {
-      setPost(Response.data);
-    }).catch(Error => console.log(Error));
+    axios
+      .get(`http://localhost:8081/api/post/auth/${isGoalId}`)
+      .then((Response) => {
+        setPost(Response.data);
+      })
+      .catch((Error) => console.log(Error));
   }, [checked]);
 
   // const now = 60;
@@ -188,8 +190,8 @@ function GoalDetail() {
       id: goal.id,
       count: goal.count + 1
     });
-    navigate('/authboard')
-  }
+    navigate("/authboard");
+  };
 
   // 목표 일일 체크
   // const onChecked = () => {
@@ -282,25 +284,39 @@ function GoalDetail() {
           )}
         </Title>
         {/* <Desc>{goal.goalDesc ? goal.goalDesc : "목표 설명"}</Desc> */}
-        <Desc>{goal ? `현재 ${goal.count} / ${goal.totalCount}회 실행` : "목표 설명"}</Desc>
+        <Desc>
+          {goal ? `현재 ${goal.count} / ${goal.totalCount}회 실행` : "목표 설명"}
+        </Desc>
         <Date>
           {goal.startDay
-            ? `${goal.startDay.substring(0, 10)}부터 ~ ${goal.endDay.substring(0, 10)}까지 ( 주 ${
-                goal.weekCount
-              }회 )`
+            ? `${goal.startDay.substring(0, 10)}부터 ~ ${goal.endDay.substring(
+                0,
+                10
+              )}까지 ( 주 ${goal.weekCount}회 )`
             : "목표 기간"}
         </Date>
         {goal.state === 1 ? null : ( // 완료된 목표는 체크, 인증글 이용 못하도록
           <Check>
             <span>오늘의 목표 체크</span>
             {/* <Input type="checkbox" onChange={() => onChecked()} /> */}
+<<<<<<< HEAD
             {/* 목표 시작일 0시 1분부터 인증 글 작성 가능 */}
             <Button marginLeft onClick={handleCheck} disabled={new window.Date(goal.startDay) - 9 * 59 * 60 * 1000 >= new window.Date()}>인증글 쓰기</Button>
+=======
+            <Button marginLeft onClick={handleCheck}>
+              인증글 쓰기
+            </Button>
+>>>>>>> fb296bb729879128f5497c887378d802e74f4fea
           </Check>
         )}
 
         <ProgressBox>
-          <ProgressBar animated now={now} label={`${now}%`} style={{ height: "25px" }} />
+          <ProgressBar
+            animated
+            now={now}
+            label={`${now}%`}
+            style={{ width: "100%", height: "25px" }}
+          />
         </ProgressBox>
         {/* <HeatMapChart /> */}
         <ButtonWrapper>
@@ -313,17 +329,15 @@ function GoalDetail() {
           </Button>
         </ButtonWrapper>
       </Wrapper>
-      {
-          post &&
-          post.slice(0, limit).map(post => (
-            <Post key={post.id}>
-              <StyledLink to={`/board/${post.id}`}>
-                <h4>{post.title}</h4>
-                <p>{post.created}</p>
-              </StyledLink>
-            </Post>
-          ))
-        }
+      {post &&
+        post.slice(0, limit).map((post) => (
+          <Post key={post.id}>
+            <StyledLink to={`/board/${post.id}`}>
+              <h4>{post.title}</h4>
+              <p>{post.created}</p>
+            </StyledLink>
+          </Post>
+        ))}
       {/* <Post>
         <StyledLink to="/">
           <h4>post title</h4>
