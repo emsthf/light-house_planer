@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { ProgressBar } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -95,6 +96,12 @@ const TitleContent = styled.input`
   margin-bottom: 5px;
 `;
 
+const ErrorMessage = styled.div`
+  font-size: 0.8rem;
+  margin: 0.5rem 0 0 1rem;
+  color: #888;
+`;
+
 const Content = styled.textarea`
   background-color: #f7f6f6;
   width: 98%;
@@ -139,20 +146,19 @@ const CancleBtn = styled.button`
   border-radius: 10px;
   margin: 1rem;
   &:hover {
-      box-shadow: none;
-      background: ${(props) =>
-        props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
+    box-shadow: none;
+    background: ${(props) =>
+      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
   }
   &:active {
-      background: linear-gradient(315deg, #89d8d3, #416dea 74%);
-      background: ${(props) =>
-        props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
-      box-shadow: 2px 3px 10px #888;
+    background: linear-gradient(315deg, #89d8d3, #416dea 74%);
+    background: ${(props) =>
+      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
+    box-shadow: 2px 3px 10px #888;
   }
 `;
 
-const EnrollEditBtn = styled(CancleBtn)`
-`;
+const EnrollEditBtn = styled(CancleBtn)``;
 
 const ImageThumbnail = styled.img`
   margin-top: 1rem;
@@ -166,7 +172,11 @@ function AuthBoard() {
   const goal = useRecoilValue(goalState); // count check할 goalId
   const navigate = useNavigate();
 
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const today = new Date();
   const todayYear = today.getFullYear();
@@ -197,7 +207,10 @@ function AuthBoard() {
               checkDate: now,
               postId: Response.data,
             })
-            .then(navigate("/dash"));
+            .then((res) => {
+              console.log(res);
+              navigate("/dash");
+            });
         }
       })
       .catch((Error) => console.log(Error));
@@ -212,6 +225,8 @@ function AuthBoard() {
   };
 
   // 이미지 파일 업로드
+  const [uploadPercentage, setUploadPercentage] = useState(0);
+
   const [files, setFiles] = useState([]);
   const upload = (e) => {
     if (document.getElementById("uploadFile").files.length) {
@@ -221,13 +236,33 @@ function AuthBoard() {
         setImg(reader.result); // 미리보기1
       };
 
+      const options = {
+        onUploadProgress: (ProgressEvent) => {
+          const { loaded, total } = ProgressEvent;
+          let percent = Math.floor((loaded * 100) / total);
+          console.log(`${loaded}kb of ${total}kb | ${percent}%`);
+
+          if (percent < 100) {
+            setUploadPercentage(percent);
+          }
+        },
+      };
+
       const formData = new FormData();
       formData.append("file", document.getElementById("uploadFile").files[0]);
-      axios.post("http://localhost:8081/api/postImg", formData).then((Response) => {
-        document.getElementById("uploadFile").value = "";
-        alert("업로드 완료!");
-        setFiles(files.concat([Response.data]));
-      });
+      axios
+        .post("http://localhost:8081/api/postImg", formData, options)
+        .then((Response) => {
+          // document.getElementById("uploadFile").value = "";
+          console.log(Response);
+          setUploadPercentage(100, () => {
+            setTimeout(() => {
+              setUploadPercentage(0);
+            }, 1000);
+          });
+          alert("업로드 완료!");
+          setFiles(files.concat([Response.data]));
+        });
     }
   };
 
@@ -256,9 +291,15 @@ function AuthBoard() {
                 type="text"
                 {...register("title", { required: true })}
               ></TitleContent>
+              <ErrorMessage>
+                {errors.title?.type === "required" && "제목을 입력해주세요."}
+              </ErrorMessage>
             </Label>
             <Label>
               <Content {...register("content", { required: true })} />
+              <ErrorMessage>
+                {errors.content?.type === "required" && "내용을 입력해주세요."}
+              </ErrorMessage>
             </Label>
             <GridBox>
               <Label>
@@ -266,12 +307,25 @@ function AuthBoard() {
                   id="uploadFile"
                   type="file"
                   accept="image/*"
-                  {...register("img")}
+                  {...register("img", { required: true })}
                   onChange={upload}
                   // onChange={(e) => {
                   //   readFile(e);
                   // }}
-                ></PictureUploadBox>
+                />
+                <ErrorMessage>
+                  {errors.img?.type === "required" && "인증 사진이 없어요"}
+                </ErrorMessage>
+                {uploadPercentage > 0 ? (
+                  <ProgressBar
+                    animated
+                    now={uploadPercentage}
+                    active
+                    label={`${uploadPercentage}%`}
+                    style={{ width: "90%", marginTop: 12 }}
+                  />
+                ) : null}
+
                 {img && <ImageThumbnail src={img} alt="thumbnail" />}
               </Label>
             </GridBox>

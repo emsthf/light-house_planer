@@ -47,6 +47,8 @@ const Content = styled.div`
   margin: 1rem 0;
   padding: 2rem;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 `;
 
 const PostImg = styled.img`
@@ -54,6 +56,7 @@ const PostImg = styled.img`
   width: 500px;
   height: 600px;
   alt: "postImg";
+  object-fit: contain;
 `;
 
 const Comment = styled.div`
@@ -144,11 +147,6 @@ function BoardDetail() {
         <ContentWrapper>
           <Content>
             <PostImg src={post.postImg} />
-            <img
-              src="https://d1hhudkecp6r56.cloudfront.net/20220612090633-dog.jpg"
-              alt="post_img"
-              style={{ width: 320, height: 450 }}
-            />
             {post.content}
           </Content>
           <Comment>
