@@ -32,3 +32,8 @@ export const goalPeriod = atom({
     },
   ],
 });
+
+export const userState = atom({
+  key : "user",
+  default : 1
+});

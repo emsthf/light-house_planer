@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 import axios from "axios";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { userState } from "../Atom";
 
 const Container = styled.div`
   width: 1200px;
@@ -125,40 +127,41 @@ function BadgeList() {
   const [id, setId] = useState(null); // 모달용 임시 state
   const [specialBadge, setSpecialBadge] = useState();
   const [badge, setBadge] = useState();
+  const [user, setUser] = useRecoilState(userState) // 로그인한 유저 - 현재 1번 사용자라고 가정
 
   const findBadgeName = (badge) => {
-    if(badge.badgeName === "100") {
+    if(badge.badge.badgeName === "100") {
       return (
         <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
           <Img src='../assets/images/badge100.png ' alt='goal badge' />
-          <BadgeCount>{badge.badgeName}</BadgeCount>
+          <BadgeCount>{badge.badge.badgeName}</BadgeCount>
         </Badge>
       )
-    } else if(badge.badgeName === "90") {
+    } else if(badge.badge.badgeName === "90") {
       return (
         <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
           <Img src='../assets/images/badge90.png ' alt='goal badge' />
-          <BadgeCount>{badge.badgeName}</BadgeCount>
+          <BadgeCount>{badge.badge.badgeName}</BadgeCount>
         </Badge>
       )
-    } else if(badge.badgeName === "80") {
+    } else if(badge.badge.badgeName === "80") {
       return (
         <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
-          <Img src='../assets/images/badge80.png ' alt='goal badge' />
-          <BadgeCount>{badge.badgeName}</BadgeCount>
+          <Img src='../assets/images/badge80.png' alt='goal badge' />
+          <BadgeCount>{badge.badge.badgeName}</BadgeCount>
         </Badge>
       )
     }
   }
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/badge/list?type=special') // 특별 한정 배지 리스트
+    axios.get(`http://localhost:8080/api/mybadge/list/${user}?type=Special`) // 특별 한정 배지 리스트
     .then(Response => {
       setSpecialBadge(Response.data);
       console.log(Response.data);
     }).catch(Error => console.log(Error));
 
-    axios.get('http://localhost:8080/api/badge/list?type=goal') // 목표 달성 배지 리스트
+    axios.get(`http://localhost:8080/api/mybadge/list/${user}?type=Ordinary`) // 목표 달성 배지 리스트
     .then(Response => {
       setBadge(Response.data);
       console.log(Response.data);
@@ -175,8 +178,8 @@ function BadgeList() {
             {
               specialBadge && specialBadge.map(badge => (
                 <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
-                  {badge.badgeName.includes("First Badge") ? <Img src='../assets/images/special_reward.png ' alt='special_badge' /> : null}
-                  <BadgeCount>{badge.badgeName}</BadgeCount>
+                  {badge.badge.badgeName.includes("Goal") ? <Img src='../assets/images/special_reward.png ' alt='special badge' /> : null}
+                  <BadgeCount>{badge.badge.badgeName}</BadgeCount>
                 </Badge>
               ))
             }

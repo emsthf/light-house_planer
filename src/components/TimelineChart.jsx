@@ -50,6 +50,16 @@ function TimelineChart({doingGoals}) {
     },
   });
 
+  useEffect(() => {
+    if(doingGoals.length === 1) { // 설정한 목표가 하나일 때
+      console.log(doingGoals.length)
+    } else if(doingGoals.length === 2) {
+      console.log(doingGoals.length)
+    } else if(doingGoals.length === 3) {
+      console.log(doingGoals.length)
+    }
+  }, []);
+
   return (
     <div id="chart">
       <ApexChart

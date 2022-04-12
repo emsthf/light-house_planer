@@ -43,7 +43,7 @@ function Badge({badge, setId}) {
               <Img src='../assets/images/badge80.png ' alt='goal badge' />
             </BadgeBox>
           )
-        } else if(badge.badgeName.includes("Special")) {
+        } else if(badge.badgeName.includes("Goal")) {
             return (
               <BadgeBox key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
                 <Img src='../assets/images/special_reward.png ' alt='goal badge' />

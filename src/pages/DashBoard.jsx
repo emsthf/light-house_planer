@@ -6,7 +6,7 @@ import PieChart from "../components/PieChart";
 import TimelineChart from "../components/TimelineChart";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { goalId, goalPeriod } from "../Atom";
+import { goalId, goalPeriod, userState } from "../Atom";
 import Badge from "./Badge";
 
 const Wrapper = styled.div`
@@ -363,6 +363,7 @@ function DashBoard() {
   const [doingGoals, setDoingGoals] = useState([]);
   const [doneGoals, setDoneGoals] = useState([]);
   const [badge, setBadge] = useState([]);
+  const [user, setUser] = useRecoilState(userState); // 로그인한 유저 - 현재 1번 사용자라고 가정
 
   const navigate = useNavigate();
   const { scrollY } = useViewportScroll();
@@ -388,22 +389,22 @@ function DashBoard() {
 
   useEffect(() => {
     // 최근 진행중 목표 3개 불러오기
-    axios.get("http://localhost:8080/api/dGoal/0").then((Response) => {
+    axios.get(`http://localhost:8080/api/dGoal/0/${user}`).then((Response) => {
       setDoingGoals(Response.data);
       // console.log(Response.data);
       setIsGoalPeriod(Response.data);
     });
 
     // 최근 완료된 목표 3개 불러오기
-    axios.get("http://localhost:8080/api/dGoal/1").then((Response) => {
+    axios.get(`http://localhost:8080/api/dGoal/1/${user}`).then((Response) => {
       setDoneGoals(Response.data);
       // console.log(Response.data);
     });
 
     // 획득한 배지 가져오기
-    axios
-      .get("http://localhost:8080/api/badge")
+    axios.get(`http://localhost:8080/api/mybadge/${user}`)
       .then((Response) => {
+        console.log(Response.data);
         setBadge(Response.data.slice(0, 5));
       })
       .catch((Error) => console.log(Error));
@@ -469,7 +470,7 @@ function DashBoard() {
               <BoxTitle style={{ marginBottom: "10px" }}>최근 획득 배지</BoxTitle>
               <BadgeList>
                 {badge &&
-                  badge.map((badge) => <Badge key={badge} badge={badge} setId={setId} />)}
+                  badge.map((badge) => <Badge key={badge.id} badge={badge.badge} setId={setId} />)}
                 {/* <Badge onClick={() => setId("1")} layoutId={"1"} />
                 <Badge onClick={() => setId("2")} layoutId={"2"} />
                 <Badge onClick={() => setId("3")} layoutId={"3"} />
