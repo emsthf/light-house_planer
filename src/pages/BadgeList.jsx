@@ -75,7 +75,7 @@ left: 50%;
 transform: translate(-50%, -50%);
 `;
 
-const BadgeCount = styled.div`
+const BadgeContent = styled.div`
   font-size: 0.9rem;
   font-weight: bold;
   position: absolute;
@@ -134,21 +134,21 @@ function BadgeList() {
       return (
         <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
           <Img src='../assets/images/badge100.png ' alt='goal badge' />
-          <BadgeCount>{badge.badge.badgeName}</BadgeCount>
+          <BadgeContent>{badge.badge.badgeName}({badge.count})</BadgeContent>
         </Badge>
       )
     } else if(badge.badge.badgeName === "90") {
       return (
         <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
           <Img src='../assets/images/badge90.png ' alt='goal badge' />
-          <BadgeCount>{badge.badge.badgeName}</BadgeCount>
+          <BadgeContent>{badge.badge.badgeName}({badge.count})</BadgeContent>
         </Badge>
       )
     } else if(badge.badge.badgeName === "80") {
       return (
         <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
           <Img src='../assets/images/badge80.png' alt='goal badge' />
-          <BadgeCount>{badge.badge.badgeName}</BadgeCount>
+          <BadgeContent>{badge.badge.badgeName}({badge.count})</BadgeContent>
         </Badge>
       )
     }
@@ -179,7 +179,7 @@ function BadgeList() {
               specialBadge && specialBadge.map(badge => (
                 <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
                   {badge.badge.badgeName.includes("Goal") ? <Img src='../assets/images/special_reward.png ' alt='special badge' /> : null}
-                  <BadgeCount>{badge.badge.badgeName}</BadgeCount>
+                  <BadgeContent>{badge.badge.badgeName}</BadgeContent>
                 </Badge>
               ))
             }

@@ -134,7 +134,7 @@ function SetGoalStep5() {
         ...goal,
         goalDesc: data.goalDesc,
         totalCount : goal.period % 7 >= goal.weekCount ? parseInt(totalCount) + parseInt(goal.weekCount) : totalCount,
-        userId : 1
+        userId : 1 // test용 user
       })
       .then((Response) => {
         console.log("Success");
