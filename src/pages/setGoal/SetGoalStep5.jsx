@@ -133,7 +133,8 @@ function SetGoalStep5() {
       .post(url, {
         ...goal,
         goalDesc: data.goalDesc,
-        totalCount : goal.period % 7 >= goal.weekCount ? parseInt(totalCount) + parseInt(goal.weekCount) : totalCount
+        totalCount : goal.period % 7 >= goal.weekCount ? parseInt(totalCount) + parseInt(goal.weekCount) : totalCount,
+        userId : 1
       })
       .then((Response) => {
         console.log("Success");

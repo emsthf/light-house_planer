@@ -312,7 +312,7 @@ function GoalDetail() {
       {
           post &&
           post.slice(0, limit).map(post => (
-            <Post>
+            <Post key={post.id}>
               <StyledLink to={`/board/${post.id}`}>
                 <h4>{post.title}</h4>
                 <p>{post.created}</p>
