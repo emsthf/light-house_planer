@@ -97,7 +97,6 @@ const PageWrapper = styled.div`
   margin-top: 4rem;
 `;
 
-
 function Board() {
   const [post, setPost] = useState([]);
   const [limit, setLimit] = useState(10); // 한 페이지당 게시물 수
@@ -105,11 +104,13 @@ function Board() {
   const offset = (page - 1) * limit; // 게시물의 위치
 
   useEffect(() => {
-    axios.get('http://localhost:8081/api/post')
-    .then(Response => {
-      // console.log(Response.data);
-      setPost(Response.data);
-    }).catch(Error => console.log(Error));
+    axios
+      .get("http://localhost:8081/api/post")
+      .then((Response) => {
+        // console.log(Response.data);
+        setPost(Response.data);
+      })
+      .catch((Error) => console.log(Error));
   }, []);
 
   return (
@@ -128,20 +129,18 @@ function Board() {
               </tr>
             </thead>
             <tbody>
-              {
-                post &&
-                post.slice(offset, offset + limit).map(post => (
-                    <TR key={post.id}>
-                      <TD textAlign={'center'}>인증</TD>
-                      <Link to={`/board/${post.id}`}>
-                        <TD>{post.title}</TD>
-                      </Link>
-                      <TD textAlign={'center'}>케빈</TD>
-                      <TD textAlign={'center'}>22.03.15</TD>
-                      <TD textAlign={'center'}>123</TD>
-                    </TR>
-                ))
-              }
+              {post &&
+                post.slice(offset, offset + limit).map((post) => (
+                  <TR key={post.id}>
+                    <TD textAlign={"center"}>인증</TD>
+                    <Link to={`/board/${post.id}`}>
+                      <TD>{post.title}</TD>
+                    </Link>
+                    <TD textAlign={"center"}>케빈</TD>
+                    <TD textAlign={"center"}>22.03.15</TD>
+                    <TD textAlign={"center"}>123</TD>
+                  </TR>
+                ))}
               {/* <TR>
                 <TD textAlign={"center"}>인증</TD>
                 <TD>3.15 공부 인증</TD>
