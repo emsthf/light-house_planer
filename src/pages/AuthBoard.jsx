@@ -189,10 +189,10 @@ const CancleBtn = styled.button`
 
 const EnrollEditBtn = styled.button`
   height: 45px;
-  width: 15%;
+  width: 160px;
   padding: 10px;
   margin-top: 25px;
-  margin-left: 870px;
+  margin-left: 30px;
   margin-right: 5px;
   margin-bottom: 20px;
   border-radius: 7px;
@@ -248,19 +248,20 @@ function AuthBoard() {
         content: data.content,
         created: now,
         goalId: goal.id,
-        // postImg : data.img
+        postImg: files, // img url 넘기기
       })
       .then((Response) => {
         console.log(Response.data);
         if (Response.data != null) {
-          axios.put(`http://localhost:8080/api/goal/${goal.id}`, {
-            ...goal,
-            checkDate: now,
-            postId: Response.data,
-          });
+          axios
+            .put(`http://localhost:8080/api/goal/${goal.id}`, {
+              ...goal,
+              checkDate: now,
+              postId: Response.data,
+            })
+            .then(navigate("/dash"));
         }
       })
-      .then(navigate("/dash"))
       .catch((Error) => console.log(Error));
   };
 
@@ -270,20 +271,26 @@ function AuthBoard() {
     reader.onload = function (e) {
       setImg(reader.result); // 미리보기1
     };
+  };
 
-    let files = e.target.photo.files;
-    const formData = new FormData();
-    formData.append("files", files.length && files[0].uploadedFile);
+  // 이미지 파일 업로드
+  const [files, setFiles] = useState([]);
+  const upload = (e) => {
+    if (document.getElementById("uploadFile").files.length) {
+      const reader = new FileReader(); // 파일 미리보기 객체
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = function (e) {
+        setImg(reader.result); // 미리보기1
+      };
 
-    axios({
-      method: "post",
-      url: "http://localhost:8081/postImg",
-      mode: "cors",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      data: formData,
-    });
+      const formData = new FormData();
+      formData.append("file", document.getElementById("uploadFile").files[0]);
+      axios.post("http://localhost:8081/api/postImg", formData).then((Response) => {
+        document.getElementById("uploadFile").value = "";
+        alert("업로드 완료!");
+        setFiles(files.concat([Response.data]));
+      });
+    }
   };
 
   useEffect(() => {
@@ -292,7 +299,13 @@ function AuthBoard() {
     // .then(Response => {
     //   setPost(Response.data)
     // }).catch(Error => console.log(Error));
-  }, []);
+
+    // 업로드된 이미지 url 불러오기
+    axios.get("http://localhost:8081/api/postImg").then((res) => {
+      setFiles(res.data);
+      console.log(res.data);
+    });
+  }, [files]);
 
   return (
     <Container>
@@ -304,26 +317,23 @@ function AuthBoard() {
               <TitleContent
                 type="text"
                 {...register("title", { required: true })}
-                value={post.title || ""}
               ></TitleContent>
             </Label>
             <Label>
-              <Content
-                {...register("content", { required: true })}
-                value={post.content || ""}
-              />
+              <Content {...register("content", { required: true })} />
             </Label>
 
             <GridBox>
               <Label>
                 <PictureUploadBox
-                  name="photo"
+                  id="uploadFile"
                   type="file"
                   accept="image/*"
                   {...register("img")}
-                  onChange={(e) => {
-                    readFile(e);
-                  }}
+                  onChange={upload}
+                  // onChange={(e) => {
+                  //   readFile(e);
+                  // }}
                 ></PictureUploadBox>
                 {img && <ImageThumbnail src={img} alt="thumbnail" />}
               </Label>
@@ -334,6 +344,11 @@ function AuthBoard() {
             </RightSideGridBox>
           </ContentBox>
         </AuthboardFrame>
+        {/* <div>
+          <input id="uploadFile" type="file" accept="image/*" onChange={upload} />
+          {img && <ImageThumbnail src={img} alt="thumbnail" />}
+          <button onClick={upload}>upLoad</button>
+        </div> */}
       </Wrapper>
     </Container>
   );
