@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { goalState } from "../Atom";
+import { goalState, userState } from "../Atom";
 
 const Container = styled.div`
   width: 1200px;
@@ -164,9 +164,12 @@ function AuthBoard() {
   const [post, setPost] = useState({});
   const [img, setImg] = useState("");
   const goal = useRecoilValue(goalState); // count check할 goalId
+  const user = useRecoilValue(userState); // 로그인한 사용자
   const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm();
+
+  console.log("authboard : " + goal.count);
 
   const today = new Date();
   const todayYear = today.getFullYear();
@@ -187,6 +190,7 @@ function AuthBoard() {
         created: now,
         goalId: goal.id,
         postImg: files, // img url 넘기기
+        userId : user
       })
       .then((Response) => {
         console.log(Response.data);
@@ -196,6 +200,8 @@ function AuthBoard() {
               ...goal,
               checkDate: now,
               postId: Response.data,
+              userId : user,
+              count : goal.count
             })
             .then(navigate("/dash"));
         }

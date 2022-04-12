@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { ProgressBar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { keyframes } from "styled-components";
-import { goalId, goalState } from "../Atom";
+import { goalId, goalState, userState } from "../Atom";
 import HeatMapChart from "../components/HeatMapChart";
 import HeatmapChart2 from "../components/HeatmapChart2";
 
@@ -90,6 +90,10 @@ const Button = styled.button`
       props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
     box-shadow: 3px 4px 10px #bbb;
   }
+  &:disabled {
+    background: linear-gradient(315deg, #cfcfcf, #707070 74%);
+    box-shadow: 3px 4px 10px #bbb;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -145,9 +149,9 @@ function GoalDetail() {
 
   const [checkGoal, setCheckGoal] = useRecoilState(goalState);
 
+  const user = useRecoilValue(userState); // 로그인한 사용자
   const [post, setPost] = useState([]); // 인증글
   const [limit, setLimit] = useState(5); // 처음 화면에 보여지는 인증글 수
-
 
   // 목표 세부 조회
   useEffect(() => {
@@ -182,7 +186,7 @@ function GoalDetail() {
   const handleCheck = () => {
     setCheckGoal({
       id: goal.id,
-      count: goal.count + 1,
+      count: goal.count + 1
     });
     navigate('/authboard')
   }
@@ -255,9 +259,9 @@ function GoalDetail() {
   const goalDelete = (id) => {
     if (window.confirm("정말 이 목표를 지우시겠습니까?")) {
       console.log(id);
-      axios
-        .delete(`http://localhost:8080/api/goal/${id}`)
+      axios.delete(`http://localhost:8080/api/goal/${id}/${user}`)
         .then((Response) => {
+          axios.delete(`http://localhost:8081/api/post/${id}/${user}`); // 목표 인증글 삭제
           navigate("/dash");
         })
         .catch((Error) => {
@@ -265,7 +269,6 @@ function GoalDetail() {
         });
     }
   };
-
 
   return (
     <Container>
@@ -291,7 +294,8 @@ function GoalDetail() {
           <Check>
             <span>오늘의 목표 체크</span>
             {/* <Input type="checkbox" onChange={() => onChecked()} /> */}
-            <Button marginLeft onClick={handleCheck}>인증글 쓰기</Button>
+            {/* 목표 시작일 0시 1분부터 인증 글 작성 가능 */}
+            <Button marginLeft onClick={handleCheck} disabled={new window.Date(goal.startDay) - 9 * 59 * 60 * 1000 >= new window.Date()}>인증글 쓰기</Button>
           </Check>
         )}
 
@@ -305,7 +309,7 @@ function GoalDetail() {
             hoverColor={"linear-gradient(315deg, #8e8e8e, #373737 74%)"}
             onClick={() => goalDelete(goal.id)}
           >
-            포 기
+            {goal.state === 0 ? "포 기" : "삭 제"}
           </Button>
         </ButtonWrapper>
       </Wrapper>
