@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProgressBar } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { DefaultValue, useRecoilValue } from "recoil";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { goalState, userState } from "../Atom";
 
@@ -173,12 +173,20 @@ function AuthBoard() {
   const user = useRecoilValue(userState); // 로그인한 사용자
   const navigate = useNavigate();
 
+  const location = useLocation();
+  console.log(location.state);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      title: location.state.title,
+      content: location.state.content,
+      img: location.state.img,
+    },
+  });
 
   const today = new Date();
   const todayYear = today.getFullYear();
@@ -324,24 +332,21 @@ function AuthBoard() {
       <Wrapper>
         <AuthboardFrame>
           <ContentBox encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>
-            <Writer>작성자</Writer>
+            <Writer>{post.userId === 1 ? "케빈" : null}</Writer>
             <Label>
               <TitleContent
                 type="text"
                 {...register("title", { required: true })}
-                defaultValue={post.title}
+                placeholder="제목을 입력해주세요"
               ></TitleContent>
               <ErrorMessage>
-                {errors.title?.type === "required" && "제목을 입력해주세요."}
+                {errors.title?.type === "required" && "제목이 비어있습니다."}
               </ErrorMessage>
             </Label>
             <Label>
-              <Content
-                {...register("content", { required: true })}
-                defaultValue={post.content}
-              />
+              <Content {...register("content", { required: true })} />
               <ErrorMessage>
-                {errors.content?.type === "required" && "내용을 입력해주세요."}
+                {errors.content?.type === "required" && "내용이 비어있습니다."}
               </ErrorMessage>
             </Label>
             <GridBox>
