@@ -182,9 +182,9 @@ function AuthBoard() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      title: location.state.title,
-      content: location.state.content,
-      img: location.state.img,
+      title: location.state != null ? location.state.title : null,
+      content: location.state != null ? location.state.content : null,
+      img: location.state != null ? location.state.img : null,
     },
   });
 
@@ -224,6 +224,7 @@ function AuthBoard() {
         })
         .then((Response) => {
           console.log(Response.data);
+          setFiles();
           if (Response.data != null) {
             axios
               .put(`http://localhost:8080/api/goal/${goal.id}`, {
@@ -273,7 +274,8 @@ function AuthBoard() {
 
   // 이미지 파일 업로드
   const [uploadPercentage, setUploadPercentage] = useState(0);
-  const [files, setFiles] = useState([]);
+  // const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState();
   const upload = (e) => {
     if (document.getElementById("uploadFile").files.length) {
       const options = {
@@ -305,7 +307,8 @@ function AuthBoard() {
         reader.onload = function (e) {
           setImg(reader.result); // 미리보기1
         };
-        setFiles(files.concat([Response.data]));
+        // setFiles(files.concat([Response.data]));
+        setFiles(Response.data);
       });
     }
   };
