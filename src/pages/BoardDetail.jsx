@@ -16,24 +16,21 @@ const Wrapper = styled.div`
 
 const TitleWrapper = styled.div`
   width: 100%;
-  height: 52px;
   text-align: center;
 `;
 
 const Title = styled.h3`
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   margin-bottom: 0.5rem;
 `;
 
 const InfoWrapper = styled.div`
-  display: flex;
-  justify-content: right;
-  font-size: 0.9rem;
-  color: #888;
+  display: grid;
+  grid-template-columns: 5fr 1fr;
 `;
 
 const Info = styled.div`
-  margin-left: 2rem;
+  text-align: left;
 `;
 
 const ContentWrapper = styled.div`
@@ -43,12 +40,15 @@ const ContentWrapper = styled.div`
 const Content = styled.div`
   width: 100%;
   min-height: 50vh;
-  border: 1px dotted #aaa;
-  margin: 1rem 0;
-  padding: 2rem;
+  border-top: 1px solid #aaa;
+  border-bottom: 3px solid #3b4890;
+  margin-top: 5px;
+  padding: 2rem 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  word-wrap: break-word;
+  line-height: 1.5em;
 `;
 
 const PostImg = styled.img`
@@ -137,11 +137,17 @@ function BoardDetail() {
     <Container>
       <Wrapper>
         <TitleWrapper>
-          <Title>{post.title}</Title>
+          <Title>
+            {post.category === "GOAL" ? "[인증]" : "[챌린지]"}&nbsp;
+            {post.title}
+          </Title>
           <InfoWrapper>
-            <Info>작성자</Info>
-            <Info>{post.created}</Info>
-            <Info>조회수</Info>
+            <Info>
+              {post.userId === 1 ? "케빈🕊️" : "비둘기"} &nbsp;&nbsp;&nbsp;&nbsp;
+              {post.created}
+            </Info>
+            {/* <Info></Info> */}
+            <Info>조회 {post.view}</Info>
           </InfoWrapper>
         </TitleWrapper>
         <ContentWrapper>

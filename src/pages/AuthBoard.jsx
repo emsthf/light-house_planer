@@ -177,7 +177,7 @@ function AuthBoard() {
     register,
     handleSubmit,
     formState: { errors },
-    getValues
+    getValues,
   } = useForm();
 
   const today = new Date();
@@ -190,45 +190,47 @@ function AuthBoard() {
   const onSubmit = (data) => {
     console.log("submit");
     console.log(data);
-    
-    if((post.title && post.content) !== null && post.created === now) {
-      axios.put(`http://localhost:8081/api/post/${post.id}`, {
-        id: post.id,
-        title: data.title,
-        content: data.content,
-        postImg: files, // img url 넘기기
-        goalId : goal.id,
-        created : post.created
-      }).then(navigate(`/board/${post.id}`))
-      .catch(Error => console.log(Error))
+
+    if ((post.title && post.content) !== null && post.created === now) {
+      axios
+        .put(`http://localhost:8081/api/post/${post.id}`, {
+          id: post.id,
+          title: data.title,
+          content: data.content,
+          postImg: files, // img url 넘기기
+          goalId: goal.id,
+          created: post.created,
+        })
+        .then(navigate(`/board/${post.id}`))
+        .catch((Error) => console.log(Error));
     } else {
       axios
-      .post("http://localhost:8081/api/post", {
-        categoryId: 1,
-        title: data.title,
-        content: data.content,
-        created: now,
-        goalId: goal.id,
-        postImg: files, // img url 넘기기
-        userId: user,
-      })
-      .then((Response) => {
-        console.log(Response.data);
-        if (Response.data != null) {
-          axios
-            .put(`http://localhost:8080/api/goal/${goal.id}`, {
-              ...goal,
-              checkDate: now,
-              postId: Response.data,
-              userId : user,
-            })
-            .then((res) => {
-              console.log(res);
-              navigate("/dash");
-            });
-        }
-      })
-      .catch((Error) => console.log(Error));
+        .post("http://localhost:8081/api/post", {
+          categoryId: 1,
+          title: data.title,
+          content: data.content,
+          created: now,
+          goalId: goal.id,
+          postImg: files, // img url 넘기기
+          userId: user,
+        })
+        .then((Response) => {
+          console.log(Response.data);
+          if (Response.data != null) {
+            axios
+              .put(`http://localhost:8080/api/goal/${goal.id}`, {
+                ...goal,
+                checkDate: now,
+                postId: Response.data,
+                userId: user,
+              })
+              .then((res) => {
+                console.log(res);
+                navigate("/dash");
+              });
+          }
+        })
+        .catch((Error) => console.log(Error));
     }
 
     // axios
@@ -259,14 +261,6 @@ function AuthBoard() {
     //     }
     //   })
     //   .catch((Error) => console.log(Error));
-  };
-
-  const readFile = (e) => {
-    const reader = new FileReader(); // 파일 미리보기 객체
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = function (e) {
-      setImg(reader.result); // 미리보기1
-    };
   };
 
   // 이미지 파일 업로드
@@ -310,11 +304,13 @@ function AuthBoard() {
 
   useEffect(() => {
     // 해당 일자에 작성한 일일 인증글이 있는 경우
-    axios.get(`http://localhost:8081/api/post/auth/find?goalId=${goal.id}&created=${now}`)
-    .then(Response => {
-      console.log(Response.data);
-      setPost(Response.data);
-    }).catch(Error => console.log(Error));
+    axios
+      .get(`http://localhost:8081/api/post/auth/find?goalId=${goal.id}&created=${now}`)
+      .then((Response) => {
+        console.log(Response.data);
+        setPost(Response.data);
+      })
+      .catch((Error) => console.log(Error));
 
     // 업로드된 이미지 url 불러오기
     axios.get("http://localhost:8081/api/postImg").then((res) => {
@@ -340,7 +336,10 @@ function AuthBoard() {
               </ErrorMessage>
             </Label>
             <Label>
-              <Content {...register("content", { required: true })} defaultValue={post.content} />
+              <Content
+                {...register("content", { required: true })}
+                defaultValue={post.content}
+              />
               <ErrorMessage>
                 {errors.content?.type === "required" && "내용을 입력해주세요."}
               </ErrorMessage>
@@ -376,7 +375,9 @@ function AuthBoard() {
             </GridBox>
             <RightSideGridBox>
               <CancleBtn type="reset">취 소</CancleBtn>
-              <EnrollEditBtn marginLeft>{post.created !== now ? "등 록" : "수 정"}</EnrollEditBtn>
+              <EnrollEditBtn marginLeft>
+                {post.created !== now ? "등 록" : "수 정"}
+              </EnrollEditBtn>
             </RightSideGridBox>
           </ContentBox>
         </AuthboardFrame>
