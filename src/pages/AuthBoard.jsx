@@ -200,7 +200,7 @@ function AuthBoard() {
         created: now,
         goalId: goal.id,
         postImg: files, // img url 넘기기
-        userId : user
+        userId: user,
       })
       .then((Response) => {
         console.log(Response.data);
@@ -210,8 +210,8 @@ function AuthBoard() {
               ...goal,
               checkDate: now,
               postId: Response.data,
-              userId : user,
-              count : goal.count
+              userId: user,
+              count: goal.count,
             })
             .then((res) => {
               console.log(res);
@@ -232,16 +232,9 @@ function AuthBoard() {
 
   // 이미지 파일 업로드
   const [uploadPercentage, setUploadPercentage] = useState(0);
-
   const [files, setFiles] = useState([]);
   const upload = (e) => {
     if (document.getElementById("uploadFile").files.length) {
-      const reader = new FileReader(); // 파일 미리보기 객체
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = function (e) {
-        setImg(reader.result); // 미리보기1
-      };
-
       const options = {
         onUploadProgress: (ProgressEvent) => {
           const { loaded, total } = ProgressEvent;
@@ -256,19 +249,23 @@ function AuthBoard() {
 
       const formData = new FormData();
       formData.append("file", document.getElementById("uploadFile").files[0]);
-      axios
-        .post("http://localhost:8081/api/postImg", formData, options)
-        .then((Response) => {
-          // document.getElementById("uploadFile").value = "";
-          console.log(Response);
-          setUploadPercentage(100, () => {
-            setTimeout(() => {
-              setUploadPercentage(0);
-            }, 1000);
-          });
-          alert("업로드 완료!");
-          setFiles(files.concat([Response.data]));
+      axios.post("http://localhost:8081/api/postImg", formData, options).then((res) => {
+        // document.getElementById("uploadFile").value = "";
+        console.log(res);
+        setUploadPercentage(100, () => {
+          setTimeout(() => {
+            setUploadPercentage(0);
+          }, 1000);
         });
+        alert("업로드 완료!");
+
+        const reader = new FileReader(); // 파일 미리보기 객체
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = function (e) {
+          setImg(reader.result); // 미리보기1
+        };
+        setFiles(files.concat([Response.data]));
+      });
     }
   };
 

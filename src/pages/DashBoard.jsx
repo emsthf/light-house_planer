@@ -19,11 +19,11 @@ const Wrapper = styled.div`
   padding: 100px 250px 150px 100px;
   margin: auto;
   margin-top: 5vh;
-  @media screen and (min-width: 768px) {
+  @media screen and (max-width: 768px) {
     padding-right: 24px !important;
     padding-left: 24px !important;
   }
-  @media screen and (min-width: 768px) {
+  @media screen and (max-width: 500px) {
     padding-right: 24px !important;
     padding-left: 24px !important;
   }
@@ -402,7 +402,8 @@ function DashBoard() {
     });
 
     // 획득한 배지 가져오기
-    axios.get(`http://localhost:8080/api/mybadge/${user}`)
+    axios
+      .get(`http://localhost:8080/api/mybadge/${user}`)
       .then((Response) => {
         console.log(Response.data);
         setBadge(Response.data.slice(0, 5));
@@ -470,7 +471,9 @@ function DashBoard() {
               <BoxTitle style={{ marginBottom: "10px" }}>최근 획득 배지</BoxTitle>
               <BadgeList>
                 {badge &&
-                  badge.map((badge) => <Badge key={badge.id} badge={badge.badge} setId={setId} />)}
+                  badge.map((badge) => (
+                    <Badge key={badge.id} badge={badge.badge} setId={setId} />
+                  ))}
                 {/* <Badge onClick={() => setId("1")} layoutId={"1"} />
                 <Badge onClick={() => setId("2")} layoutId={"2"} />
                 <Badge onClick={() => setId("3")} layoutId={"3"} />

@@ -188,7 +188,7 @@ function GoalDetail() {
   const handleCheck = () => {
     setCheckGoal({
       id: goal.id,
-      count: goal.count + 1
+      count: goal.count + 1,
     });
     navigate("/authboard");
   };
@@ -261,7 +261,8 @@ function GoalDetail() {
   const goalDelete = (id) => {
     if (window.confirm("정말 이 목표를 지우시겠습니까?")) {
       console.log(id);
-      axios.delete(`http://localhost:8080/api/goal/${id}/${user}`)
+      axios
+        .delete(`http://localhost:8080/api/goal/${id}/${user}`)
         .then((Response) => {
           axios.delete(`http://localhost:8081/api/post/${id}/${user}`); // 목표 인증글 삭제
           navigate("/dash");
@@ -299,14 +300,16 @@ function GoalDetail() {
           <Check>
             <span>오늘의 목표 체크</span>
             {/* <Input type="checkbox" onChange={() => onChecked()} /> */}
-<<<<<<< HEAD
             {/* 목표 시작일 0시 1분부터 인증 글 작성 가능 */}
-            <Button marginLeft onClick={handleCheck} disabled={new window.Date(goal.startDay) - 9 * 59 * 60 * 1000 >= new window.Date()}>인증글 쓰기</Button>
-=======
-            <Button marginLeft onClick={handleCheck}>
+            <Button
+              marginLeft
+              onClick={handleCheck}
+              disabled={
+                new window.Date(goal.startDay) - 9 * 59 * 60 * 1000 >= new window.Date()
+              }
+            >
               인증글 쓰기
             </Button>
->>>>>>> fb296bb729879128f5497c887378d802e74f4fea
           </Check>
         )}
 
