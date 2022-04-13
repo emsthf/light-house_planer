@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ProgressBar } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { DefaultValue, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { goalState, userState } from "../Atom";
 
@@ -167,7 +167,7 @@ const ImageThumbnail = styled.img`
 `;
 
 function AuthBoard() {
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState({}); // 이미 작성된 일일 인증글이 있는 경우
   const [img, setImg] = useState("");
   const goal = useRecoilValue(goalState); // count check할 goalId
   const user = useRecoilValue(userState); // 로그인한 사용자
@@ -177,9 +177,8 @@ function AuthBoard() {
     register,
     handleSubmit,
     formState: { errors },
+    getValues
   } = useForm();
-
-  console.log("authboard : " + goal.count);
 
   const today = new Date();
   const todayYear = today.getFullYear();
@@ -191,8 +190,19 @@ function AuthBoard() {
   const onSubmit = (data) => {
     console.log("submit");
     console.log(data);
-
-    axios
+    
+    if((post.title && post.content) !== null && post.created === now) {
+      axios.put(`http://localhost:8081/api/post/${post.id}`, {
+        id: post.id,
+        title: data.title,
+        content: data.content,
+        postImg: files, // img url 넘기기
+        goalId : goal.id,
+        created : post.created
+      }).then(navigate(`/board/${post.id}`))
+      .catch(Error => console.log(Error))
+    } else {
+      axios
       .post("http://localhost:8081/api/post", {
         categoryId: 1,
         title: data.title,
@@ -211,7 +221,7 @@ function AuthBoard() {
               checkDate: now,
               postId: Response.data,
               userId : user,
-              count : goal.count
+              // count : goal.count
             })
             .then((res) => {
               console.log(res);
@@ -220,6 +230,36 @@ function AuthBoard() {
         }
       })
       .catch((Error) => console.log(Error));
+    }
+
+    // axios
+    //   .post("http://localhost:8081/api/post", {
+    //     categoryId: 1,
+    //     title: data.title,
+    //     content: data.content,
+    //     created: now,
+    //     goalId: goal.id,
+    //     postImg: files, // img url 넘기기
+    //     userId : user
+    //   })
+    //   .then((Response) => {
+    //     console.log(Response.data);
+    //     if (Response.data != null) {
+    //       axios
+    //         .put(`http://localhost:8080/api/goal/${goal.id}`, {
+    //           ...goal,
+    //           checkDate: now,
+    //           postId: Response.data,
+    //           userId : user,
+    //           // count : goal.count
+    //         })
+    //         .then((res) => {
+    //           console.log(res);
+    //           navigate("/dash");
+    //         });
+    //     }
+    //   })
+    //   .catch((Error) => console.log(Error));
   };
 
   const readFile = (e) => {
@@ -274,10 +314,11 @@ function AuthBoard() {
 
   useEffect(() => {
     // 해당 일자에 작성한 일일 인증글이 있는 경우
-    // axios.get(`http://localhost:8081/api/post/auth/find?goalId=${goal.id}&created=${now}`)
-    // .then(Response => {
-    //   setPost(Response.data)
-    // }).catch(Error => console.log(Error));
+    axios.get(`http://localhost:8081/api/post/auth/find?goalId=${goal.id}&created=${now}`)
+    .then(Response => {
+      console.log(Response.data);
+      setPost(Response.data);
+    }).catch(Error => console.log(Error));
 
     // 업로드된 이미지 url 불러오기
     axios.get("http://localhost:8081/api/postImg").then((res) => {
@@ -296,13 +337,14 @@ function AuthBoard() {
               <TitleContent
                 type="text"
                 {...register("title", { required: true })}
+                defaultValue={post.title}
               ></TitleContent>
               <ErrorMessage>
                 {errors.title?.type === "required" && "제목을 입력해주세요."}
               </ErrorMessage>
             </Label>
             <Label>
-              <Content {...register("content", { required: true })} />
+              <Content {...register("content", { required: true })} defaultValue={post.content} />
               <ErrorMessage>
                 {errors.content?.type === "required" && "내용을 입력해주세요."}
               </ErrorMessage>
@@ -333,11 +375,12 @@ function AuthBoard() {
                 ) : null}
 
                 {img && <ImageThumbnail src={img} alt="thumbnail" />}
+                {post.postImg && <ImageThumbnail src={post.postImg} alt="thumbnail" />}
               </Label>
             </GridBox>
             <RightSideGridBox>
-              <CancleBtn type="reset">취소버튼</CancleBtn>
-              <EnrollEditBtn marginLeft>등록/수정버튼</EnrollEditBtn>
+              <CancleBtn type="reset">취 소</CancleBtn>
+              <EnrollEditBtn marginLeft>{post.title === null ? "등 록" : "수 정"}</EnrollEditBtn>
             </RightSideGridBox>
           </ContentBox>
         </AuthboardFrame>
