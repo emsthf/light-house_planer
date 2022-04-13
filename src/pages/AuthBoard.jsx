@@ -176,8 +176,7 @@ function AuthBoard() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-    getValues
+    formState: { errors }
   } = useForm();
 
   const today = new Date();
@@ -370,8 +369,20 @@ function AuthBoard() {
                   />
                 ) : null}
 
-                {img && <ImageThumbnail src={img} alt="thumbnail" />}
-                {post.postImg && <ImageThumbnail src={post.postImg} alt="thumbnail" />}
+                {
+                  img && 
+                  <div>
+                    미리보기 : 
+                    <ImageThumbnail src={img} alt="thumbnail" />
+                  </div>
+                }
+                {
+                  post.postImg && 
+                  <div>
+                    기존 이미지 : 
+                    <ImageThumbnail src={post.postImg} alt="thumbnail" />
+                  </div>
+                }
               </Label>
             </GridBox>
             <RightSideGridBox>
