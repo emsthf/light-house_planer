@@ -182,9 +182,9 @@ function AuthBoard() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      title: location.state.title,
-      content: location.state.content,
-      img: location.state.img,
+      title: location.state != null ? location.state.title : null,
+      content: location.state != null ? location.state.content : null,
+      img: location.state != null ? location.state.img : null,
     },
   });
 
