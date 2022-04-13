@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 100px 250px 150px 100px;
+  padding: 100px 250px 150px 250px;
   margin: auto;
   margin-top: 5vh;
   @media screen and (max-width: 768px) {
@@ -396,10 +396,13 @@ function DashBoard() {
     });
 
     // 최근 완료된 목표 3개 불러오기
-    axios.get(`http://localhost:8080/api/dGoal/1/${user}`).then((Response) => {
-      setDoneGoals(Response.data);
-      // console.log(Response.data);
-    });
+    axios
+      .get(`http://localhost:8080/api/dGoal/1/${user}`)
+      .then((Response) => {
+        setDoneGoals(Response.data);
+        // console.log(Response.data);
+      })
+      .catch((Error) => console.log(Error));
 
     // 획득한 배지 가져오기
     axios
@@ -452,6 +455,9 @@ function DashBoard() {
                     </div>
                     <div>
                       <Explanation>{item.goalDesc}</Explanation>
+                    </div>
+                    <div>
+                      {item.count} / {item.totalCount}
                     </div>
                   </Goal>
                 ))

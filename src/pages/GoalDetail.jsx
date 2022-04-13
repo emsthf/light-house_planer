@@ -166,6 +166,7 @@ function GoalDetail() {
         console.log(Error);
       });
 
+    // 골 id로 골에 달린 모든 post 조회
     axios
       .get(`http://localhost:8081/api/post/auth/${isGoalId}`)
       .then((Response) => {
@@ -180,7 +181,7 @@ function GoalDetail() {
       id: goal.id,
       count: goal.count + 1,
     });
-    navigate("/authboard");
+    navigate("/authboard", { state: post[post.length - 1] });
   };
 
   // 목표 삭제
