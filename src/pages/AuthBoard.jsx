@@ -380,7 +380,7 @@ function AuthBoard() {
             </GridBox>
             <RightSideGridBox>
               <CancleBtn type="reset">취 소</CancleBtn>
-              <EnrollEditBtn marginLeft>{post.title === null ? "등 록" : "수 정"}</EnrollEditBtn>
+              <EnrollEditBtn marginLeft>{post.created !== now ? "등 록" : "수 정"}</EnrollEditBtn>
             </RightSideGridBox>
           </ContentBox>
         </AuthboardFrame>
