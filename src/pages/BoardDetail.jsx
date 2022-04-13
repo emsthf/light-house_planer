@@ -140,7 +140,7 @@ function BoardDetail() {
           <Title>{post.title}</Title>
           <InfoWrapper>
             <Info>작성자</Info>
-            <Info>작성일자</Info>
+            <Info>{post.created}</Info>
             <Info>조회수</Info>
           </InfoWrapper>
         </TitleWrapper>
@@ -149,7 +149,7 @@ function BoardDetail() {
             <PostImg src={post.postImg} />
             {post.content}
           </Content>
-          <Comment>
+          {/* <Comment>
             <CommentForm>
               <Label>아이디</Label>
               <Textarea readOnly></Textarea>
@@ -174,14 +174,14 @@ function BoardDetail() {
             >
               작성
             </Button>
-          </CommentForm>
+          </CommentForm> */}
         </ContentWrapper>
         <ButtonWrapper>
           <Link to="/board">
             <Button>글 목록</Button>
           </Link>
-          <Button>수정</Button>
-          <Button backgroundColor={"#373737"}>삭제</Button>
+          {/* <Button>수정</Button>
+          <Button backgroundColor={"#373737"}>삭제</Button> */}
         </ButtonWrapper>
       </Wrapper>
     </Container>

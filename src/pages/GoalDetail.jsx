@@ -143,7 +143,7 @@ function GoalDetail() {
   const [isGoalId, setIsGoalId] = useRecoilState(goalId);
   const [goal, setGoal] = useState({});
   const [now, setNow] = useState();
-  const [checked, setChecked] = useState(false);
+  // const [checked, setChecked] = useState(false);
   const url = `http://localhost:8080/api/goal/${isGoalId}`;
   const navigate = useNavigate();
 
@@ -160,14 +160,6 @@ function GoalDetail() {
       .then((Response) => {
         setGoal(Response.data);
         console.log(Response.data);
-        // setNow(
-        //   (
-        //     (Response.data.count /
-        //       (Math.ceil(Response.data.totalCount / 7) * Response.data.weekCount +
-        //         (Response.data.totalCount % 7))) *
-        //     100
-        //   ).toFixed(2)
-        // );
         setNow(((Response.data.count / Response.data.totalCount) * 100).toFixed(2));
       })
       .catch((Error) => {
@@ -180,9 +172,7 @@ function GoalDetail() {
         setPost(Response.data);
       })
       .catch((Error) => console.log(Error));
-  }, [checked]);
-
-  // const now = 60;
+  }, []);
 
   // 인증글쓰기로 목표 일일 체크
   const handleCheck = () => {
@@ -192,70 +182,6 @@ function GoalDetail() {
     });
     navigate("/authboard");
   };
-
-  // 목표 일일 체크
-  // const onChecked = () => {
-  //   console.log("check");
-  //   if (checked === false) {
-  //     axios
-  //       .put(`http://localhost:8080/api/goal/${goal.id}`, {
-  //         id: goal.id,
-  //         goalTitle: goal.goalTitle,
-  //         goalDesc: goal.goalDesc,
-  //         startDay: goal.startDay,
-  //         endDay: goal.endDay,
-  //         weekCount: goal.weekCount,
-  //         count: goal.count + 1,
-  //         // totalCount: goal.totalCount,
-  //         // state: goal.state,
-  //       })
-  //       .then((Response) => {
-  //         setChecked(!checked); // 체크 상태 변경
-  //         window.alert("오늘 목표 달성!");
-  //         // setNow(
-  //         //   (
-  //         //     (Response.data.count /
-  //         //       (Math.ceil(Response.data.totalCount / 7) * Response.data.weekCount +
-  //         //         (Response.data.totalCount % 7))) *
-  //         //     100
-  //         //   ).toFixed(2)
-  //         // );
-  //         setNow(((Response.data.count / Response.data.totalCount) * 100).toFixed(2));
-  //       })
-  //       .catch((Error) => {
-  //         console.log(Error);
-  //       });
-  //   } else {
-  //     axios
-  //       .put(`http://localhost:8080/api/goal/${goal.id}`, {
-  //         id: goal.id,
-  //         goalTitle: goal.goalTitle,
-  //         goalDesc: goal.goalDesc,
-  //         startDay: goal.startDay,
-  //         endDay: goal.endDay,
-  //         weekCount: goal.weekCount,
-  //         count: goal.count - 1,
-  //         totalCount: goal.totalCount,
-  //         doing: goal.doing,
-  //         state: goal.state,
-  //       })
-  //       .then((Response) => {
-  //         setChecked(!checked);
-  //         // setNow(
-  //         //   (
-  //         //     (Response.data.count /
-  //         //       (Math.ceil(Response.data.totalCount / 7) * Response.data.weekCount +
-  //         //         (Response.data.totalCount % 7))) *
-  //         //     100
-  //         //   ).toFixed(2)
-  //         // );
-  //         setNow(((Response.data.count / Response.data.totalCount) * 100).toFixed(2));
-  //       })
-  //       .catch((Error) => {
-  //         console.log(Error);
-  //       });
-  //   }
-  // };
 
   // 목표 삭제
   const goalDelete = (id) => {
