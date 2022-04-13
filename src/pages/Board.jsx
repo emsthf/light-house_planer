@@ -2,33 +2,53 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Pagination from "../components/Pagination";
 
-const Container = styled.div`
-  width: 80vw;
-  margin: auto;
-`;
+// const Container = styled.div`
+//   width: 80vw;
+//   margin: auto;
+// `;
 
 const Wrapper = styled.div`
-  /* background-color: #74b9ff; */
   height: auto;
-  min-height: 140vh;
-  width: 100%;
+  min-height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 100px 250px 150px 100px;
+  padding: 100px 0px 150px 0px;
   margin: auto;
-  @media screen and (min-width: 768px) {
+  margin-top: 5vh;
+  @media screen and (max-width: 768px) {
     padding-right: 24px !important;
     padding-left: 24px !important;
   }
-  @media screen and (min-width: 768px) {
-    padding-right: 24px !important;
-    padding-left: 24px !important;
+  @media screen and (max-width: 500px) {
+    padding-right: 50px !important;
+    padding-left: 50px !important;
   }
 `;
+
+// const Wrapper = styled.div`
+//   /* background-color: #74b9ff; */
+//   height: auto;
+//   min-height: 140vh;
+//   width: 100%;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   padding: 100px 250px 150px 100px;
+//   margin: auto;
+//   @media screen and (min-width: 768px) {
+//     padding-right: 24px !important;
+//     padding-left: 24px !important;
+//   }
+//   @media screen and (min-width: 768px) {
+//     padding-right: 24px !important;
+//     padding-left: 24px !important;
+//   }
+// `;
 
 const BoardBox = styled.div`
   width: 100%;
@@ -48,11 +68,12 @@ const BoxTitle = styled.span`
 
 const Table = styled.table`
   border-collapse: collapse;
-  width: 100%;
+  width: 60%;
   border-style: hidden;
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 768px) {
     table {
       font-size: 8px;
+      width: 90%;
     }
   }
 `;
@@ -72,6 +93,7 @@ const TH = styled.th`
 const TR = styled(motion.tr)`
   /* cursor: pointer; */
   height: 45px;
+  cursor: pointer;
   &:nth-child(even) {
     background-color: rgba(154, 170, 192, 0.2);
   }
@@ -113,35 +135,40 @@ function Board() {
       .catch((Error) => console.log(Error));
   }, []);
 
+  const navigate = useNavigate();
+  const onClicked = (id) => {
+    navigate(`/board/${id}`);
+  };
+
   return (
-    <Container>
-      <Wrapper>
-        <BoardBox>
-          <BoxTitle>게시판</BoxTitle>
-          <Table>
-            <thead>
-              <tr>
-                <TH>Category</TH>
-                <TH>Title</TH>
-                <TH>작성자</TH>
-                <TH>Created date</TH>
-                <TH>View</TH>
-              </tr>
-            </thead>
-            <tbody>
-              {post &&
-                post.slice(offset, offset + limit).map((post) => (
-                  <TR key={post.id}>
-                    <TD textAlign={"center"}>인증</TD>
-                    <Link to={`/board/${post.id}`}>
-                      <TD>{post.title}</TD>
-                    </Link>
-                    <TD textAlign={"center"}>케빈</TD>
-                    <TD textAlign={"center"}>22.03.15</TD>
-                    <TD textAlign={"center"}>123</TD>
-                  </TR>
-                ))}
-              {/* <TR>
+    // <Container>
+    <Wrapper>
+      <BoardBox>
+        <BoxTitle>게시판</BoxTitle>
+        <Table>
+          <thead>
+            <tr>
+              <TH>Category</TH>
+              <TH>Title</TH>
+              <TH>작성자</TH>
+              <TH>Created date</TH>
+              <TH>View</TH>
+            </tr>
+          </thead>
+          <tbody>
+            {post &&
+              post.slice(offset, offset + limit).map((post) => (
+                <TR key={post.id} onClick={() => onClicked(post.id)}>
+                  <TD textAlign={"center"}>
+                    {post.category === "GOAL" ? "인증" : "챌린지"}
+                  </TD>
+                  <TD>{post.title}</TD>
+                  <TD textAlign={"center"}>케빈</TD>
+                  <TD textAlign={"center"}>{post.created}</TD>
+                  <TD textAlign={"center"}>{post.view}</TD>
+                </TR>
+              ))}
+            {/* <TR>
                 <TD textAlign={"center"}>인증</TD>
                 <TD>3.15 공부 인증</TD>
                 <TD textAlign={"center"}>케빈</TD>
@@ -176,14 +203,14 @@ function Board() {
                 <TD textAlign={"center"}>22.03.19</TD>
                 <TD textAlign={"center"}>2340</TD>
               </TR> */}
-            </tbody>
-          </Table>
-          <PageWrapper>
-            <Pagination total={post.length} limit={limit} page={page} setPage={setPage} />
-          </PageWrapper>
-        </BoardBox>
-      </Wrapper>
-    </Container>
+          </tbody>
+        </Table>
+        <PageWrapper>
+          <Pagination total={post.length} limit={limit} page={page} setPage={setPage} />
+        </PageWrapper>
+      </BoardBox>
+    </Wrapper>
+    // </Container>
   );
 }
 
