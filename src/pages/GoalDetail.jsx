@@ -181,7 +181,11 @@ function GoalDetail() {
       id: goal.id,
       count: goal.count + 1,
     });
-    navigate("/authboard", { state: post[post.length - 1] });
+    if (post != null) {
+      navigate("/authboard", { state: post[post.length - 1] });
+    } else {
+      navigate("/authboard");
+    }
   };
 
   // 목표 삭제
