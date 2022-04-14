@@ -51,11 +51,11 @@ const Content = styled.div`
   line-height: 1.5em;
 `;
 
-const PostImg = styled.img`
+const NotiImg = styled.img`
   src: ${(props) => props.src};
   width: 500px;
   height: 600px;
-  alt: "postImg";
+  alt: "NotificationImg";
   object-fit: contain;
 `;
 
@@ -118,17 +118,16 @@ const Button = styled.button`
   }
 `;
 
-function BoardDetail() {
+function NotificationDetail() {
   const { id } = useParams();
-
-  const [post, setPost] = useState({});
+  const [noti, setNoti] = useState({});
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8081/api/post/${id}`)
+      .get(`http://localhost:8081/api/notification/${id}`)
       .then((Response) => {
-        setPost(Response.data);
-        console.log(Response.data.postImg);
+        setNoti(Response.data);
+        console.log(Response.data.notifImg);
       })
       .catch((Error) => console.log(Error));
   }, []);
@@ -137,23 +136,20 @@ function BoardDetail() {
     <Container>
       <Wrapper>
         <TitleWrapper>
-          <Title>
-            {post.category === "GOAL" ? "[인증]" : "[챌린지]"}&nbsp;
-            {post.title}
-          </Title>
+          <Title>{noti.title}</Title>
           <InfoWrapper>
             <Info>
-              {post.userId === 1 ? "케빈🕊️" : "비둘기"} &nbsp;&nbsp;&nbsp;&nbsp;
-              {post.created}
+              admin😼&nbsp;&nbsp;|&nbsp;&nbsp;
+              {noti.created}
             </Info>
             {/* <Info></Info> */}
-            <Info>조회 {post.view}</Info>
+            <Info></Info>
           </InfoWrapper>
         </TitleWrapper>
         <ContentWrapper>
           <Content>
-            {post.postImg ? <PostImg src={post.postImg} /> : null}
-            {post.content}
+            {noti.notifImg ? <NotiImg src={noti.notifImg} /> : null}
+            {noti.content}
           </Content>
           {/* <Comment>
             <CommentForm>
@@ -183,8 +179,8 @@ function BoardDetail() {
           </CommentForm> */}
         </ContentWrapper>
         <ButtonWrapper>
-          <Link to="/board">
-            <Button>글 목록</Button>
+          <Link to="/noti">
+            <Button>공지 목록</Button>
           </Link>
           {/* <Button>수정</Button>
           <Button backgroundColor={"#373737"}>삭제</Button> */}
@@ -194,4 +190,4 @@ function BoardDetail() {
   );
 }
 
-export default BoardDetail;
+export default NotificationDetail;

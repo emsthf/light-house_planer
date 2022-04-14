@@ -378,11 +378,11 @@ function DashBoard() {
     navigate("/badge");
   };
 
-  // 모달용 옵션
   const onClicked = (id) => {
     setIsGoalId(id);
     navigate(`/goal/${id}`);
   };
+
   // 모달 배경 클릭시 이전 화면으로
   const onOverlayClick = () => {
     navigate("/dash");

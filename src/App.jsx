@@ -32,6 +32,10 @@ import BoardDetail from "./pages/BoardDetail";
 import GoalList from "./pages/GoalList";
 import TopScroll from "./components/TopScroll";
 import SetChallenge from "./pages/SetChallenge";
+import ChanllengeList from "./pages/ChanllengeList";
+import Notification from "./pages/Notification";
+import NotificationDetail from "./pages/NotificationDetail";
+import Challenge2 from "./pages/Challenge2";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -124,10 +128,14 @@ function App() {
           <Route path="/goal/*" element={<GoalDetail />} />
           <Route path="/badge" element={<BadgeList />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/noti" element={<Notification />} />
+          <Route path="/noti/:id" element={<NotificationDetail />} />
           <Route path="/board" element={<Board />} />
           <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/" element={<Landing />} />
-          <Route path="/challenge" element={<Challenge />} />
+          <Route path="/challenge/*" element={<Challenge />} />
+          <Route path="/challengee" element={<Challenge2 />} />
+          <Route path="/challengeList" element={<ChanllengeList />} />
           <Route path="/challenges" element={<Challenges />} />
           <Route path="/set/challenge" element={<SetChallenge />} />
           <Route path="/authboard" element={<AuthBoard />} />

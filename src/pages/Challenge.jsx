@@ -203,16 +203,14 @@ function Challenge() {
     <Wrapper>
       <Container>
         <ChallengeNameBox>
-          <ChallengeName>Chanllenge Name : 1만보 걷기</ChallengeName>
+          <ChallengeName>Chanllenge : 1만보 걷기</ChallengeName>
         </ChallengeNameBox>
 
         <GridBox>
           <ContentBox>
             <ChallengeImg></ChallengeImg>
             <InfoBox>
-              <ChallengePeriod>
-                ◎ 챌린지기간: 5월1일(일)~6월31일(목)
-              </ChallengePeriod>
+              <ChallengePeriod>◎ 챌린지기간: 5월1일(일)~6월31일(목)</ChallengePeriod>
             </InfoBox>
             <InfoBox>
               <ChallengePeople>◎ 참여인원:4,871</ChallengePeople>
@@ -230,8 +228,8 @@ function Challenge() {
                 동일한 사진으로 2번 이상 인증한 것으로 스탭이 판단하는 경우,
                 <br />
                 또는 다른 회원들의 신고를 받으신 경우, <br />
-                등대에서는 추가 증빙을 요구할 수 있으며, 같은 신고가 반복될 경우
-                패널티가 있을 수 있습니다.
+                등대에서는 추가 증빙을 요구할 수 있으며, 같은 신고가 반복될 경우 패널티가
+                있을 수 있습니다.
                 <br />
               </ChallengeExplanation>
             </InfoBox>
@@ -239,7 +237,7 @@ function Challenge() {
           <div>
             <ChallengeRewardBox>
               <ChallengeRewardImg />
-              <EnrollBtn>신청버튼</EnrollBtn>
+              <EnrollBtn>신청하기</EnrollBtn>
             </ChallengeRewardBox>
           </div>
         </GridBox>
