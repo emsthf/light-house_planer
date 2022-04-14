@@ -209,7 +209,7 @@ function AuthBoard() {
           goalId: goal.id,
           created: post.created,
         })
-        .then(navigate(`/board/${post.id}`))
+        .then(navigate(`/goal/${post.id}`))
         .catch((Error) => console.log(Error));
     } else {
       axios
@@ -224,7 +224,7 @@ function AuthBoard() {
         })
         .then((Response) => {
           console.log(Response.data);
-          setFiles();
+          // setFiles();
           if (Response.data != null) {
             axios
               .put(`http://localhost:8080/api/goal/${goal.id}`, {
@@ -308,7 +308,8 @@ function AuthBoard() {
           setImg(reader.result); // 미리보기1
         };
         // setFiles(files.concat([Response.data]));
-        setFiles(Response.data);
+        setFiles(res.data);
+        console.log("이미지 업로드 완료 : ", res.data);
       });
     }
   };
@@ -324,10 +325,10 @@ function AuthBoard() {
       .catch((Error) => console.log(Error));
 
     // 업로드된 이미지 url 불러오기
-    axios.get("http://localhost:8081/api/postImg").then((res) => {
-      setFiles(res.data);
-      console.log(res.data);
-    });
+    // axios.get("http://localhost:8081/api/postImg").then((res) => {
+    //   setFiles(res.data);
+    //   console.log(res.data);
+    // });
   }, [files]);
 
   return (
