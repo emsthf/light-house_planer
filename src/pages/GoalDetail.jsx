@@ -178,7 +178,7 @@ function GoalDetail() {
   // 인증글쓰기로 목표 일일 체크
   const handleCheck = () => {
     setCheckGoal({
-      id: goal.id
+      id: goal.id,
     });
     if (post != null) {
       navigate("/authboard", { state: post[post.length - 1] });
