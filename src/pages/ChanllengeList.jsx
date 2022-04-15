@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { challengeId } from "../Atom";
+import axios from 'axios';
 
 const Wrapper = styled.div`
   height: auto;
@@ -108,16 +109,60 @@ const myVars = {
 };
 
 function ChanllengeList() {
+  const [challenge, setChallenge] = useState();
   const [isChallengeId, setIsChallengeId] = useRecoilState(challengeId);
   const navigate = useNavigate();
   const onClicked = (id) => {
     setIsChallengeId(id);
-    navigate(`/challenge/${id}`);
   };
+
+  useEffect(() => {
+    axios.get('http://localhost:8082/api/challenge')
+    .then(Response => {
+      console.log(Response.data);
+      setChallenge(Response.data);
+    }).catch(Error => console.log(Error));
+  }, []);
 
   return (
     <Wrapper>
       <Container>
+        {
+          challenge && 
+          challenge.map(challenge => (
+            <Link to={`/challenge/${challenge.id}`}>
+              <ChallengeBox onClick={() => onClicked()} key={challenge.id}>
+                <GridBox>
+                  <LeftGrid>
+                    <div style={{ marginBottom: 10 }}>
+                      <i className="fa-solid fa-person-running" style={{ fontSize: 22 }}></i>
+                      <GoalTitle>&nbsp;{challenge.challengeTitle}</GoalTitle>
+                      {/* <Status>진행 중</Status> */}
+                    </div>
+                    <div>
+                      <Explanation>{challenge.challengeDesc}</Explanation>
+                    </div>
+                  </LeftGrid>
+                  <MiddleGrid>
+                    {
+                      challenge.challengeState === 0
+                      ? (
+                        <Stamp variants={myVars} initial="start" animate="end">
+                          진행중!
+                        </Stamp>
+                      )
+                      : null
+                    }
+                  </MiddleGrid>
+                  <RightGrid>
+                    <div>기간 : {challenge.period}일</div>
+                    <div>신청자 0명</div>
+                  </RightGrid>
+                </GridBox>
+              </ChallengeBox>
+            </Link>
+          ))
+        }
         <ChallengeBox onClick={() => onClicked()}>
           <GridBox>
             <LeftGrid>
@@ -164,9 +209,9 @@ function ChanllengeList() {
             </RightGrid>
           </GridBox>
         </ChallengeBox>
+        {/* <ChallengeBox></ChallengeBox>
         <ChallengeBox></ChallengeBox>
-        <ChallengeBox></ChallengeBox>
-        <ChallengeBox></ChallengeBox>
+        <ChallengeBox></ChallengeBox> */}
       </Container>
     </Wrapper>
   );

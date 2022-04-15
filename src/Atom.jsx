@@ -44,3 +44,8 @@ export const challengeId = atom({
   key: "cId",
   default: 0,
 });
+
+export const imgUrl = atom({
+  key: "imgUrl",
+  default: "",
+});

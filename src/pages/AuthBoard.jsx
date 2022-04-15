@@ -1,22 +1,22 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { ProgressBar } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { goalState, userState } from "../Atom";
+import { goalState, imgUrl, userState } from "../Atom";
+import LoadingSpiner from "../components/LoadingSpiner";
 
 const Container = styled.div`
   width: 1200px;
   margin: 20vh auto;
-  min-height: 100vh;
+  min-height: 70vh;
   margin-bottom: 240px;
-  @media screen and (min-width: 768px) {
+  @media screen and (max-width: 768px) {
     padding-right: 24px !important;
     padding-left: 24px !important;
   }
-  @media screen and (min-width: 768px) {
+  @media screen and (max-width: 500px) {
     padding-right: 24px !important;
     padding-left: 24px !important;
   }
@@ -172,6 +172,9 @@ function AuthBoard() {
   const goal = useRecoilValue(goalState); // count check할 goalId
   const user = useRecoilValue(userState); // 로그인한 사용자
   const navigate = useNavigate();
+  const [file, setFile] = useRecoilState(imgUrl);
+  const [loadingToggle, setLoadingToggle] = useState(false);
+  const [imgLoading, setImgLoading] = useState(false);
 
   const location = useLocation();
   console.log(location.state);
@@ -199,47 +202,58 @@ function AuthBoard() {
     console.log("submit");
     console.log(data);
 
+    setLoadingToggle((prev) => !prev);
+
     if ((post.title && post.content) !== null && post.created === now) {
-      axios
-        .put(`http://localhost:8081/api/post/${post.id}`, {
-          id: post.id,
-          title: data.title,
-          content: data.content,
-          postImg: files, // img url 넘기기
-          goalId: goal.id,
-          created: post.created,
-        })
-        .then(navigate(`/goal/${post.id}`))
-        .catch((Error) => console.log(Error));
+      setTimeout(() => {
+        axios
+          .put(`http://localhost:8081/api/post/${post.id}`, {
+            id: post.id,
+            title: data.title,
+            content: data.content,
+            postImg: file, // img url 넘기기
+            goalId: goal.id,
+            created: post.created,
+          })
+          .then((res) => {
+            navigate(`/goal/${post.id}`);
+            console.log("수정 : ", res);
+            console.log("포스트 수정 img : ", file);
+          })
+          .catch((Error) => console.log(Error));
+      }, 3000);
     } else {
-      axios
-        .post("http://localhost:8081/api/post", {
-          categoryId: 1,
-          title: data.title,
-          content: data.content,
-          created: now,
-          goalId: goal.id,
-          postImg: files, // img url 넘기기
-          userId: user,
-        })
-        .then((Response) => {
-          console.log(Response.data);
-          // setFiles();
-          if (Response.data != null) {
-            axios
-              .put(`http://localhost:8080/api/goal/${goal.id}`, {
-                ...goal,
-                checkDate: now,
-                postId: Response.data,
-                userId: user,
-              })
-              .then((res) => {
-                console.log(res);
-                navigate("/dash");
-              });
-          }
-        })
-        .catch((Error) => console.log(Error));
+      setTimeout(() => {
+        axios
+          .post("http://localhost:8081/api/post", {
+            categoryId: 1,
+            title: data.title,
+            content: data.content,
+            created: now,
+            goalId: goal.id,
+            postImg: file, // img url 넘기기
+            userId: user,
+          })
+          .then((Response) => {
+            console.log("등록 : ", Response);
+            console.log("포스트 등록 img : ", file);
+            // setFile();
+            if (Response.data != null) {
+              axios
+                .put(`http://localhost:8080/api/goal/${goal.id}`, {
+                  ...goal,
+                  checkDate: now,
+                  postId: Response.data,
+                  userId: user,
+                })
+                .then((res) => {
+                  console.log(res);
+                  navigate("/dash");
+                });
+            }
+          })
+          .catch((Error) => console.log(Error));
+      }, 3000);
     }
 
     // axios
@@ -249,7 +263,7 @@ function AuthBoard() {
     //     content: data.content,
     //     created: now,
     //     goalId: goal.id,
-    //     postImg: files, // img url 넘기기
+    //     postImg: file, // img url 넘기기
     //     userId : user
     //   })
     //   .then((Response) => {
@@ -273,42 +287,28 @@ function AuthBoard() {
   };
 
   // 이미지 파일 업로드
-  const [uploadPercentage, setUploadPercentage] = useState(0);
-  // const [files, setFiles] = useState([]);
-  const [files, setFiles] = useState();
+  // const [uploadPercentage, setUploadPercentage] = useState(0);
+  // const [file, setFile] = useState([]);
+  // const [file, setFile] = useState();
   const upload = (e) => {
     if (document.getElementById("uploadFile").files.length) {
-      const options = {
-        onUploadProgress: (ProgressEvent) => {
-          const { loaded, total } = ProgressEvent;
-          let percent = Math.floor((loaded * 100) / total);
-          console.log(`${loaded}kb of ${total}kb | ${percent}%`);
-
-          if (percent < 100) {
-            setUploadPercentage(percent);
-          }
-        },
-      };
+      setImgLoading((prev) => !prev);
 
       const formData = new FormData();
       formData.append("file", document.getElementById("uploadFile").files[0]);
-      axios.post("http://localhost:8081/api/postImg", formData, options).then((res) => {
+      axios.post("http://localhost:8081/api/postImg", formData).then((res) => {
         // document.getElementById("uploadFile").value = "";
         console.log(res);
-        setUploadPercentage(100, () => {
-          setTimeout(() => {
-            setUploadPercentage(0);
-          }, 1000);
-        });
         alert("업로드 완료!");
+        setImgLoading(false);
 
         const reader = new FileReader(); // 파일 미리보기 객체
         reader.readAsDataURL(e.target.files[0]);
         reader.onload = function (e) {
-          setImg(reader.result); // 미리보기1
+          setImg(reader.result); // 미리보기
         };
-        // setFiles(files.concat([Response.data]));
-        setFiles(res.data);
+        // setFile(file.concat([Response.data]));
+        setFile(res.data);
         console.log("이미지 업로드 완료 : ", res.data);
       });
     }
@@ -323,51 +323,27 @@ function AuthBoard() {
         setPost(Response.data);
       })
       .catch((Error) => console.log(Error));
-
-    // 업로드된 이미지 url 불러오기
-    // axios.get("http://localhost:8081/api/postImg").then((res) => {
-    //   setFiles(res.data);
-    //   console.log(res.data);
-    // });
-  }, [files]);
+  }, [file]);
 
   return (
     <Container>
-      <Wrapper>
-        <AuthboardFrame>
-          <ContentBox encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>
-            <Writer>{post.userId === 1 ? "케빈" : null}</Writer>
-            <Label>
-              <TitleContent
-                type="text"
-                {...register("title", { required: true })}
-                placeholder="제목을 입력해주세요"
-              ></TitleContent>
-              <ErrorMessage>
-                {errors.title?.type === "required" && "제목이 비어있습니다."}
-              </ErrorMessage>
-            </Label>
-            <Label>
-              <Content {...register("content", { required: true })} />
-              <ErrorMessage>
-                {errors.content?.type === "required" && "내용이 비어있습니다."}
-              </ErrorMessage>
-            </Label>
-            <GridBox>
+      {loadingToggle === true ? (
+        <LoadingSpiner />
+      ) : (
+        <Wrapper>
+          <AuthboardFrame>
+            <ContentBox encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>
+              <Writer>{post.userId === 1 ? "케빈" : null}</Writer>
               <Label>
-                <PictureUploadBox
-                  id="uploadFile"
-                  type="file"
-                  accept="image/*"
-                  {...register("img", { required: true })}
-                  onChange={upload}
-                  // onChange={(e) => {
-                  //   readFile(e);
-                  // }}
-                />
+                <TitleContent
+                  type="text"
+                  {...register("title", { required: true })}
+                  placeholder="제목을 입력해주세요"
+                ></TitleContent>
                 <ErrorMessage>
-                  {errors.img?.type === "required" && "인증 사진이 없어요"}
+                  {errors.title?.type === "required" && "제목이 비어있습니다."}
                 </ErrorMessage>
+<<<<<<< HEAD
                 {uploadPercentage > 0 ? (
                   <ProgressBar
                     animated
@@ -392,22 +368,64 @@ function AuthBoard() {
                     <ImageThumbnail src={post.postImg} alt="thumbnail" />
                   </div>
                 }
+=======
+>>>>>>> 68a54c5f0d351888851935dbe56ead44e9fd05ef
               </Label>
-            </GridBox>
-            <RightSideGridBox>
-              <CancleBtn type="reset">취 소</CancleBtn>
-              <EnrollEditBtn marginLeft>
-                {post.created !== now ? "등 록" : "수 정"}
-              </EnrollEditBtn>
-            </RightSideGridBox>
-          </ContentBox>
-        </AuthboardFrame>
-        {/* <div>
+              <Label>
+                <Content {...register("content", { required: true })} />
+                <ErrorMessage>
+                  {errors.content?.type === "required" && "내용이 비어있습니다."}
+                </ErrorMessage>
+              </Label>
+              <GridBox>
+                <Label>
+                  <PictureUploadBox
+                    id="uploadFile"
+                    type="file"
+                    accept="image/*"
+                    {...register("img", { required: true })}
+                    onChange={upload}
+                    // onChange={(e) => {
+                    //   readFile(e);
+                    // }}
+                  />
+                  <ErrorMessage>
+                    {errors.img?.type === "required" && "인증 사진이 없어요"}
+                  </ErrorMessage>
+                  {/* {uploadPercentage > 0 ? (
+                    <ProgressBar
+                      animated
+                      now={uploadPercentage}
+                      active
+                      label={`${uploadPercentage}%`}
+                      style={{ width: "90%", marginTop: 12 }}
+                    />
+                  ) : null} */}
+
+                  {imgLoading === true ? (
+                    <LoadingSpiner />
+                  ) : (
+                    img && <ImageThumbnail src={img} alt="thumbnail" />
+                  )}
+                  {/* {img && <ImageThumbnail src={img} alt="thumbnail" />} */}
+                  {post.postImg && <ImageThumbnail src={post.postImg} alt="thumbnail" />}
+                </Label>
+              </GridBox>
+              <RightSideGridBox>
+                <CancleBtn type="reset">취 소</CancleBtn>
+                <EnrollEditBtn marginLeft>
+                  {post.created !== now ? "등 록" : "수 정"}
+                </EnrollEditBtn>
+              </RightSideGridBox>
+            </ContentBox>
+          </AuthboardFrame>
+          {/* <div>
           <input id="uploadFile" type="file" accept="image/*" onChange={upload} />
           {img && <ImageThumbnail src={img} alt="thumbnail" />}
           <button onClick={upload}>upLoad</button>
         </div> */}
-      </Wrapper>
+        </Wrapper>
+      )}
     </Container>
   );
 }
