@@ -49,7 +49,6 @@ const Content = styled.div`
   flex-direction: column;
   word-wrap: break-word;
   line-height: 1.5em;
-  white-space: pre-wrap; // <br>과 개행 문자에서 줄바꿈. 한 줄이 너무 길어서 넘칠 때에도 줄바꿈
 `;
 
 const PostImg = styled.img`
