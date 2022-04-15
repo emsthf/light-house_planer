@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { goalState, imgUrl, userState } from "../Atom";
-// import LoadingSpiner from "../components/LoadingSpiner";
+import LoadingSpiner from "../components/LoadingSpiner";
 
 const Container = styled.div`
   width: 1200px;
@@ -328,8 +328,7 @@ function AuthBoard() {
   return (
     <Container>
       {loadingToggle === true ? (
-        // <LoadingSpiner />
-        <div></div>
+        <LoadingSpiner />
       ) : (
         <Wrapper>
           <AuthboardFrame>
@@ -377,8 +376,7 @@ function AuthBoard() {
                   ) : null} */}
 
                   {imgLoading === true ? (
-                    // <LoadingSpiner />
-                    <div></div>
+                    <LoadingSpiner />
                   ) : (
                     img && <ImageThumbnail src={img} alt="thumbnail" />
                   )}
