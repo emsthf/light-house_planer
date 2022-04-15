@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 
@@ -198,6 +198,8 @@ function Challenge() {
   // const [id, setId] = useState(null);
   // const { scrollY } = useViewportScroll();
   // console.log(scrollY);
+
+  const { id } = useParams();
 
   return (
     <Wrapper>

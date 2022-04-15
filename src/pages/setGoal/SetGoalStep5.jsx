@@ -119,7 +119,11 @@ function SetGoalStep5() {
     formState: { errors },
   } = useForm();
 
-  const totalCount = Math.floor(goal.period / 7) * goal.weekCount;
+  const totalWeekCount = Math.floor(goal.period / 7) * goal.weekCount; // 전체 기간 주차별 실행해야 할 count 수
+  const remainderDay = goal.period - Math.floor(goal.period / 7) * 7; // 전체 기간에서 일주일 단위로 나누었을 때 나머지 부분
+
+  console.log("total week count : " + totalWeekCount);
+  console.log("remainderDay : " + remainderDay);
 
   const onSubmit = (data) => {
     // console.log(data);
@@ -133,7 +137,11 @@ function SetGoalStep5() {
       .post(url, {
         ...goal,
         goalDesc: data.goalDesc,
-        totalCount : goal.period % 7 >= goal.weekCount ? parseInt(totalCount) + parseInt(goal.weekCount) : totalCount,
+        totalCount : goal.period % 7 > goal.weekCount 
+          ? parseInt(totalWeekCount) + parseInt(goal.weekCount) 
+          : goal.period % 7 === 0 
+          ? totalWeekCount
+          : totalWeekCount + remainderDay,
         userId : 1 // test용 user
       })
       .then((Response) => {

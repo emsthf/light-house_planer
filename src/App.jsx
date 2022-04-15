@@ -133,7 +133,7 @@ function App() {
           <Route path="/board" element={<Board />} />
           <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/" element={<Landing />} />
-          <Route path="/challenge/*" element={<Challenge />} />
+          <Route path="/challenge/:id" element={<Challenge />} />
           <Route path="/challengee" element={<Challenge2 />} />
           <Route path="/challengeList" element={<ChanllengeList />} />
           <Route path="/challenges" element={<Challenges />} />

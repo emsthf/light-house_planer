@@ -357,6 +357,7 @@ const modalVariants = {
 };
 
 function DashBoard() {
+
   const [isGoalId, setIsGoalId] = useRecoilState(goalId);
   const [isGoalPeriod, setIsGoalPeriod] = useRecoilState(goalPeriod);
   const [id, setId] = useState(null); // 모달용 임시 state
