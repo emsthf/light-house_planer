@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { goalState, imgUrl, userState } from "../Atom";
-import LoadingSpiner from "../components/LoadingSpiner";
+// import LoadingSpiner from "../components/LoadingSpiner";
 
 const Container = styled.div`
   width: 1200px;
@@ -328,7 +328,8 @@ function AuthBoard() {
   return (
     <Container>
       {loadingToggle === true ? (
-        <LoadingSpiner />
+        // <LoadingSpiner />
+        <div></div>
       ) : (
         <Wrapper>
           <AuthboardFrame>
@@ -343,33 +344,6 @@ function AuthBoard() {
                 <ErrorMessage>
                   {errors.title?.type === "required" && "제목이 비어있습니다."}
                 </ErrorMessage>
-<<<<<<< HEAD
-                {uploadPercentage > 0 ? (
-                  <ProgressBar
-                    animated
-                    now={uploadPercentage}
-                    active
-                    label={`${uploadPercentage}%`}
-                    style={{ width: "90%", marginTop: 12 }}
-                  />
-                ) : null}
-
-                {
-                  img && 
-                  <div>
-                    미리보기 : 
-                    <ImageThumbnail src={img} alt="thumbnail" />
-                  </div>
-                }
-                {
-                  post.postImg && 
-                  <div>
-                    기존 이미지 : 
-                    <ImageThumbnail src={post.postImg} alt="thumbnail" />
-                  </div>
-                }
-=======
->>>>>>> 68a54c5f0d351888851935dbe56ead44e9fd05ef
               </Label>
               <Label>
                 <Content {...register("content", { required: true })} />
@@ -403,7 +377,8 @@ function AuthBoard() {
                   ) : null} */}
 
                   {imgLoading === true ? (
-                    <LoadingSpiner />
+                    // <LoadingSpiner />
+                    <div></div>
                   ) : (
                     img && <ImageThumbnail src={img} alt="thumbnail" />
                   )}
