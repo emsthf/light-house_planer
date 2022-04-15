@@ -26,12 +26,30 @@ const Col = styled.div`
   justify-content: space-between;
 `;
 
-const HeaderTitle = styled.div`
-  color: gray;
+const HeaderTitle = styled(motion.div)`
+  color: ${(props) => props.titleColor};
   font-size: 40px;
   margin-right: 25px;
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 600;
+  animation: ${(props) => props.neon};
+  @keyframes flicker {
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+      text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px #8220b5,
+        0 0 80px #8220b5, 0 0 90px #8220b5, 0 0 100px #8220b5, 0 0 150px #8220b5;
+    }
+    20%,
+    24%,
+    55% {
+      text-shadow: none;
+    }
+  }
 `;
 
 const Items = styled.ul`
@@ -88,7 +106,7 @@ const logoVariants = {
 
 const navVariants = {
   top: { backgroundColor: "rgba(0, 0, 0, 0)" },
-  scroll: { backgroundColor: "rgba(32, 32, 32, 1)" },
+  scroll: { backgroundColor: "#15141a" },
 };
 
 const Backdrop = styled(motion.div)`
@@ -205,7 +223,7 @@ function Header() {
   const homeMatch = useMatch("/dash");
   const boardMatch = useMatch("/board");
   const notiMatch = useMatch("/noti");
-  const challengeMatch = useMatch("/challenge");
+  const challengeMatch = useMatch("/challengeList");
   const loginMatch = useMatch("/login");
   // const inputAnumation = useAnimation();
   const navAnimation = useAnimation();
@@ -271,7 +289,12 @@ function Header() {
     <Nav variants={navVariants} initial="top" animate={navAnimation}>
       <Col>
         <Link to="/">
-          <HeaderTitle>Light House</HeaderTitle>
+          <HeaderTitle
+            titleColor={isDarkMode === true ? "#fff" : "gray"}
+            neon={isDarkMode === true ? "flicker 1.5s infinite alternate" : "none"}
+          >
+            Light House
+          </HeaderTitle>
         </Link>
         <DarkModeToggle onChange={toggleDarkAtom} checked={isDarkMode} size={60} />
       </Col>

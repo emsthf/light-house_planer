@@ -101,7 +101,7 @@ const TR = styled(motion.tr)`
     background-color: rgba(154, 170, 192, 0.1);
   }
   &:hover {
-    background-color: #ffffff;
+    background-color: ${(props) => props.theme.cardBgColor};
   }
 `;
 
@@ -159,7 +159,7 @@ function Notification() {
               noti.slice(offset, offset + limit).map((noti) => (
                 <TR key={noti.id} onClick={() => onClicked(noti.id)}>
                   <TD>{noti.title}</TD>
-                  <TD textAlign={"center"}>admin</TD>
+                  <TD textAlign={"center"}>admin😼</TD>
                   <TD textAlign={"center"}>{noti.created}</TD>
                 </TR>
               ))}

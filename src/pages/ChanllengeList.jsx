@@ -12,15 +12,15 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 100px 250px 150px 250px;
+  padding: 100px 400px 150px 400px;
   margin: auto;
   margin-top: 5vh;
   margin-bottom: 3vh;
-  @media screen and (max-width: 768px) {
-    padding-right: 24px !important;
-    padding-left: 24px !important;
+  @media screen and (max-width: 1150px) {
+    padding-right: 150px !important;
+    padding-left: 150px !important;
   }
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 768px) {
     padding-right: 24px !important;
     padding-left: 24px !important;
   }
