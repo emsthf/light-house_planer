@@ -101,7 +101,7 @@ const TR = styled(motion.tr)`
     background-color: rgba(154, 170, 192, 0.1);
   }
   &:hover {
-    background-color: #ffffff;
+    background-color: ${(props) => props.theme.cardBgColor};
   }
 `;
 

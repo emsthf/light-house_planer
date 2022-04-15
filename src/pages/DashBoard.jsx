@@ -19,11 +19,11 @@ const Wrapper = styled.div`
   padding: 100px 250px 150px 250px;
   margin: auto;
   margin-top: 5vh;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1150px) {
     padding-right: 24px !important;
     padding-left: 24px !important;
   }
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 768px) {
     padding-right: 24px !important;
     padding-left: 24px !important;
   }
