@@ -179,6 +179,7 @@ function GoalDetail() {
   const handleCheck = () => {
     setCheckGoal({
       id: goal.id,
+      count: goal.count + 1,
     });
     if (post != null) {
       navigate("/authboard", { state: post[post.length - 1] });
