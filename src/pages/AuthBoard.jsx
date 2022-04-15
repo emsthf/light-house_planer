@@ -233,7 +233,6 @@ function AuthBoard() {
             goalId: goal.id,
             postImg: file, // img url 넘기기
             userId: user,
-            count: goal.count,
           })
           .then((Response) => {
             console.log("등록 : ", Response);
