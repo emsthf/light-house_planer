@@ -202,7 +202,7 @@ function AuthBoard() {
     console.log("submit");
     console.log(data);
 
-    // setLoadingToggle((prev) => !prev);
+    setLoadingToggle((prev) => !prev);
 
     if ((post.title && post.content) !== null && post.created === now) {
       setTimeout(() => {
@@ -245,7 +245,7 @@ function AuthBoard() {
                   ...goal,
                   checkDate: now,
                   postId: Response.data,
-                  userId: user
+                  userId: user,
                 })
                 .then((res) => {
                   console.log(res);

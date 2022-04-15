@@ -33,19 +33,19 @@ const Carousel = styled(motion.div)`
   }
 `;
 
-const BannerIndicator1 = styled.div`
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: white;
-`;
+// const BannerIndicator1 = styled.div`
+//   width: 10px;
+//   height: 10px;
+//   border-radius: 50%;
+//   background-color: white;
+// `;
 
-const BannerIndicator2 = styled.div`
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: white;
-`;
+// const BannerIndicator2 = styled.div`
+//   width: 10px;
+//   height: 10px;
+//   border-radius: 50%;
+//   background-color: white;
+// `;
 
 const DescContainer = styled.div`
   display: flex;
@@ -201,8 +201,8 @@ function Landing() {
             </Carousel>
           ) : null
         )}
-        <BannerIndicator1 />
-        <BannerIndicator2 />
+        {/* <BannerIndicator1 />
+        <BannerIndicator2 /> */}
       </AnimatePresence>
       <DescContainer>
         <h2>Description</h2>
