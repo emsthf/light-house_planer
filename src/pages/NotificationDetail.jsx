@@ -49,6 +49,7 @@ const Content = styled.div`
   flex-direction: column;
   word-wrap: break-word;
   line-height: 1.5em;
+  white-space: pre-wrap;
 `;
 
 const NotiImg = styled.img`
