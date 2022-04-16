@@ -27,7 +27,7 @@ const Col = styled.div`
 `;
 
 const HeaderTitle = styled(motion.div)`
-  color: ${(props) => props.txtcolor};
+  color: ${(props) => props.titlecolor};
   font-size: 40px;
   margin-right: 25px;
   font-family: "Source Sans Pro", sans-serif;
@@ -290,7 +290,7 @@ function Header() {
       <Col>
         <Link to="/">
           <HeaderTitle
-            txtcolor={isDarkMode === true ? "#fff" : "gray"}
+            titlecolor={isDarkMode === true ? "#fff" : "gray"}
             neon={isDarkMode === true ? "flicker 1.5s infinite alternate" : "none"}
           >
             Light House

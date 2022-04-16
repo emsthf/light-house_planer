@@ -204,7 +204,7 @@ function AuthBoard() {
     console.log(data);
     console.log("date : " + now);
 
-    // setLoadingToggle((prev) => !prev);
+    setLoadingToggle((prev) => !prev);
 
     if ((post.title && post.content) !== null && post.created === now) {
       setTimeout(() => {
@@ -235,6 +235,7 @@ function AuthBoard() {
             goalId: goal.id,
             postImg: file, // img url 넘기기
             userId: user,
+            count: goal.count,
           })
           .then((Response) => {
             console.log("등록 : ", Response.data);
@@ -246,7 +247,7 @@ function AuthBoard() {
                   ...goal,
                   checkDate: now,
                   postId: Response.data,
-                  userId: user
+                  userId: user,
                 })
                 .then((res) => {
                   console.log(res);
