@@ -197,10 +197,12 @@ function AuthBoard() {
     today.getMonth() >= 9 ? `${today.getMonth() + 1}` : `0${today.getMonth() + 1}`;
   const todayDate = today.getDate() > 9 ? `${today.getDate()}` : `0${today.getDate()}`;
   const now = `${todayYear}-${todayMonth}-${todayDate}`;
+  console.log("date : " + now);
 
   const onSubmit = (data) => {
     console.log("submit");
     console.log(data);
+    console.log("date : " + now);
 
     // setLoadingToggle((prev) => !prev);
 
@@ -213,7 +215,7 @@ function AuthBoard() {
             content: data.content,
             postImg: file, // img url 넘기기
             goalId: goal.id,
-            created: post.created,
+            created: post.created
           })
           .then((res) => {
             navigate(`/goal/${post.id}`);
