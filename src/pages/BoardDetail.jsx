@@ -4,10 +4,13 @@ import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
-  width: 1200px;
-  margin: 20vh auto;
+  width: 60%;
+  margin: 150px auto;
   min-height: 100vh;
   margin-bottom: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Wrapper = styled.div`

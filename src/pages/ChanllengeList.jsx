@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { challengeId } from "../Atom";
-import axios from 'axios';
+import axios from "axios";
 
 const Wrapper = styled.div`
   height: auto;
@@ -13,13 +13,13 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 100px 400px 150px 400px;
+  padding: 100px 0px 150px 0px;
   margin: auto;
   margin-top: 5vh;
   margin-bottom: 3vh;
   @media screen and (max-width: 1150px) {
-    padding-right: 150px !important;
-    padding-left: 150px !important;
+    padding-right: 24px !important;
+    padding-left: 24px !important;
   }
   @media screen and (max-width: 768px) {
     padding-right: 24px !important;
@@ -31,6 +31,9 @@ const Container = styled.div`
   height: 600px;
   width: 100%;
   margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const GoalBox = styled.div`
@@ -43,7 +46,7 @@ const GoalBox = styled.div`
 `;
 
 const ChallengeBox = styled(motion.div)`
-  width: 100%;
+  width: 55%;
   height: 100px;
   border-radius: 10px;
   border: 2px solid gray;
@@ -52,6 +55,12 @@ const ChallengeBox = styled(motion.div)`
   padding: 20px;
   margin-bottom: 10px;
   cursor: pointer;
+  @media screen and (max-width: 1150px) {
+    width: 70%;
+  }
+  @media screen and (max-width: 768px) {
+    width: 80%;
+  }
 `;
 
 const GoalTitle = styled.span`
@@ -117,25 +126,29 @@ function ChanllengeList() {
   };
 
   useEffect(() => {
-    axios.get('http://localhost:8082/api/challenge')
-    .then(Response => {
-      console.log(Response.data);
-      setChallenge(Response.data);
-    }).catch(Error => console.log(Error));
+    axios
+      .get("http://localhost:8082/api/challenge")
+      .then((Response) => {
+        console.log(Response.data);
+        setChallenge(Response.data);
+      })
+      .catch((Error) => console.log(Error));
   }, []);
 
   return (
     <Wrapper>
       <Container>
-        {
-          challenge && 
-          challenge.map(challenge => (
+        {challenge &&
+          challenge.map((challenge) => (
             <Link to={`/challenge/${challenge.id}`}>
               <ChallengeBox onClick={() => onClicked()} key={challenge.id}>
                 <GridBox>
                   <LeftGrid>
                     <div style={{ marginBottom: 10 }}>
-                      <i className="fa-solid fa-person-running" style={{ fontSize: 22 }}></i>
+                      <i
+                        className="fa-solid fa-person-running"
+                        style={{ fontSize: 22 }}
+                      ></i>
                       <GoalTitle>&nbsp;{challenge.challengeTitle}</GoalTitle>
                       {/* <Status>진행 중</Status> */}
                     </div>
@@ -144,15 +157,11 @@ function ChanllengeList() {
                     </div>
                   </LeftGrid>
                   <MiddleGrid>
-                    {
-                      challenge.challengeState === 0
-                      ? (
-                        <Stamp variants={myVars} initial="start" animate="end">
-                          진행중!
-                        </Stamp>
-                      )
-                      : null
-                    }
+                    {challenge.challengeState === 0 ? (
+                      <Stamp variants={myVars} initial="start" animate="end">
+                        진행중!
+                      </Stamp>
+                    ) : null}
                   </MiddleGrid>
                   <RightGrid>
                     <div>기간 : {challenge.period}일</div>
@@ -161,8 +170,7 @@ function ChanllengeList() {
                 </GridBox>
               </ChallengeBox>
             </Link>
-          ))
-        }
+          ))}
         <ChallengeBox onClick={() => onClicked()}>
           <GridBox>
             <LeftGrid>
