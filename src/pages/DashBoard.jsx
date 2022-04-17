@@ -364,6 +364,7 @@ function DashBoard() {
   const [doingGoals, setDoingGoals] = useState([]);
   const [doneGoals, setDoneGoals] = useState([]);
   const [badge, setBadge] = useState([]);
+  const [post, setPost] = useState([]);
   const [user, setUser] = useRecoilState(userState); // 로그인한 유저 - 현재 1번 사용자라고 가정
 
   const navigate = useNavigate();
@@ -409,10 +410,17 @@ function DashBoard() {
     axios
       .get(`http://localhost:8080/api/mybadge/${user}`)
       .then((Response) => {
-        console.log(Response.data);
+        // console.log(Response.data);
         setBadge(Response.data.slice(0, 5));
       })
       .catch((Error) => console.log(Error));
+
+      // 내 작성 글 가져오기
+      axios.get(`http://localhost:8081/api/post/list/${user}`)
+      .then(Response => {
+        // console.log(Response.data);
+        setPost(Response.data);
+      }).catch(Error => console.log(Error));
   }, [setBadge]);
 
   return (
@@ -528,65 +536,33 @@ function DashBoard() {
                     <TH>Title</TH>
                     <TH>Created date</TH>
                     <TH>View</TH>
-                    <TH style={{ textAlign: "center" }}>Delete</TH>
                   </tr>
                 </thead>
                 <tbody>
-                  <TR>
+                  {
+                    post.map(post => (
+                        <TR key={post.id}>
+                          <TD>{post.category}</TD>
+                          <Link to={`/board/${post.id}`}>
+                            <TD>{post.title}</TD>
+                          </Link>
+                          <TD>{post.created}</TD>
+                          <TD>{post.view}</TD>
+                        </TR>
+                    ))
+                  }
+                  {/* <TR>
                     <TD>인증</TD>
                     <TD>3.15 공부 인증</TD>
                     <TD>22.03.15</TD>
                     <TD>123</TD>
-                    <TD style={{ textAlign: "center", padding: 0 }}>
-                      <IconBox>
-                        <i className="fa-solid fa-trash-can" />
-                      </IconBox>
-                    </TD>
                   </TR>
                   <TR>
                     <TD>인증</TD>
                     <TD>3.16 공부 인증</TD>
                     <TD>22.03.16</TD>
                     <TD>127</TD>
-                    <TD style={{ textAlign: "center", padding: 0 }}>
-                      <IconBox>
-                        <i className="fa-solid fa-trash-can" />
-                      </IconBox>
-                    </TD>
-                  </TR>
-                  <TR>
-                    <TD>인증</TD>
-                    <TD>3.17 공부 인증</TD>
-                    <TD>22.03.17</TD>
-                    <TD>162</TD>
-                    <TD style={{ textAlign: "center", padding: 0 }}>
-                      <IconBox>
-                        <i className="fa-solid fa-trash-can" />
-                      </IconBox>
-                    </TD>
-                  </TR>
-                  <TR>
-                    <TD>인증</TD>
-                    <TD>3.18 공부 인증</TD>
-                    <TD>22.03.18</TD>
-                    <TD>134</TD>
-                    <TD style={{ textAlign: "center", padding: 0 }}>
-                      <IconBox>
-                        <i className="fa-solid fa-trash-can" />
-                      </IconBox>
-                    </TD>
-                  </TR>
-                  <TR>
-                    <TD>자랑</TD>
-                    <TD>공부 포기</TD>
-                    <TD>22.03.19</TD>
-                    <TD>2340</TD>
-                    <TD style={{ textAlign: "center", padding: 0 }}>
-                      <IconBox>
-                        <i className="fa-solid fa-trash-can" />
-                      </IconBox>
-                    </TD>
-                  </TR>
+                  </TR> */}
                 </tbody>
               </Table>
             </BoardBox>

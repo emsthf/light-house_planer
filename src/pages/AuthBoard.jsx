@@ -197,12 +197,10 @@ function AuthBoard() {
     today.getMonth() >= 9 ? `${today.getMonth() + 1}` : `0${today.getMonth() + 1}`;
   const todayDate = today.getDate() > 9 ? `${today.getDate()}` : `0${today.getDate()}`;
   const now = `${todayYear}-${todayMonth}-${todayDate}`;
-  console.log("date : " + now);
 
   const onSubmit = (data) => {
     console.log("submit");
     console.log(data);
-    console.log("date : " + now);
 
     setLoadingToggle((prev) => !prev);
 
@@ -258,41 +256,8 @@ function AuthBoard() {
           .catch((Error) => console.log(Error));
       }, 3000);
     }
-
-    // axios
-    //   .post("http://localhost:8081/api/post", {
-    //     categoryId: 1,
-    //     title: data.title,
-    //     content: data.content,
-    //     created: now,
-    //     goalId: goal.id,
-    //     postImg: file, // img url 넘기기
-    //     userId : user
-    //   })
-    //   .then((Response) => {
-    //     console.log(Response.data);
-    //     if (Response.data != null) {
-    //       axios
-    //         .put(`http://localhost:8080/api/goal/${goal.id}`, {
-    //           ...goal,
-    //           checkDate: now,
-    //           postId: Response.data,
-    //           userId : user,
-    //           // count : goal.count
-    //         })
-    //         .then((res) => {
-    //           console.log(res);
-    //           navigate("/dash");
-    //         });
-    //     }
-    //   })
-    //   .catch((Error) => console.log(Error));
   };
 
-  // 이미지 파일 업로드
-  // const [uploadPercentage, setUploadPercentage] = useState(0);
-  // const [file, setFile] = useState([]);
-  // const [file, setFile] = useState();
   const upload = (e) => {
     if (document.getElementById("uploadFile").files.length) {
       setImgLoading((prev) => !prev);
@@ -327,6 +292,7 @@ function AuthBoard() {
       })
       .catch((Error) => console.log(Error));
   }, [file]);
+
 
   return (
     <Container>
