@@ -8,6 +8,7 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { goalId, goalPeriod, userState } from "../Atom";
 import Badge from "./Badge";
+import BarChart from "../components/BarChart";
 
 const Wrapper = styled.div`
   height: auto;
@@ -504,6 +505,7 @@ function DashBoard() {
               <StatisticsBox>
                 <PieChart />
                 <TimelineChart doingGoals={doingGoals} />
+                {/* <BarChart doingGoals={doingGoals} /> */}
               </StatisticsBox>
             </StatisticsCon>
             <DoneGoalBox>

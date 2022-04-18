@@ -133,9 +133,9 @@ function App() {
           <Route path="/board" element={<Board />} />
           <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/" element={<Landing />} />
-          <Route path="/challenge/:id" element={<Challenge />} />
-          <Route path="/challengee" element={<Challenge2 />} />
-          <Route path="/challengeList" element={<ChanllengeList />} />
+          <Route path="/challenge" element={<ChanllengeList />} />
+          <Route path="/challenge/:id" element={<Challenge2 />} />
+          <Route path="/challengee" element={<Challenge />} />
           <Route path="/challenges" element={<Challenges />} />
           <Route path="/set/challenge" element={<SetChallenge />} />
           <Route path="/authboard" element={<AuthBoard />} />

@@ -140,8 +140,10 @@ function ChanllengeList() {
       <Container>
         {challenge &&
           challenge.map((challenge) => (
-            <Link to={`/challenge/${challenge.id}`}>
-              <ChallengeBox onClick={() => onClicked()} key={challenge.id}>
+              <ChallengeBox onClick={() => {
+                onClicked();
+                navigate(`/challenge/${challenge.id}`);
+              }} key={challenge.id}>
                 <GridBox>
                   <LeftGrid>
                     <div style={{ marginBottom: 10 }}>
@@ -169,15 +171,14 @@ function ChanllengeList() {
                   </RightGrid>
                 </GridBox>
               </ChallengeBox>
-            </Link>
           ))}
-        <ChallengeBox onClick={() => onClicked()}>
+        {/* <ChallengeBox onClick={() => onClicked()}>
           <GridBox>
             <LeftGrid>
               <div style={{ marginBottom: 10 }}>
                 <i className="fa-solid fa-person-running" style={{ fontSize: 22 }}></i>
                 <GoalTitle>&nbsp;챌린지 제목</GoalTitle>
-                {/* <Status>진행 중</Status> */}
+                <Status>진행 중</Status>
               </div>
               <div>
                 <Explanation>챌린지 설명</Explanation>
@@ -193,30 +194,7 @@ function ChanllengeList() {
               <div>신청자 0명</div>
             </RightGrid>
           </GridBox>
-        </ChallengeBox>
-        <ChallengeBox>
-          <GridBox>
-            <LeftGrid>
-              <div style={{ marginBottom: 10 }}>
-                <i class="fa-solid fa-person-running" style={{ fontSize: 22 }}></i>
-                <GoalTitle>&nbsp;챌린지 제목</GoalTitle>
-                {/* <Status>진행 중</Status> */}
-              </div>
-              <div>
-                <Explanation>챌린지 설명</Explanation>
-              </div>
-            </LeftGrid>
-            <MiddleGrid>
-              <Stamp variants={myVars} initial="start" animate="end">
-                terminated!
-              </Stamp>
-            </MiddleGrid>
-            <RightGrid>
-              <div>기간 : 2주</div>
-              <div>신청자 0명</div>
-            </RightGrid>
-          </GridBox>
-        </ChallengeBox>
+        </ChallengeBox> */}
         {/* <ChallengeBox></ChallengeBox>
         <ChallengeBox></ChallengeBox>
         <ChallengeBox></ChallengeBox> */}

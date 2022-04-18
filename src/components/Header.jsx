@@ -335,7 +335,7 @@ function Header() {
             <Link to="/board">게시판 {boardMatch && <Circle layoutId="circle" />}</Link>
           </Item>
           <Item>
-            <Link to="/challengeList">
+            <Link to="/challenge">
               Challenge {challengeMatch && <Circle layoutId="circle" />}
             </Link>
           </Item>
