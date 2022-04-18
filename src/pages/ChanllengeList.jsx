@@ -159,7 +159,7 @@ function ChanllengeList() {
                   <MiddleGrid>
                     {challenge.challengeState === 0 ? (
                       <Stamp variants={myVars} initial="start" animate="end">
-                        진행중!
+                        terminated!
                       </Stamp>
                     ) : null}
                   </MiddleGrid>

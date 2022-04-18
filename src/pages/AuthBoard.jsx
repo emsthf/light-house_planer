@@ -213,7 +213,7 @@ function AuthBoard() {
             content: data.content,
             postImg: file, // img url 넘기기
             goalId: goal.id,
-            created: post.created,
+            created: post.created
           })
           .then((res) => {
             navigate(`/goal/${post.id}`);
@@ -256,41 +256,8 @@ function AuthBoard() {
           .catch((Error) => console.log(Error));
       }, 3000);
     }
-
-    // axios
-    //   .post("http://localhost:8081/api/post", {
-    //     categoryId: 1,
-    //     title: data.title,
-    //     content: data.content,
-    //     created: now,
-    //     goalId: goal.id,
-    //     postImg: file, // img url 넘기기
-    //     userId : user
-    //   })
-    //   .then((Response) => {
-    //     console.log(Response.data);
-    //     if (Response.data != null) {
-    //       axios
-    //         .put(`http://localhost:8080/api/goal/${goal.id}`, {
-    //           ...goal,
-    //           checkDate: now,
-    //           postId: Response.data,
-    //           userId : user,
-    //           // count : goal.count
-    //         })
-    //         .then((res) => {
-    //           console.log(res);
-    //           navigate("/dash");
-    //         });
-    //     }
-    //   })
-    //   .catch((Error) => console.log(Error));
   };
 
-  // 이미지 파일 업로드
-  // const [uploadPercentage, setUploadPercentage] = useState(0);
-  // const [file, setFile] = useState([]);
-  // const [file, setFile] = useState();
   const upload = (e) => {
     if (document.getElementById("uploadFile").files.length) {
       setImgLoading((prev) => !prev);
@@ -325,6 +292,7 @@ function AuthBoard() {
       })
       .catch((Error) => console.log(Error));
   }, [file]);
+
 
   return (
     <Container>

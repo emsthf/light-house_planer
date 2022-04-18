@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -45,7 +45,7 @@ const SubTitle = styled.h3`
 const ErrorMessage = styled.div`
   font-size: 0.8rem;
   margin: 0.5rem 0 0 1rem;
-  color: #888;
+  color: ${(props) => props.fontColor || "#888"};
 `;
 
 const Desc = styled.div`
@@ -109,10 +109,13 @@ const Textarea = styled.textarea`
 `;
 
 function SetGoalStep5() {
+
   const url = "http://localhost:8080/api/goal";
   const navigate = useNavigate();
   const setGoal = useSetRecoilState(goalState);
   const goal = useRecoilValue(goalState);
+  const [errorMsg, setErrorMsg] = useState();
+
   const {
     register,
     handleSubmit,
@@ -121,9 +124,6 @@ function SetGoalStep5() {
 
   const totalWeekCount = Math.floor(goal.period / 7) * goal.weekCount; // 전체 기간 주차별 실행해야 할 count 수
   const remainderDay = goal.period - Math.floor(goal.period / 7) * 7; // 전체 기간에서 일주일 단위로 나누었을 때 나머지 부분
-
-  console.log("total week count : " + totalWeekCount);
-  console.log("remainderDay : " + remainderDay);
 
   const onSubmit = (data) => {
     // console.log(data);
@@ -145,8 +145,12 @@ function SetGoalStep5() {
         userId : 1 // test용 user
       })
       .then((Response) => {
-        console.log("Success");
-        navigate("/dash");
+        if(Response.data) {
+          // console.log(Response.data);
+          setErrorMsg(Response.data);
+        } else {
+          navigate("/dash");
+        }
       })
       .catch((Error) => console.log(Error));
   };
@@ -192,6 +196,12 @@ function SetGoalStep5() {
               직접 설정한 목표의 내용을 확인하세요.
               <br />
               맞으면 등록, 틀리면 다시 등록하기 버튼을 눌러 목표를 다시 설정해주세요.
+              <br />
+            </Desc>
+            <Desc>
+              <ErrorMessage fontColor={"#416dea"}>
+                {errorMsg}
+              </ErrorMessage>
             </Desc>
             <ButtonWrapper>
               <Button>등 록</Button>
