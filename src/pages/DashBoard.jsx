@@ -255,6 +255,8 @@ const StatisticsBox = styled(GoalBox)`
 
 const DoneGoalBox = styled(GoalBox)``;
 
+const MoreViewBtn = styled(MoreBadge)``;
+
 const BoardBox = styled(GoalBox)`
   height: 300px;
 `;
@@ -392,9 +394,9 @@ function DashBoard() {
   useEffect(() => {
     // 최근 진행중 목표 3개 불러오기
     axios.get(`http://localhost:8080/api/dGoal/0/${user}`).then((Response) => {
-      setDoingGoals(Response.data);
+      setDoingGoals(Response.data.slice(0, 3));
       // console.log(Response.data);
-      setIsGoalPeriod(Response.data);
+      setIsGoalPeriod(Response.data.slice(0, 3));
     });
 
     // 최근 완료된 목표 3개 불러오기
@@ -402,7 +404,7 @@ function DashBoard() {
       .get(`http://localhost:8080/api/dGoal/1/${user}`)
       .then((Response) => {
         setDoneGoals(Response.data);
-        // console.log(Response.data);
+        console.log(Response.data);
       })
       .catch((Error) => console.log(Error));
 
@@ -526,6 +528,11 @@ function DashBoard() {
                   </Goal>
                 ))
               )}
+              {
+                doneGoals.length > 3 
+                ? <MoreViewBtn onClick={() => navigate('/goal/list')}>+더 보기</MoreViewBtn>
+                : null
+              }
             </DoneGoalBox>
             <BoardBox>
               <BoxTitle>내 작성 글</BoxTitle>

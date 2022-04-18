@@ -1,5 +1,9 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { userState } from '../Atom';
 
 const Container = styled.div`
   width: 1200px;
@@ -9,7 +13,8 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
 `;
 
 const SearchWrapper = styled.div`
@@ -82,10 +87,24 @@ font-size: 0.9rem;
 `;
 
 function GoalList() {
+
+  const user = useRecoilValue(userState);
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/api/dGoal/1/${user}`)
+    .then(Response => {
+    //   console.log(Response.data);
+      setList(Response.data);
+    }).catch(Error => console.log(Error));
+  }, []);
+
+  console.log(list);
+
   return ( 
     <Container>
       <Wrapper>
-        <SearchWrapper>
+        {/* <SearchWrapper>
           <SearchForm>
             <Select>
               <option>전체</option>
@@ -95,15 +114,18 @@ function GoalList() {
             <SearchInput></SearchInput>
             <Button>Search</Button>
           </SearchForm>
-        </SearchWrapper>
-        <List>
-          <Title>완료된 목표</Title>
-          <Tag>성공</Tag>
-        </List>
-        <List>
-          <Title>완료된 목표</Title>
-          <Tag background={'#373737'}>실패</Tag>
-        </List>
+        </SearchWrapper> */}
+        {
+          list && 
+          list.map(goal => (
+            <Link to={`/goal/${goal.id}`}>
+            <List key={goal.id}>
+                <Title>{goal.goalTitle}</Title>
+                {goal.result === true ? <Tag>성공</Tag> : <Tag background={'#373737'}>실패</Tag>}
+            </List>
+            </Link>
+          ))
+        }
       </Wrapper>
     </Container>
    );

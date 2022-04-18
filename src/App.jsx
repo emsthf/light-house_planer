@@ -142,6 +142,7 @@ function App() {
           <Route path="/authdetail" element={<AuthBoardDetail />} />
           <Route path="/site-rule" element={<SiteRule />} />
           <Route path="/contact-us" element={<ContactUs />} />
+          <Route path="/goal/list" element={<GoalList />} />
         </Routes>
         <Footer />
       </BrowserRouter>
