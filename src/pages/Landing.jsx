@@ -22,10 +22,11 @@ const Carousel = styled(motion.div)`
   align-items: center;
   position: absolute;
   h2 {
-    font-size: 70px;
+    font-size: 48px;
     color: white;
     font-family: "Source Sans Pro", sans-serif;
     font-weight: 600;
+    line-height: 5rem;
   }
   span {
     color: white;
@@ -52,7 +53,7 @@ const DescContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  height: 600px;
+  height: 720px;
   margin-top: 720px;
   h2 {
     font-size: 70px;
@@ -60,11 +61,20 @@ const DescContainer = styled.div`
     font-weight: 600;
   }
   span {
-    font-size: 19px;
+    font-size: 16px;
     font-family: "Source Sans Pro", sans-serif;
     width: 60%;
     text-align: center;
     margin-top: 35px;
+    line-height: 1.5rem;
+  }
+  strong {
+    font-weight: bold;
+  }
+  p {
+    font-size: 14px;
+    font-weight: bold;
+    color: #888;
   }
 `;
 
@@ -167,14 +177,14 @@ function Landing() {
     {
       id: 1,
       img: "https://static.wixstatic.com/media/94e66f_e748a6157aa84c24a309d318175d06d8~mv2.gif",
-      title: "Life is Too Short",
-      subTitle: "Luck is the residue of Design",
+      title: "100만번 같은 일을 반복하면",
+      subTitle: "그것이 당신의 강력한 무기가 됩니다.",
     },
     {
       id: 2,
       img: "https://eskipaper.com/images/usain-bolt-40.jpg",
-      title: "Impossible Is Nothing",
-      subTitle: "Just Do It.",
+      title: "꾸준함을 통해",
+      subTitle: "가치있는 성장을 할 수 있도록.",
     },
   ];
 
@@ -205,12 +215,31 @@ function Landing() {
         <BannerIndicator2 /> */}
       </AnimatePresence>
       <DescContainer>
-        <h2>Description</h2>
+        <h2>About</h2>
         <span>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-          Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-          unknown printer took a galley of type and scrambled it to make a type specimen
-          book.
+          <strong>
+            내일은 더 멋져질 당신을 위해, <br />
+            등대와 함께하는 슬기로운 습관 생활 <br />
+          </strong>
+          <hr />
+          등대는 당신의 습관을 성취하고 관리하는 가장 강력한 툴입니다. <br />
+          꾸준한 성취을 반복하며 더 멋지게 발전하는 나를 경험해보세요.
+        </span>
+        <span>
+          <p>
+          ▶ 목표 설정은 다음 단계로 이루어집니다.<br /><br />
+          목표 입력<br />
+          ↓<br />
+          템플릿 선택(60일 or 사용자지정)<br />
+          ↓<br />
+          목표 시작일과 종료일 지정<br />
+          ↓<br />
+          일주일 실천 횟수 지정<br />
+          ↓<br />
+          목표에 대한 나의 다짐/설명 작성<br />
+          ↓<br />
+          개인대시보드에서 조회
+          </p>
         </span>
       </DescContainer>
       <GalleryContainer>

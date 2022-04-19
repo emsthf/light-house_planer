@@ -36,6 +36,7 @@ import ChanllengeList from "./pages/ChanllengeList";
 import Notification from "./pages/Notification";
 import NotificationDetail from "./pages/NotificationDetail";
 import Challenge2 from "./pages/Challenge2";
+import ChallengeInfo from "./pages/ChallengeInfo";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -133,10 +134,11 @@ function App() {
           <Route path="/board" element={<Board />} />
           <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/" element={<Landing />} />
-          <Route path="/challenge/:id" element={<Challenge />} />
-          <Route path="/challengee" element={<Challenge2 />} />
-          <Route path="/challengeList" element={<ChanllengeList />} />
+          <Route path="/challenge" element={<ChanllengeList />} />
+          <Route path="/challenge/:id" element={<Challenge2 />} />
+          <Route path="/challengee" element={<Challenge />} />
           <Route path="/challenges" element={<Challenges />} />
+          <Route path="/challenges/:id" element={<ChallengeInfo/>} />
           <Route path="/set/challenge" element={<SetChallenge />} />
           <Route path="/authboard" element={<AuthBoard />} />
           <Route path="/authdetail" element={<AuthBoardDetail />} />
