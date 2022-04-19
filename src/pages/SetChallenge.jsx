@@ -171,7 +171,7 @@ function SetChallenge() {
             endDay: data.endDay,
             period: totalDate,
             weekCount: data.weekCount,
-            goalDesc: data.desc
+            challengeDesc: data.desc
         }).then(console.log('ok')).catch(Error => console.log(Error));
     };
 
