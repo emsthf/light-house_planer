@@ -2,7 +2,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { ProgressBar } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { keyframes } from "styled-components";
@@ -138,130 +138,50 @@ const myVars = {
 };
 
 function ChallengeDetail() {
-  const [isGoalId, setIsGoalId] = useRecoilState(goalId);
-  const [goal, setGoal] = useState({});
-  const [now, setNow] = useState();
-  // const [checked, setChecked] = useState(false);
-  const url = `http://localhost:8080/api/goal/${isGoalId}`;
-  const navigate = useNavigate();
 
-  const [checkGoal, setCheckGoal] = useRecoilState(goalState);
+  const { id } = useParams();
 
+  const [myChallenge, setMyChallenge] = useState({});
   const user = useRecoilValue(userState); // 로그인한 사용자
-  const [post, setPost] = useState([]); // 인증글
-  const [limit, setLimit] = useState(5); // 처음 화면에 보여지는 인증글 수
+  // const [post, setPost] = useState([]); // 인증글
+  // const [limit, setLimit] = useState(5); // 처음 화면에 보여지는 인증글 수
 
-  // 목표 세부 조회
   useEffect(() => {
-    // axios
-    //   .get(url)
-    //   .then((Response) => {
-    //     setGoal(Response.data);
-    //     console.log(Response.data);
-    //     setNow(((Response.data.count / Response.data.totalCount) * 100).toFixed(2));
-    //   })
-    //   .catch((Error) => {
-    //     console.log(Error);
-    //   });
-
-    // // 골 id로 골에 달린 모든 post 조회
-    // axios
-    //   .get(`http://localhost:8081/api/post/auth/${isGoalId}`)
-    //   .then((Response) => {
-    //     setPost(Response.data);
-    //   })
-    //   .catch((Error) => console.log(Error));
+    // axios.get(`http://localhost:8082/api/mychallenge/${id}`)
+    // .then(Response => {
+    //   console.log(Response.data);
+    //   setMyChallenge(Response.data);
+    // })
   }, []);
-
-  // 인증글쓰기로 목표 일일 체크
-  const handleCheck = () => {
-    setCheckGoal({
-      id: goal.id,
-      count: goal.count + 1,
-    });
-    if (post != null) {
-      navigate("/authboard", { state: post[post.length - 1] });
-    } else {
-      navigate("/authboard");
-    }
-  };
-
-  // 목표 삭제
-  const goalDelete = (id) => {
-    if (window.confirm("정말 이 목표를 지우시겠습니까?")) {
-      console.log(id);
-      axios
-        .delete(`http://localhost:8080/api/goal/${id}/${user}`)
-        .then((Response) => {
-          axios.delete(`http://localhost:8081/api/post/${id}/${user}`); // 목표 인증글 삭제
-          navigate("/dash");
-        })
-        .catch((Error) => {
-          console.log(Error);
-        });
-    }
-  };
 
   return (
     <Container>
       <Wrapper>
-        <Title>
-          {goal.goalTitle ? goal.goalTitle : "목표 명"}
-          {goal.state === 0 || (goal.state === 1 && goal.result === false) ? null : (
-            <Stamp variants={myVars} initial="start" animate="end">
-              Success!
-            </Stamp>
-          )}
-        </Title>
-        {/* <Desc>{goal.goalDesc ? goal.goalDesc : "목표 설명"}</Desc> */}
-        <Desc>
-          {goal ? `현재 ${goal.count} / ${goal.totalCount}회 실행` : "목표 설명"}
-        </Desc>
-        <Date>
-          {goal.startDay
-            ? `${goal.startDay.substring(0, 10)}부터 ~ ${goal.endDay.substring(
-                0,
-                10
-              )}까지 ( 주 ${goal.weekCount}회 )`
-            : "목표 기간"}
-        </Date>
-        {goal.state === 1 ? null : ( // 완료된 목표는 체크, 인증글 이용 못하도록
-          <Check>
+        <Title></Title>
+        <Desc></Desc>
+        <Date></Date>
+        <Check>
             <span>오늘의 목표 체크</span>
-            {/* <Input type="checkbox" onChange={() => onChecked()} /> */}
-            {/* 목표 시작일 0시 1분부터 인증 글 작성 가능 */}
-            <Button
-              marginLeft
-              onClick={handleCheck}
-              disabled={
-                new window.Date(goal.startDay) - 9 * 59 * 60 * 1000 >= new window.Date()
-              }
-            >
-              인증글 쓰기
-            </Button>
+            <Button marginLeft>인증글 쓰기</Button>
           </Check>
-        )}
-
         <ProgressBox>
-          <ProgressBar
+          {/* <ProgressBar
             animated
             now={now}
             label={`${now}%`}
             style={{ width: "100%", height: "25px" }}
-          />
+          /> */}
         </ProgressBox>
-        {/* <HeatMapChart /> */}
         <ButtonWrapper>
           <Button
             backgroundColor={"#373737"}
             hoverColor={"linear-gradient(315deg, #8e8e8e, #373737 74%)"}
-            onClick={() => goalDelete(goal.id)}
           >
-            {goal.state === 0 ? "포 기" : "삭 제"}
+            포 기
           </Button>
         </ButtonWrapper>
       </Wrapper>
-      {post &&
+      {/* {post &&
         post.slice(0, limit).map((post) => (
           <Post key={post.id}>
             <StyledLink to={`/board/${post.id}`}>
@@ -269,10 +189,10 @@ function ChallengeDetail() {
               <p>{post.created}</p>
             </StyledLink>
           </Post>
-        ))}
-      <ButtonWrapper>
-        <Button onClick={() => setLimit((prev) => prev + 5)}>더 보기</Button>
-      </ButtonWrapper>
+        ))} */}
+      {/* <ButtonWrapper>
+        <Button>더 보기</Button>
+      </ButtonWrapper> */}
     </Container>
   );
 }

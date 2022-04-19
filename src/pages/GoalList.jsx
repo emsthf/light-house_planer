@@ -99,8 +99,6 @@ function GoalList() {
     }).catch(Error => console.log(Error));
   }, []);
 
-  console.log(list);
-
   return ( 
     <Container>
       <Wrapper>
@@ -119,10 +117,10 @@ function GoalList() {
           list && 
           list.map(goal => (
             <Link to={`/goal/${goal.id}`}>
-            <List key={goal.id}>
-                <Title>{goal.goalTitle}</Title>
-                {goal.result === true ? <Tag>성공</Tag> : <Tag background={'#373737'}>실패</Tag>}
-            </List>
+              <List key={goal.id}>
+                  <Title>{goal.goalTitle}</Title>
+                  {goal.result === true ? <Tag>성공</Tag> : <Tag background={'#373737'}>실패</Tag>}
+              </List>
             </Link>
           ))
         }

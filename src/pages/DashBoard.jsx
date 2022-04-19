@@ -508,7 +508,7 @@ function DashBoard() {
               {
                 challenge && challenge.map(challenge => (
                   <Link to={`/challenge/${challenge.challenge.id}`}>
-                  <ChallengeItem>
+                  <ChallengeItem key={challenge.challenge.id}>
                     <div>
                       <i className="fa-regular fa-calendar-check"></i>
                       <GoalTitle>{challenge.challenge.challengeTitle}</GoalTitle>

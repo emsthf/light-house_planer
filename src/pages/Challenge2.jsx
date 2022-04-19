@@ -226,7 +226,7 @@ function Challenge2() {
                   </ButtonWrapper>
               </Enroll>
               <Information>
-                <p>현재 신청 인원</p>
+                <p>신청 인원</p>
                 <hr />
                 <p>{count && count}명</p>
               </Information>

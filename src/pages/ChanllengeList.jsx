@@ -152,7 +152,6 @@ function ChanllengeList() {
                         style={{ fontSize: 22 }}
                       ></i>
                       <GoalTitle>&nbsp;{challenge.challengeTitle}</GoalTitle>
-                      {/* <Status>진행 중</Status> */}
                     </div>
                     <div>
                       <Explanation>{challenge.challengeDesc}</Explanation>
@@ -161,7 +160,7 @@ function ChanllengeList() {
                   <MiddleGrid>
                     {challenge.challengeState === 0 ? (
                       <Stamp variants={myVars} initial="start" animate="end">
-                        terminated!
+                        진행중!
                       </Stamp>
                     ) : null}
                   </MiddleGrid>
