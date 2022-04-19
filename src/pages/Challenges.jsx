@@ -109,10 +109,23 @@ const ToNotice = styled.button`
 const ToAuthentication = styled(ToNotice)`
 `;
 
+const DeleteBtn = styled.div`
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-weight: bold;
+  padding: 4px;
+  cursor: pointer;
+  &:hover {
+    color: #888;
+  }
+`;
+
 const ChallengesTable = styled.div`
   border-radius: 40px;
   background-color: #fafafa;
-  height: 700px;
   max-width: 1100px;
   box-shadow: ${(props) => props.theme.boxShadow};
   padding: 15px;
@@ -123,6 +136,12 @@ function Challenges() {
 
   const [challenge, setChallenge] = useState();
   const navigate = useNavigate();
+
+  // const delChallenge = (id) => {
+  //   axios.delete(`http://localhost:8082/api/challenge/${id}`)
+  //   .then(console.log('delete'))
+  //   .catch(Error => console.log(Error));
+  // }
 
   useEffect(() => {
     axios.get('http://localhost:8082/api/challenge')
@@ -144,9 +163,9 @@ function Challenges() {
           {
             challenge &&
             challenge.map(challenge => (
-              <Link to={`/challenge/${challenge.id}`}>
+              <Link to={`/challenges/${challenge.id}`}>
                 <Title key={challenge.id}>
-                  {challenge.challengeTitle}
+                    {challenge.challengeTitle}
                   <ChallengeCondition>
                     {challenge.challengeState === 0 ? "진행중" : "종료"}
                   </ChallengeCondition>

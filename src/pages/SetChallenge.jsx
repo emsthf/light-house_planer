@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
 width: 1200px;
@@ -122,6 +123,8 @@ function SetChallenge() {
     
     const [img, setImg] = useState("");
 
+    const navigate = useNavigate();
+
     const today = new Date();
     const todayYear = today.getFullYear();
     const todayMonth = today.getMonth() >= 9 ? `${today.getMonth() + 1}` : `0${today.getMonth() + 1}`
@@ -172,7 +175,7 @@ function SetChallenge() {
             period: totalDate,
             weekCount: data.weekCount,
             challengeDesc: data.desc
-        }).then(console.log('ok')).catch(Error => console.log(Error));
+        }).then(navigate('/challenges')).catch(Error => console.log(Error));
     };
 
     return ( 

@@ -8,7 +8,7 @@ import axios from "axios";
 
 const Wrapper = styled.div`
   height: auto;
-  min-height: 100%;
+  /* min-height: 100%; */
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -28,12 +28,23 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  height: 600px;
+  min-height: 600px;
   width: 100%;
   margin-bottom: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const Information = styled.div`
+  width: 800px;
+  margin: 2rem auto;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.4rem;
+  strong {
+    font-weight: bold;
+  }
 `;
 
 const GoalBox = styled.div`
@@ -91,6 +102,7 @@ const MiddleGrid = styled.div`
 const RightGrid = styled.div`
   width: 100%;
   height: 100%;
+  line-height: 1.5rem;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -138,6 +150,17 @@ function ChanllengeList() {
   return (
     <Wrapper>
       <Container>
+        <Information>
+          <strong>
+            챌린지 신청 및 인증<br />
+          </strong>
+          ▷ 참여하기 원하는 챌린지를 신청<br />
+          ▷ 참가기간 동안 인증<br />
+          해당 챌린지 내 인증 규정을 반드시 확인해주세요.<br />
+          인증 규정 내 명시한 인증 시간 내에 진행 가능하며 자정 12시
+          기준으로 변화합니다.<br />
+          (*인증 방법은 챌린지마다 상이할 수 있습니다.)
+        </Information>
         {challenge &&
           challenge.map((challenge) => (
               <ChallengeBox onClick={() => {
@@ -166,7 +189,7 @@ function ChanllengeList() {
                   </MiddleGrid>
                   <RightGrid>
                     <div>기간 : {challenge.period}일</div>
-                    <div>신청자 0명</div>
+                    <div>시작일 : {`${challenge.startDay.substring(5, 7)}월 ${challenge.startDay.substring(8, 10)}일`}</div>
                   </RightGrid>
                 </GridBox>
               </ChallengeBox>
@@ -194,9 +217,6 @@ function ChanllengeList() {
             </RightGrid>
           </GridBox>
         </ChallengeBox> */}
-        {/* <ChallengeBox></ChallengeBox>
-        <ChallengeBox></ChallengeBox>
-        <ChallengeBox></ChallengeBox> */}
       </Container>
     </Wrapper>
   );

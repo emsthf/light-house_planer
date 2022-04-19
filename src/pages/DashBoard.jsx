@@ -410,7 +410,7 @@ function DashBoard() {
       setIsGoalPeriod(Response.data.slice(0, 3));
     });
 
-    // 최근 완료된 목표 3개 불러오기
+    // 최근 완료된 목표 불러오기
     axios
       .get(`http://localhost:8080/api/dGoal/1/${user}`)
       .then((Response) => {
@@ -438,7 +438,7 @@ function DashBoard() {
       // 참여 중인 챌린지 가져오기
       axios.get(`http://localhost:8082/api/mychallenge/list/${user}`)
       .then(Response => {
-        setChallenge(Response.data);
+        setChallenge(Response.data.slice(0, 3));
       }).catch(Error => console.log(Error));
   }, [setBadge]);
 

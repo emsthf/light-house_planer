@@ -1,12 +1,7 @@
 import axios from "axios";
-import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { ProgressBar } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { keyframes } from "styled-components";
-import { goalId, goalState, userState } from "../Atom";
 
 const Container = styled.div`
   width: 1200px;
@@ -117,84 +112,62 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const Stamp = styled(motion.div)`
-  width: 66px;
-  height: 66px;
-  border-radius: 50%;
-  border: 3px double #e74c3c;
-  color: #e74c3c;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  font-size: 1rem;
-  position: absolute;
-  margin-left: 560px;
-`;
-
-const myVars = {
-  start: { scale: 0 },
-  end: { scale: 1, rotateZ: 360, transition: { type: "spring", damping: 5 } },
-};
-
-function ChallengeDetail() {
+function ChallengeInfo() {
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  const [myChallenge, setMyChallenge] = useState({});
-  const user = useRecoilValue(userState); // 로그인한 사용자
-  // const [post, setPost] = useState([]); // 인증글
-  // const [limit, setLimit] = useState(5); // 처음 화면에 보여지는 인증글 수
+  const [challenge, setChallenge] = useState({});
+  const [count, setCount] = useState(0);
+
+  const deleteChallenge = () => {
+    if(window.confirm('챌린지를 삭제하시겠습니까?')) {
+      axios.delete(`http://localhost:8082/api/challenge/${id}`)
+      .then(navigate('/challenge'))
+      .catch(Error => console.log(Error));
+    }
+  }
 
   useEffect(() => {
-    // axios.get(`http://localhost:8082/api/mychallenge/${id}`)
-    // .then(Response => {
-    //   console.log(Response.data);
-    //   setMyChallenge(Response.data);
-    // })
+    axios.get(`http://localhost:8082/api/challenge/${id}`)
+    .then(Response => {
+      console.log(Response.data);
+      setChallenge(Response.data);
+    }).catch(Error => console.log(Error));
+
+    axios.get(`http://localhost:8082/api/mychallenge/all/${id}`)
+    .then(Response => {
+      setCount(Response.data);
+    }).catch(Error => console.log(Error));
   }, []);
 
   return (
     <Container>
       <Wrapper>
-        <Title></Title>
-        <Desc></Desc>
-        <Date></Date>
-        <Check>
-            <span>오늘의 목표 체크</span>
-            <Button marginLeft>인증글 쓰기</Button>
-          </Check>
-        <ProgressBox>
-          {/* <ProgressBar
-            animated
-            now={now}
-            label={`${now}%`}
-            style={{ width: "100%", height: "25px" }}
-          /> */}
-        </ProgressBox>
+        <Title>
+          {challenge && challenge.challengeTitle}
+        </Title>
+        <Desc>
+          {challenge && challenge.challengeDesc}
+        </Desc>
+        <Date>
+          {challenge && `${challenge.startDay} ~ ${challenge.endDay}`}
+        </Date>
+        <Desc>
+          신청 인원 : {count && count}명
+        </Desc>
         <ButtonWrapper>
           <Button
             backgroundColor={"#373737"}
             hoverColor={"linear-gradient(315deg, #8e8e8e, #373737 74%)"}
+            onClick={deleteChallenge}
           >
-            포 기
+            삭 제
           </Button>
         </ButtonWrapper>
       </Wrapper>
-      {/* {post &&
-        post.slice(0, limit).map((post) => (
-          <Post key={post.id}>
-            <StyledLink to={`/board/${post.id}`}>
-              <h4>{post.title}</h4>
-              <p>{post.created}</p>
-            </StyledLink>
-          </Post>
-        ))} */}
-      {/* <ButtonWrapper>
-        <Button>더 보기</Button>
-      </ButtonWrapper> */}
     </Container>
   );
 }
 
-export default ChallengeDetail;
+export default ChallengeInfo;

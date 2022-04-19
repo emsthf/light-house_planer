@@ -188,7 +188,7 @@ function Challenge2() {
     .then(Response => {
       setCount(Response.data);
     }).catch(Error => console.log(Error));
-  }, []);
+  }, [setCount]);
 
   return (
     <Wrapper>
