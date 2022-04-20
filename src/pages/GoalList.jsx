@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
@@ -69,8 +69,13 @@ const List = styled.div`
 `;
 
 const Title = styled.div`
-flex-grow: 2;
 margin-left: 2rem;
+font-weight: bold;
+`;
+
+const Desc = styled.div`
+flex-grow: 2;
+margin-left: 1rem;
 `;
 
 const Tag = styled.div`
@@ -90,6 +95,24 @@ function GoalList() {
 
   const user = useRecoilValue(userState);
   const [list, setList] = useState([]);
+  const [keyword, setKeyword] = useState('');
+  const [result, setResult] = useState({});
+  const [listState, setListState] = useState(true);
+
+  const handleFormValue = (e) => {
+    setKeyword(e.target.value);
+  }
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    console.log(keyword);
+    axios.get(`http://localhost:8080/api/goal/1/${user}/search?keyword=${keyword}`)
+    .then(Response => {
+      console.log(Response.data);
+      setResult(Response.data);
+      setListState(false);
+    })
+  }
 
   useEffect(() => {
     axios.get(`http://localhost:8080/api/dGoal/1/${user}`)
@@ -102,20 +125,32 @@ function GoalList() {
   return ( 
     <Container>
       <Wrapper>
-        {/* <SearchWrapper>
-          <SearchForm>
-            <Select>
+        <SearchWrapper>
+          <SearchForm onSubmit={submitForm}>
+            {/* <Select>
               <option>전체</option>
               <option>성공</option>
               <option>실패</option>
-            </Select>
-            <SearchInput></SearchInput>
+            </Select> */}
+            <SearchInput onChange={handleFormValue}></SearchInput>
             <Button>Search</Button>
           </SearchForm>
-        </SearchWrapper> */}
+        </SearchWrapper>
         {
-          list && 
+          (list && listState == true) &&
           list.map(goal => (
+            <Link to={`/goal/${goal.id}`}>
+              <List key={goal.id}>
+                  <Title>{goal.goalTitle}</Title>
+                  <Desc>{`(총 ${goal.totalCount}회 중 ${goal.count}회 실행)`}</Desc>
+                  {goal.result === true ? <Tag>성공</Tag> : <Tag background={'#373737'}>실패</Tag>}
+              </List>
+            </Link>
+          ))
+        }
+        {
+          result.length > 0
+          ? result.map(goal => (
             <Link to={`/goal/${goal.id}`}>
               <List key={goal.id}>
                   <Title>{goal.goalTitle}</Title>
@@ -123,6 +158,7 @@ function GoalList() {
               </List>
             </Link>
           ))
+          : null
         }
       </Wrapper>
     </Container>
