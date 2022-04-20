@@ -255,6 +255,7 @@ function Header() {
     formState: { errors },
     reset,
   } = useForm();
+
   const onValid = (data) => {
     navigate(`/search?keyword=${data.keyword}`);
     setValue("keyword", "");
@@ -266,10 +267,19 @@ function Header() {
       setIsClick(!isClick);
     } else {
       setIsClick(false);
+      if(isClick === false && user.id !== 0) {
+        setUser({
+          id : 0,
+          name : "",
+          email : "",
+          password : "",
+          phoneNum : ""
+        })
+      };
     }
   };
 
-  console.log(user);
+  console.log("user id => " + user.id);
 
   const onSubmit = (data) => {
     // login form
@@ -280,9 +290,11 @@ function Header() {
       if(Response.data !== null) {
         setUser(Response.data);
       }
-      console.log(Response.data);
+      // console.log(Response.data);
       // window.location.reload();
-    }).catch(Error => console.log(Error));
+      resetForm();
+    }).then(setIsClick(false))
+    .catch(Error => console.log(Error));
   };
 
   const resetForm = () => {
@@ -345,11 +357,13 @@ function Header() {
           <Item>
             <Link to="/noti">공지 사항 {notiMatch && <Circle layoutId="circle" />}</Link>
           </Item>
-          <Item>
-            {
-              user.id !== 0 ? <Link to="/dash">나의 목표 {homeMatch && <Circle layoutId="circle" />}</Link> : null
-            }
-          </Item>
+          {
+            user.id !== 0
+            ? <Item>
+                <Link to="/dash">나의 목표 {homeMatch && <Circle layoutId="circle" />}</Link>
+              </Item>
+            : null
+          }
           <Item>
             <Link to="/board">게시판 {boardMatch && <Circle layoutId="circle" />}</Link>
           </Item>
@@ -418,7 +432,10 @@ function Header() {
                       <Button>Login</Button>
                     </ButtonWrapper>
                     <LoginInfo>
-                      <InfoText>SignUp</InfoText>&nbsp;&nbsp;&nbsp;
+                      <InfoText onClick={() => {
+                        navigate('/signup');
+                        setIsClick(false);
+                      }}>SignUp</InfoText>&nbsp;&nbsp;&nbsp;
                       <InfoText
                         onClick={() => {
                           handleLoginModal();
