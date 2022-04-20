@@ -146,7 +146,7 @@ function SignUp() {
           phoneNum: data.phone,
         }
       )
-      .then(console.log(data))
+      // .then(console.log(data))
       .then(navigate("/"))
       .catch((Error) => console.log(Error));
   };

@@ -21,6 +21,7 @@ import { darkTheme, lightTheme, theme } from "./theme";
 import { useRecoilState } from "recoil";
 import { darkModeState } from "./Atom";
 
+import Challenge from "./pages/Challenge";
 import AuthBoard from "./pages/AuthBoard";
 import SiteRule from "./pages/SiteRule";
 import ContactUs from "./pages/ContactUs";

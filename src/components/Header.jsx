@@ -299,13 +299,14 @@ function Header() {
       setIsClick(false);
       if (isClick === false && user.id !== 0) {
         setUser({
-          id: 0,
-          name: "",
-          email: "",
-          password: "",
-          phoneNum: "",
-        });
-      }
+          id : 0,
+          name : "",
+          email : "",
+          password : "",
+          phoneNum : ""
+        })
+      };
+      navigate('/');
     }
   };
 
@@ -325,6 +326,7 @@ function Header() {
         // console.log(Response.data);
         // window.location.reload();
       })
+      .then(setIsClick(false))
       .catch((Error) => console.log(Error));
   };
 

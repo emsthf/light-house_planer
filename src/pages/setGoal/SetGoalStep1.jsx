@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { goalState } from '../../Atom';
+import { goalState, userState } from '../../Atom';
 
 const Container = styled.div`
 width: 1200px;
@@ -97,6 +97,7 @@ margin-left: ${props => props.marginLeft && '2rem'};
 function SetGoalStep1() {
 
     const navigate = useNavigate();
+    const user = useRecoilValue(userState);
 
     const [goal, setGoal] = useRecoilState(goalState); // set한 목표 goalState atom에 저장
 
@@ -112,6 +113,9 @@ function SetGoalStep1() {
     };
 
     useEffect(() => {
+        if(user.id === 0) {
+            navigate('/');
+        }
         reset({
             data : ''
         });
