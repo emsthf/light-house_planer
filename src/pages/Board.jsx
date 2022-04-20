@@ -163,7 +163,7 @@ function Board() {
                     {post.category === "GOAL" ? "인증" : "챌린지"}
                   </TD>
                   <TD>{post.title}</TD>
-                  <TD textAlign={"center"}>케빈</TD>
+                  <TD textAlign={"center"}>{post.userId}</TD>
                   <TD textAlign={"center"}>{post.created}</TD>
                   <TD textAlign={"center"}>{post.view}</TD>
                 </TR>

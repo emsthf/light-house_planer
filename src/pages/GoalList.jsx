@@ -154,6 +154,7 @@ function GoalList() {
             <Link to={`/goal/${goal.id}`}>
               <List key={goal.id}>
                   <Title>{goal.goalTitle}</Title>
+                  <Desc>{`(총 ${goal.totalCount}회 중 ${goal.count}회 실행)`}</Desc>
                   {goal.result === true ? <Tag>성공</Tag> : <Tag background={'#373737'}>실패</Tag>}
               </List>
             </Link>

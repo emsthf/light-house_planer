@@ -458,7 +458,7 @@ function DashBoard() {
         setChallenge(Response.data.slice(0, 3));
       })
       .catch((Error) => console.log(Error));
-  }, [setBadge]);
+  }, [setBadge, setDoingGoals, setDoneGoals]);
 
   console.log(challenge);
 
@@ -469,10 +469,10 @@ function DashBoard() {
           <Container>
             <ProfileImg />
             <ProfileBox>
-              <Name>Kevin</Name>
+              <Name>{user.name}</Name>
               <InfoBox>
-                <Email>alone@gmail.com</Email>
-                <Phone>010-0000-0000</Phone>
+                <Email>{user.email}</Email>
+                <Phone>{user.phoneNum}</Phone>
                 <Motto>no pain, no gain</Motto>
                 <Grade>🕊️ 갈매기</Grade>
               </InfoBox>
