@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { goalState } from "../../Atom";
+import { goalState, userState } from "../../Atom";
 
 const Container = styled.div`
   width: 1200px;
@@ -114,6 +114,7 @@ function SetGoalStep5() {
   const navigate = useNavigate();
   const setGoal = useSetRecoilState(goalState);
   const goal = useRecoilValue(goalState);
+  const user = useRecoilValue(userState);
   const [errorMsg, setErrorMsg] = useState();
 
   const {
@@ -142,7 +143,7 @@ function SetGoalStep5() {
           : goal.period % 7 === 0 
           ? totalWeekCount
           : totalWeekCount + remainderDay,
-        userId : 1 // test용 user
+        userId : user
       })
       .then((Response) => {
         if(Response.data) {
