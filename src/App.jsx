@@ -35,7 +35,6 @@ import NotificationDetail from "./pages/NotificationDetail";
 import ChallengeInfo from "./pages/ChallengeInfo";
 import UserList from "./pages/UserList";
 import AdminPage from "./pages/AdminPage";
-import Challenge from "./pages/Challenge";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,

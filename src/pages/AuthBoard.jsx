@@ -8,17 +8,16 @@ import { goalState, imgUrl, userState } from "../Atom";
 import LoadingSpiner from "../components/LoadingSpiner";
 
 const Container = styled.div`
-  width: 1200px;
+  padding: 0px 350px;
+  width: 100%;
   margin: 20vh auto;
   min-height: 70vh;
   margin-bottom: 240px;
   @media screen and (max-width: 768px) {
-    padding-right: 24px !important;
-    padding-left: 24px !important;
   }
   @media screen and (max-width: 500px) {
-    padding-right: 24px !important;
-    padding-left: 24px !important;
+    padding-right: 20px !important;
+    padding-left: 20px !important;
   }
 `;
 
@@ -28,12 +27,17 @@ const Wrapper = styled.div`
 
 const AuthboardFrame = styled.div`
   background-color: #fdffff;
-  width: 98%;
+  width: 100%;
   display: flex;
   border-radius: 4%;
   text-align: center;
   font-weight: bold;
   padding: 20px;
+  @media screen and (max-width: 768px) {
+  }
+  @media screen and (max-width: 500px) {
+    padding: 10px;
+  }
 `;
 
 const Writer = styled.div`
@@ -43,8 +47,6 @@ const Writer = styled.div`
   border-radius: 7px;
   text-align: center;
   font-weight: bold;
-  padding: 10px;
-  margin: 10px 0 10px 10px;
 `;
 
 const GridBox = styled.div`
@@ -57,8 +59,6 @@ const ContentBox = styled.form`
   text-align: center;
   font-weight: bold;
   padding: 3px;
-  margin-top: 3px;
-  margin-left: 0px;
   margin-bottom: 3px;
 `;
 
@@ -69,7 +69,6 @@ const Title = styled.div`
   text-align: center;
   font-weight: bold;
   padding: 10px;
-  margin-top: 10px;
   margin-left: 10px;
   margin-bottom: 10px;
 `;
@@ -91,9 +90,11 @@ const TitleContent = styled.input`
   text-align: left;
   font-weight: bold;
   padding: 10px;
-  margin-top: 5px;
-  margin-left: 0px;
-  margin-bottom: 5px;
+  @media screen and (max-width: 1450px) {
+  }
+  @media screen and (max-width: 768px) {
+    height: 55px;
+  }
 `;
 
 const ErrorMessage = styled.div`
@@ -108,14 +109,14 @@ const Content = styled.textarea`
   height: 600px;
   border-radius: 7px;
   text-align: left;
-  /* font-weight: bold; */
-  padding: 10px;
-  margin-top: 5px;
-  margin-left: 0px;
-  margin-bottom: 5px;
   font-size: 1rem;
   box-sizing: border-box;
-  padding: 2rem;
+  padding: 1rem;
+  @media screen and (max-width: 1450px) {
+  }
+  @media screen and (max-width: 768px) {
+    height: 300px;
+  }
 `;
 
 const PictureUploadBox = styled.input`
@@ -164,6 +165,11 @@ const ImageThumbnail = styled.img`
   margin-top: 1rem;
   width: 480px;
   height: auto;
+  @media screen and (max-width: 1450px) {
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 function AuthBoard() {

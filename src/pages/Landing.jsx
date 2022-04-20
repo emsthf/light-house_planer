@@ -5,9 +5,14 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   min-height: 100vh;
-  min-width: 100vw;
+  /* min-width: 100vw; */
   background-color: ${(props) => props.theme.bgColor};
   padding: 120px 0px 150px 0px;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    padding: 125px 0px 470px 0px;
+  }
 `;
 
 const Carousel = styled(motion.div)`
@@ -31,6 +36,24 @@ const Carousel = styled(motion.div)`
   span {
     color: white;
     margin-top: 30px;
+  }
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    height: 500px;
+    h2 {
+      font-size: 28px;
+      text-align: center;
+      color: white;
+      font-family: "Source Sans Pro", sans-serif;
+      font-weight: 600;
+      line-height: 3rem;
+      padding: 0px 25px;
+    }
+    span {
+      color: white;
+      margin-top: 30px;
+    }
   }
 `;
 
@@ -74,7 +97,14 @@ const DescContainer = styled.div`
   p {
     font-size: 14px;
     font-weight: bold;
-    color: #666;
+    color: #a3a3a3;
+  }
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    height: 660px;
+    margin-top: 660px;
+    margin-bottom: 150px;
   }
 `;
 
@@ -82,6 +112,13 @@ const GalleryContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   height: 498px;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+  }
 `;
 
 const InfoBox = styled.div`
@@ -227,18 +264,25 @@ function Landing() {
         </span>
         <span>
           <p>
-          ▶ 목표 설정은 다음 단계로 이루어집니다.<br /><br />
-          목표 입력<br />
-          ↓<br />
-          템플릿 선택(60일 or 사용자지정)<br />
-          ↓<br />
-          목표 시작일과 종료일 지정<br />
-          ↓<br />
-          일주일 실천 횟수 지정<br />
-          ↓<br />
-          목표에 대한 나의 다짐/설명 작성<br />
-          ↓<br />
-          개인대시보드에서 조회
+            ▶ 목표 설정은 다음 단계로 이루어집니다.
+            <br />
+            <br />
+            목표 입력
+            <br />
+            ↓<br />
+            템플릿 선택(60일 or 사용자지정)
+            <br />
+            ↓<br />
+            목표 시작일과 종료일 지정
+            <br />
+            ↓<br />
+            일주일 실천 횟수 지정
+            <br />
+            ↓<br />
+            목표에 대한 나의 다짐/설명 작성
+            <br />
+            ↓<br />
+            개인대시보드에서 조회
           </p>
         </span>
       </DescContainer>

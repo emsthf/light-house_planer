@@ -7,10 +7,14 @@ import styled from "styled-components";
 import { goalState, userState } from "../../Atom";
 
 const Container = styled.div`
-  width: 1200px;
+  padding: 0px 300px;
   margin: 20vh auto;
-  min-height: 100vh;
   margin-bottom: 240px;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    padding: 0px 0px 0px 0px;
+  }
 `;
 
 const Setting = styled.div`
@@ -79,6 +83,11 @@ const Button = styled.button`
     background: linear-gradient(315deg, #89d8d3, #416dea 74%);
     box-shadow: 3px 4px 10px #bbb;
   }
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
 
 const GoalTitle = styled.h4`
@@ -86,7 +95,7 @@ const GoalTitle = styled.h4`
 `;
 
 const Content = styled.div`
-  width: 95%;
+  width: 100%;
   height: 4rem;
   display: flex;
   align-items: center;
@@ -103,7 +112,7 @@ const Strong = styled.strong`
 const Textarea = styled.textarea`
   margin-top: 0.5rem;
   padding: 1rem;
-  width: 800px;
+  width: 100%;
   height: 80px;
   border-radius: 20px;
 `;

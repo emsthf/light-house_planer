@@ -7,14 +7,19 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { keyframes } from "styled-components";
 import { goalId, goalState, userState } from "../Atom";
-import HeatMapChart from "../components/HeatMapChart";
-import HeatmapChart2 from "../components/HeatmapChart2";
 
 const Container = styled.div`
-  width: 1200px;
+  padding: 0px 300px;
+  width: 100%;
   margin: 20vh auto;
   min-height: 100vh;
   margin-bottom: 240px;
+  @media screen and (max-width: 1450px) {
+    padding: 0px 100px;
+  }
+  @media screen and (max-width: 768px) {
+    padding: 0px 30px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -23,7 +28,7 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.div`
-  width: 800px;
+  width: 65%;
   height: 100px;
   background: #fafafa;
   border-radius: 20px;
@@ -35,6 +40,14 @@ const Title = styled.div`
   margin: 2rem auto;
   font-weight: bold;
   font-size: 1.3em;
+  @media screen and (max-width: 1450px) {
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 75px;
+    margin: 1rem auto;
+    font-size: 1em;
+  }
 `;
 
 const Desc = styled(Title)`
@@ -46,7 +59,7 @@ const Date = styled(Title)`
 `;
 
 const Check = styled.div`
-  width: 400px;
+  width: 35%;
   height: 80px;
   margin: 0 auto;
   background: #fafafa;
@@ -56,12 +69,24 @@ const Check = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 1450px) {
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 75px;
+    font-size: 14px;
+  }
 `;
 
 const ProgressBox = styled.div`
   width: 80%;
   margin: auto;
   margin-top: 25px;
+  @media screen and (max-width: 1450px) {
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const Input = styled.input`
@@ -104,10 +129,15 @@ const ButtonWrapper = styled.div`
 `;
 
 const Post = styled.div`
-  width: 80%;
+  width: 65%;
   margin: 0 auto;
   border-top: 1px solid #bbb;
   box-sizing: border-box;
+  @media screen and (max-width: 1450px) {
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const StyledLink = styled(Link)`

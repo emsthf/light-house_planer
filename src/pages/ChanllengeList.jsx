@@ -1,15 +1,14 @@
 import { motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { challengeId } from "../Atom";
 import axios from "axios";
 
 const Wrapper = styled.div`
-  height: auto;
-  /* min-height: 100%; */
-  width: 100vw;
+  min-width: 100vw;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,8 +21,8 @@ const Wrapper = styled.div`
     padding-left: 24px !important;
   }
   @media screen and (max-width: 768px) {
-    padding-right: 24px !important;
-    padding-left: 24px !important;
+    min-width: 50vw;
+    min-height: 100vh;
   }
 `;
 
@@ -37,12 +36,18 @@ const Container = styled.div`
 `;
 
 const Information = styled.div`
-  width: 800px;
+  padding: 0px 300px;
+  width: 100%;
   margin: 2rem auto;
   font-size: 14px;
   line-height: 1.5rem;
   strong {
     font-weight: bold;
+  }
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    padding: 0px 20px;
   }
 `;
 

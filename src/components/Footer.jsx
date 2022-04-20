@@ -14,6 +14,11 @@ const Container = styled.footer`
   position: absolute;
   transform: translateY(-100%);
   /* top: 550px; */
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const IconBox = styled.div`
