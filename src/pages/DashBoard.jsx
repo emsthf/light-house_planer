@@ -188,11 +188,10 @@ const Goal = styled(motion.div)`
   }
 `;
 
-const ChallengeBox = styled(GoalBox)`
-`;
+const ChallengeBox = styled(GoalBox)``;
 
 const ChallengeItem = styled(Goal)`
-height: 70px;
+  height: 70px;
 `;
 
 const CreateBtn = styled.button`
@@ -262,7 +261,7 @@ const StatisticsBox = styled(GoalBox)`
 `;
 
 const DoneGoalBox = styled(GoalBox)`
-margin-bottom: 40px;
+  margin-bottom: 40px;
 `;
 
 const MoreViewBtn = styled(MoreBadge)``;
@@ -369,7 +368,6 @@ const modalVariants = {
 };
 
 function DashBoard() {
-
   const [isGoalId, setIsGoalId] = useRecoilState(goalId);
   const [isGoalPeriod, setIsGoalPeriod] = useRecoilState(goalPeriod);
   const [id, setId] = useState(null); // 모달용 임시 state
@@ -404,15 +402,23 @@ function DashBoard() {
 
   useEffect(() => {
     // 최근 진행중 목표 3개 불러오기
-    axios.get(`http://localhost:8080/api/dGoal/0/${user}`).then((Response) => {
-      setDoingGoals(Response.data.slice(0, 3));
-      // console.log(Response.data);
-      setIsGoalPeriod(Response.data.slice(0, 3));
-    });
+    axios
+      .get(
+        `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/0/${user}`
+        // `http://localhost:8080/api/dGoal/0/${user}`
+      )
+      .then((Response) => {
+        setDoingGoals(Response.data.slice(0, 3));
+        // console.log(Response.data);
+        setIsGoalPeriod(Response.data.slice(0, 3));
+      });
 
     // 최근 완료된 목표 불러오기
     axios
-      .get(`http://localhost:8080/api/dGoal/1/${user}`)
+      .get(
+        `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/1/${user}`
+        // `http://localhost:8080/api/dGoal/1/${user}`
+      )
       .then((Response) => {
         setDoneGoals(Response.data);
         console.log(Response.data);
@@ -421,25 +427,35 @@ function DashBoard() {
 
     // 획득한 배지 가져오기
     axios
-      .get(`http://localhost:8080/api/mybadge/${user}`)
+      .get(
+        `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/mybadge/${user}`
+        // `http://localhost:8080/api/mybadge/${user}`
+      )
       .then((Response) => {
         // console.log(Response.data);
         setBadge(Response.data.slice(0, 5));
       })
       .catch((Error) => console.log(Error));
 
-      // 내 작성 글 가져오기
-      axios.get(`http://localhost:8081/api/post/list/${user}`)
-      .then(Response => {
+    // 내 작성 글 가져오기
+    axios
+      .get(
+        `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/list/${user}`
+        // `http://localhost:8081/api/post/list/${user}`
+      )
+      .then((Response) => {
         // console.log(Response.data);
         setPost(Response.data.slice(0, 5));
-      }).catch(Error => console.log(Error));
+      })
+      .catch((Error) => console.log(Error));
 
-      // 참여 중인 챌린지 가져오기
-      axios.get(`http://localhost:8082/api/mychallenge/list/${user}`)
-      .then(Response => {
+    // 참여 중인 챌린지 가져오기
+    axios
+      .get(`http://localhost:8082/api/mychallenge/list/${user}`)
+      .then((Response) => {
         setChallenge(Response.data.slice(0, 3));
-      }).catch(Error => console.log(Error));
+      })
+      .catch((Error) => console.log(Error));
   }, [setBadge]);
 
   console.log(challenge);
@@ -505,20 +521,19 @@ function DashBoard() {
             </GoalBox>
             <ChallengeBox>
               <BoxTitle>현재 참가 중인 챌린지</BoxTitle>
-              {
-                challenge && challenge.map(challenge => (
+              {challenge &&
+                challenge.map((challenge) => (
                   <Link to={`/challenge/${challenge.challenge.id}`}>
-                  <ChallengeItem key={challenge.challenge.id}>
-                    <div>
-                      <i className="fa-regular fa-calendar-check"></i>
-                      <GoalTitle>{challenge.challenge.challengeTitle}</GoalTitle>
-                      <Explanation>{challenge.challenge.challengeDesc}</Explanation>
-                      {/* <Status>진행 중</Status> */}
-                    </div>
-                  </ChallengeItem>
+                    <ChallengeItem key={challenge.challenge.id}>
+                      <div>
+                        <i className="fa-regular fa-calendar-check"></i>
+                        <GoalTitle>{challenge.challenge.challengeTitle}</GoalTitle>
+                        <Explanation>{challenge.challenge.challengeDesc}</Explanation>
+                        {/* <Status>진행 중</Status> */}
+                      </div>
+                    </ChallengeItem>
                   </Link>
-                ))
-              }
+                ))}
             </ChallengeBox>
             <BadgeBox>
               <BoxTitle style={{ marginBottom: "10px" }}>최근 획득 배지</BoxTitle>
@@ -565,11 +580,9 @@ function DashBoard() {
                   </Goal>
                 ))
               )}
-              {
-                doneGoals.length > 3 
-                ? <MoreViewBtn onClick={() => navigate('/goal/list')}>+더 보기</MoreViewBtn>
-                : null
-              }
+              {doneGoals.length > 3 ? (
+                <MoreViewBtn onClick={() => navigate("/goal/list")}>+더 보기</MoreViewBtn>
+              ) : null}
             </DoneGoalBox>
             <BoardBox>
               <BoxTitle>내 작성 글</BoxTitle>
@@ -583,18 +596,16 @@ function DashBoard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {
-                    post.map(post => (
-                        <TR key={post.id}>
-                          <TD>{post.category}</TD>
-                          <Link to={`/board/${post.id}`}>
-                            <TD>{post.title}</TD>
-                          </Link>
-                          <TD>{post.created}</TD>
-                          <TD>{post.view}</TD>
-                        </TR>
-                    ))
-                  }
+                  {post.map((post) => (
+                    <TR key={post.id}>
+                      <TD>{post.category}</TD>
+                      <Link to={`/board/${post.id}`}>
+                        <TD>{post.title}</TD>
+                      </Link>
+                      <TD>{post.created}</TD>
+                      <TD>{post.view}</TD>
+                    </TR>
+                  ))}
                 </tbody>
               </Table>
             </BoardBox>
