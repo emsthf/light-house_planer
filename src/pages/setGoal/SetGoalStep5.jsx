@@ -144,7 +144,7 @@ function SetGoalStep5() {
           : goal.period % 7 === 0 
           ? totalWeekCount
           : totalWeekCount + remainderDay,
-        userId : user
+        userId : user.id
       })
       .then((Response) => {
         if (Response.data) {

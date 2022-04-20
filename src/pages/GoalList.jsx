@@ -106,7 +106,7 @@ function GoalList() {
   const submitForm = (e) => {
     e.preventDefault();
     console.log(keyword);
-    axios.get(`http://localhost:8080/api/goal/1/${user}/search?keyword=${keyword}`)
+    axios.get(`http://localhost:8080/api/goal/1/${user.id}/search?keyword=${keyword}`)
     .then(Response => {
       console.log(Response.data);
       setResult(Response.data);
@@ -115,7 +115,7 @@ function GoalList() {
   }
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/dGoal/1/${user}`)
+    axios.get(`http://localhost:8080/api/dGoal/1/${user.id}`)
     .then(Response => {
     //   console.log(Response.data);
       setList(Response.data);

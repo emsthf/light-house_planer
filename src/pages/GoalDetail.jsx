@@ -194,9 +194,9 @@ function GoalDetail() {
     if (window.confirm("정말 이 목표를 지우시겠습니까?")) {
       console.log(id);
       axios
-        .delete(`http://localhost:8080/api/goal/${id}/${user}`)
+        .delete(`http://localhost:8080/api/goal/${id}/${user.id}`)
         .then((Response) => {
-          axios.delete(`http://localhost:8081/api/post/${id}/${user}`); // 목표 인증글 삭제
+          axios.delete(`http://localhost:8081/api/post/${id}/${user.id}`); // 목표 인증글 삭제
           navigate("/dash");
         })
         .catch((Error) => {

@@ -232,7 +232,7 @@ function AuthBoard() {
             created: now,
             goalId: goal.id,
             postImg: file, // img url 넘기기
-            userId: user,
+            userId: user.id,
             count: goal.count,
           })
           .then((Response) => {
@@ -245,7 +245,7 @@ function AuthBoard() {
                   ...goal,
                   checkDate: now,
                   postId: Response.data,
-                  userId: user,
+                  userId: user.id,
                 })
                 .then((res) => {
                   console.log(res);

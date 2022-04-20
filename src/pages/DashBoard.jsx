@@ -375,8 +375,10 @@ function DashBoard() {
   const [doneGoals, setDoneGoals] = useState([]);
   const [badge, setBadge] = useState([]);
   const [post, setPost] = useState([]);
-  const [user, setUser] = useRecoilState(userState); // 로그인한 유저 - 현재 1번 사용자라고 가정
+  const [user, setUser] = useRecoilState(userState); // 로그인한 유저
   const [challenge, setChallenge] = useState([]); // 진행 중인 챌린지
+
+  console.log("user id -> " + user.id);
 
   const navigate = useNavigate();
   const { scrollY } = useViewportScroll();
@@ -405,7 +407,7 @@ function DashBoard() {
     axios
       .get(
         // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/0/${user}`
-        `http://localhost:8080/api/dGoal/0/${user}`
+        `http://localhost:8080/api/dGoal/0/${user.id}`
       )
       .then((Response) => {
         setDoingGoals(Response.data.slice(0, 3));
@@ -417,7 +419,7 @@ function DashBoard() {
     axios
       .get(
         // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/1/${user}`
-        `http://localhost:8080/api/dGoal/1/${user}`
+        `http://localhost:8080/api/dGoal/1/${user.id}`
       )
       .then((Response) => {
         setDoneGoals(Response.data);
@@ -429,7 +431,7 @@ function DashBoard() {
     axios
       .get(
         // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/mybadge/${user}`
-        `http://localhost:8080/api/mybadge/${user}`
+        `http://localhost:8080/api/mybadge/${user.id}`
       )
       .then((Response) => {
         // console.log(Response.data);
@@ -441,7 +443,7 @@ function DashBoard() {
     axios
       .get(
         // `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/list/${user}`
-        `http://localhost:8081/api/post/list/${user}`
+        `http://localhost:8081/api/post/list/${user.id}`
       )
       .then((Response) => {
         // console.log(Response.data);
@@ -451,7 +453,7 @@ function DashBoard() {
 
     // 참여 중인 챌린지 가져오기
     axios
-      .get(`http://localhost:8082/api/mychallenge/list/${user}`)
+      .get(`http://localhost:8082/api/mychallenge/list/${user.id}`)
       .then((Response) => {
         setChallenge(Response.data.slice(0, 3));
       })

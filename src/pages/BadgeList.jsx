@@ -127,7 +127,7 @@ function BadgeList() {
   const [id, setId] = useState(null); // 모달용 임시 state
   const [specialBadge, setSpecialBadge] = useState();
   const [badge, setBadge] = useState();
-  const [user, setUser] = useRecoilState(userState) // 로그인한 유저 - 현재 1번 사용자라고 가정
+  const [user, setUser] = useRecoilState(userState) // 로그인한 유저
 
   const findBadgeName = (badge) => {
     if(badge.badge.badgeName === "100") {
@@ -155,13 +155,13 @@ function BadgeList() {
   }
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/mybadge/list/${user}?type=Special`) // 특별 한정 배지 리스트
+    axios.get(`http://localhost:8080/api/mybadge/list/${user.id}?type=Special`) // 특별 한정 배지 리스트
     .then(Response => {
       setSpecialBadge(Response.data);
       console.log(Response.data);
     }).catch(Error => console.log(Error));
 
-    axios.get(`http://localhost:8080/api/mybadge/list/${user}?type=Ordinary`) // 목표 달성 배지 리스트
+    axios.get(`http://localhost:8080/api/mybadge/list/${user.id}?type=Ordinary`) // 목표 달성 배지 리스트
     .then(Response => {
       setBadge(Response.data);
       console.log(Response.data);
