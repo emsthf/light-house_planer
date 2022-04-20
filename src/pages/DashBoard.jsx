@@ -11,9 +11,9 @@ import Badge from "./Badge";
 import BarChart from "../components/BarChart";
 
 const Wrapper = styled.div`
-  height: auto;
+  /* height: auto; */
   min-height: 100%;
-  width: 100vw;
+  /* width: 100vw; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,8 +25,6 @@ const Wrapper = styled.div`
     padding-left: 24px !important;
   }
   @media screen and (max-width: 768px) {
-    padding-right: 24px !important;
-    padding-left: 24px !important;
   }
 `;
 
@@ -35,12 +33,25 @@ const GridBox = styled.div`
   max-width: 1280px;
   grid-template-columns: repeat(2, 1fr);
   grid-template-columns: 1fr 4fr;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const Container = styled.div`
   height: 600px;
   /* box-shadow: 10px 8px 5px rgba(0, 0, 0, 0.5); */
   margin-right: 30px;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    margin-right: 0;
+    margin-top: 40px;
+  }
 `;
 
 const ProfileImg = styled.div`
@@ -122,6 +133,11 @@ const GoalBox = styled.div`
   flex-direction: column;
   justify-content: center;
   margin-bottom: 52px;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    width: 60%;
+  }
 `;
 
 const OrEmpty = styled.span`
@@ -136,12 +152,22 @@ const BoxTitle = styled.span`
   font-size: 20px;
   font-weight: bold !important;
   margin-bottom: 8px !important;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 
 const GoalTitle = styled.span`
   font-size: 20px;
   font-weight: bold;
   margin-right: 6px;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 
 const Status = styled.div`
@@ -222,6 +248,11 @@ const BadgeBox = styled.div`
   flex-direction: column;
   padding: 15px;
   margin-bottom: 52px;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    width: 60%;
+  }
 `;
 
 const BadgeList = styled.div`
@@ -258,6 +289,11 @@ const StatisticsBox = styled(GoalBox)`
   /* justify-content: space-between; */
   align-items: center;
   margin-bottom: 0;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const DoneGoalBox = styled(GoalBox)`

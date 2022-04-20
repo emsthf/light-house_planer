@@ -5,15 +5,10 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../components/Pagination";
 
-// const Container = styled.div`
-//   width: 80vw;
-//   margin: auto;
-// `;
-
 const Wrapper = styled.div`
   height: auto;
   min-height: 100vh;
-  width: 100vw;
+  /* width: 100vw; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,12 +16,8 @@ const Wrapper = styled.div`
   margin: auto;
   margin-top: 5vh;
   @media screen and (max-width: 768px) {
-    padding-right: 24px !important;
-    padding-left: 24px !important;
   }
   @media screen and (max-width: 500px) {
-    padding-right: 50px !important;
-    padding-left: 50px !important;
   }
 `;
 
@@ -51,6 +42,7 @@ const Wrapper = styled.div`
 // `;
 
 const BoardBox = styled.div`
+  padding: 0px 300px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -58,6 +50,15 @@ const BoardBox = styled.div`
   align-items: center;
   margin-bottom: 20px;
   height: 100%;
+  @media screen and (max-width: 1350px) {
+    padding: 0px 150px;
+  }
+  @media screen and (max-width: 1150px) {
+    padding: 0px 150px;
+  }
+  @media screen and (max-width: 768px) {
+    padding: 0px 25px;
+  }
 `;
 
 const BoxTitle = styled.span`
@@ -68,13 +69,11 @@ const BoxTitle = styled.span`
 
 const Table = styled.table`
   border-collapse: collapse;
-  width: 60%;
+  width: 100%;
   border-style: hidden;
   @media screen and (max-width: 768px) {
-    table {
-      font-size: 8px;
-      width: 90%;
-    }
+  }
+  @media screen and (max-width: 500px) {
   }
 `;
 

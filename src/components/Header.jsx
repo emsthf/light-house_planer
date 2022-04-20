@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import DarkModeToggle from "react-dark-mode-toggle";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { darkModeState, userState } from "../Atom";
 import axios from "axios";
 
@@ -19,6 +19,12 @@ const Nav = styled(motion.nav)`
   padding: 30px 90px 20px 80px;
   color: gray;
   z-index: 99;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    padding: 30px 90px 20px 20px;
+    flex-wrap: wrap;
+  }
 `;
 
 const ColLogo = styled.div`
@@ -50,6 +56,12 @@ const LogoImg = styled.img`
   /* top: 50%; */
   /* left: 50%; */
   /* transform: translate(-50%, -50%); */
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    width: 15%;
+    height: 15%;
+  }
 `;
 
 const HeaderTitle = styled(motion.div)`
@@ -76,12 +88,35 @@ const HeaderTitle = styled(motion.div)`
       text-shadow: none;
     }
   }
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 30px;
+  }
+`;
+
+const ToggleBtn = styled.div`
+  display: none;
+  position: absolute;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    right: 20px;
+  }
 `;
 
 const Items = styled.ul`
   display: flex;
   align-items: center;
   font-size: 20px;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    margin-top: 10px;
+  }
 `;
 
 const Item = styled.li`
@@ -94,6 +129,14 @@ const Item = styled.li`
   /* flex-direction: column; */
   font-weight: 600;
   cursor: pointer;
+  @media screen and (max-width: 1350px) {
+    font-size: 16px;
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 15px;
+    width: 4rem;
+    margin-right: 8px;
+  }
 `;
 
 const Search = styled.form`
@@ -154,6 +197,11 @@ const Modal = styled(motion.div)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    width: 370px;
+  }
 `;
 
 const Form = styled.form`
@@ -181,6 +229,11 @@ const Input = styled.input`
   }
   &:focus {
     outline: none;
+  }
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    width: 80%;
   }
 `;
 
@@ -250,7 +303,7 @@ function Header() {
   const homeMatch = useMatch("/dash");
   const boardMatch = useMatch("/board");
   const notiMatch = useMatch("/noti");
-  const challengeMatch = useMatch("/challengeList");
+  const challengeMatch = useMatch("/challenge");
   const loginMatch = useMatch("/login");
   // const inputAnumation = useAnimation();
   const navAnimation = useAnimation();
@@ -299,14 +352,14 @@ function Header() {
       setIsClick(false);
       if (isClick === false && user.id !== 0) {
         setUser({
-          id : 0,
-          name : "",
-          email : "",
-          password : "",
-          phoneNum : ""
-        })
-      };
-      navigate('/');
+          id: 0,
+          name: "",
+          email: "",
+          password: "",
+          phoneNum: "",
+        });
+      }
+      navigate("/");
     }
   };
 
@@ -346,6 +399,12 @@ function Header() {
       }
     });
   }, [scrollY, navAnimation]);
+
+  // 모바일 메뉴 토글 버튼
+  const [open, setOpen] = useState(false);
+  const toggleMenu = () => {
+    setOpen((open) => !open); // on,off 개념 boolean
+  };
 
   return (
     <Nav variants={navVariants} initial="top" animate={navAnimation}>
@@ -390,7 +449,8 @@ function Header() {
           />
         </Search> */}
 
-        <Items>
+        <ToggleBtn onClick={() => toggleMenu()} />
+        <Items toggleState={open ? "376px" : "-376px"}>
           {user.name === "admin" && (
             <Item>
               <Link to="/admin">관리자{notiMatch && <Circle layoutId="circle" />}</Link>
@@ -434,6 +494,7 @@ function Header() {
             {loginMatch && <Circle layoutId="circle" />}
             {/* </Link> */}
           </Item>
+
           <AnimatePresence>
             {isClick && (
               <Backdrop

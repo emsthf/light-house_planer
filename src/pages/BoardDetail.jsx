@@ -4,13 +4,19 @@ import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
-  width: 60%;
+  padding: 0px 380px;
+  width: 100%;
   margin: 150px auto;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   margin-bottom: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    padding: 0px 25px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -61,6 +67,11 @@ const PostImg = styled.img`
   height: 600px;
   alt: "postImg";
   object-fit: contain;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    height: 400px;
+  }
 `;
 
 const Comment = styled.div`
