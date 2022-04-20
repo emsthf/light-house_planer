@@ -128,7 +128,10 @@ function NotificationDetail() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8081/api/notification/${id}`)
+      .get(
+        // `http://localhost:8081/api/notification/${id}`
+        `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/notification/${id}`
+      )
       .then((Response) => {
         setNoti(Response.data);
         console.log(Response.data.notifImg);

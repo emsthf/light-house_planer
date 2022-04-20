@@ -204,16 +204,25 @@ function AuthBoard() {
 
     setLoadingToggle((prev) => !prev);
 
+    // const url1 = `http://localhost:8081/api/post/${post.id}`;
+    // const url2 = "http://localhost:8081/api/post";
+    // const url3 = `http://localhost:8080/api/goal/${goal.id}`;
+
+    const url1 = `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/${post.id}`;
+    const url2 =
+      "http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post";
+    const url3 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/${goal.id}`;
+
     if ((post.title && post.content) !== null && post.created === now) {
       setTimeout(() => {
         axios
-          .put(`http://localhost:8081/api/post/${post.id}`, {
+          .put(url1, {
             id: post.id,
             title: data.title,
             content: data.content,
             postImg: file, // img url 넘기기
             goalId: goal.id,
-            created: post.created
+            created: post.created,
           })
           .then((res) => {
             navigate(`/goal/${post.id}`);
@@ -225,7 +234,7 @@ function AuthBoard() {
     } else {
       setTimeout(() => {
         axios
-          .post("http://localhost:8081/api/post", {
+          .post(url2, {
             categoryId: 1,
             title: data.title,
             content: data.content,
@@ -241,7 +250,7 @@ function AuthBoard() {
             // setFile();
             if (Response.data != null) {
               axios
-                .put(`http://localhost:8080/api/goal/${goal.id}`, {
+                .put(url3, {
                   ...goal,
                   checkDate: now,
                   postId: Response.data,
@@ -264,35 +273,43 @@ function AuthBoard() {
 
       const formData = new FormData();
       formData.append("file", document.getElementById("uploadFile").files[0]);
-      axios.post("http://localhost:8081/api/postImg", formData).then((res) => {
-        // document.getElementById("uploadFile").value = "";
-        console.log(res);
-        alert("업로드 완료!");
-        setImgLoading(false);
+      axios
+        .post(
+          // "http://localhost:8081/api/postImg",
+          "http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/postImg",
+          formData
+        )
+        .then((res) => {
+          // document.getElementById("uploadFile").value = "";
+          console.log(res);
+          alert("업로드 완료!");
+          setImgLoading(false);
 
-        const reader = new FileReader(); // 파일 미리보기 객체
-        reader.readAsDataURL(e.target.files[0]);
-        reader.onload = function (e) {
-          setImg(reader.result); // 미리보기
-        };
-        // setFile(file.concat([Response.data]));
-        setFile(res.data);
-        console.log("이미지 업로드 완료 : ", res.data);
-      });
+          const reader = new FileReader(); // 파일 미리보기 객체
+          reader.readAsDataURL(e.target.files[0]);
+          reader.onload = function (e) {
+            setImg(reader.result); // 미리보기
+          };
+          // setFile(file.concat([Response.data]));
+          setFile(res.data);
+          console.log("이미지 업로드 완료 : ", res.data);
+        });
     }
   };
 
   useEffect(() => {
     // 해당 일자에 작성한 일일 인증글이 있는 경우
     axios
-      .get(`http://localhost:8081/api/post/auth/find?goalId=${goal.id}&created=${now}`)
+      .get(
+        // `http://localhost:8081/api/post/auth/find?goalId=${goal.id}&created=${now}`
+        `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/auth/find?goalId=${goal.id}&created=${now}`
+      )
       .then((Response) => {
         console.log(Response.data);
         setPost(Response.data);
       })
       .catch((Error) => console.log(Error));
   }, [file]);
-
 
   return (
     <Container>

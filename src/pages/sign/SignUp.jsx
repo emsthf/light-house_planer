@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -102,14 +102,22 @@ function SignUp() {
   const [user, setUser] = useState({});
   const [img, setImg] = useState("");
   const navigate = useNavigate();
+  const [loginUser, SetLoginUser] = useRecoilState(userState);
+  // const [userData, setUserData] = useState();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    watch
+    watch,
   } = useForm();
+  // {defaultValues: {
+  //   name: userData.name,
+  //   email: userData.email,
+  //   password: userData.password,
+  //   phone: userData.phoneNum,
+  // }}
 
   const readFile = (e) => {
     const reader = new FileReader(); // 파일 미리보기 객체
@@ -120,34 +128,47 @@ function SignUp() {
   };
 
   const onSubmit = (data) => {
-    // console.log(data);
     // setUser({
-    //     name : data.name,
-    //     email: data.email,
-    //     password: data.password,
-    //     phoneNum: data.phone,
-    //     // img: data.img
+    //   name: data.name,
+    //   email: data.email,
+    //   password: data.password,
+    //   phoneNum: data.phone,
+    //   // img: data.img
     // });
-    axios.post('http://localhost:8083/api/signup', {
-      name : data.name,
-      email: data.email,
-      password: data.password,
-      phoneNum: data.phone,
-    })
-    // .then(console.log(user))
-    .then(navigate('/'))
-    .catch(Error => console.log(Error));
+    axios
+      .post(
+        // "http://localhost:8083/api/signup",
+        "http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/signup",
+        {
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          phoneNum: data.phone,
+        }
+      )
+      // .then(console.log(data))
+      .then(navigate("/"))
+      .catch((Error) => console.log(Error));
   };
 
-  const resetForm = () => {
-    reset({
-      name: "",
-      email: "",
-      password: "",
-      passwordConfirm: "",
-      phone: "",
-    });
-  };
+  // const resetForm = () => {
+  //   reset({
+  //     name: "",
+  //     email: "",
+  //     password: "",
+  //     passwordConfirm: "",
+  //     phone: "",
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       `http://localhost:8083/api/user/get/${loginUser.id}`
+  //       // `http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/user/get/${loginUser.id}`
+  //     )
+  //     .then((res) => setUserData(res.data));
+  // }, []);
 
   return (
     <Container>
@@ -239,16 +260,20 @@ function SignUp() {
             {img && <ImageThumbnail src={img} alt="thumbnail" />}
           </Label> */}
           <ButtonWrapper>
-            <Button>가입</Button>
-            <Button
-              type="button"
-              marginLeft
-              onClick={resetForm}
-              backgroundColor={"#89d8d3"}
-              hoverColor={"linear-gradient(315deg, #416dea, #89d8d3 74%)"}
-            >
-              reset
-            </Button>
+            <Button>{loginUser.id !== 0 ? "수정" : "가입"}</Button>
+            {loginUser.id !== 0 ? (
+              <Button marginLeft>탈퇴</Button>
+            ) : (
+              <Button
+                type="button"
+                marginLeft
+                // onClick={resetForm}
+                backgroundColor={"#89d8d3"}
+                hoverColor={"linear-gradient(315deg, #416dea, #89d8d3 74%)"}
+              >
+                reset
+              </Button>
+            )}
           </ButtonWrapper>
         </Form>
       </FormWrapper>

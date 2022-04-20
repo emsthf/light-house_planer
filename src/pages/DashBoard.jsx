@@ -378,7 +378,17 @@ function DashBoard() {
   const [user, setUser] = useRecoilState(userState); // 로그인한 유저
   const [challenge, setChallenge] = useState([]); // 진행 중인 챌린지
 
-  console.log("user id -> " + user.id);
+  // const url1 = `http://localhost:8080/api/dGoal/0/${user.id}`;
+  // const url2 = `http://localhost:8080/api/dGoal/1/${user.id}`;
+  // const url3 = `http://localhost:8080/api/mybadge/${user.id}`;
+  // const url4 = `http://localhost:8081/api/post/list/${user.id}`;
+  // const url5 = `http://localhost:8082/api/mychallenge/list/${user.id}`;
+
+  const url1 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/0/${user.id}`;
+  const url2 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/1/${user.id}`;
+  const url3 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/mybadge/${user.id}`;
+  const url4 = `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/list/${user.id}`;
+  const url5 = `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/mychallenge/list/${user.id}`;
 
   const navigate = useNavigate();
   const { scrollY } = useViewportScroll();
@@ -404,23 +414,15 @@ function DashBoard() {
 
   useEffect(() => {
     // 최근 진행중 목표 3개 불러오기
-    axios
-      .get(
-        // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/0/${user}`
-        `http://localhost:8080/api/dGoal/0/${user.id}`
-      )
-      .then((Response) => {
-        setDoingGoals(Response.data.slice(0, 3));
-        // console.log(Response.data);
-        setIsGoalPeriod(Response.data.slice(0, 3));
-      });
+    axios.get(url1).then((Response) => {
+      setDoingGoals(Response.data.slice(0, 3));
+      // console.log(Response.data);
+      setIsGoalPeriod(Response.data.slice(0, 3));
+    });
 
     // 최근 완료된 목표 불러오기
     axios
-      .get(
-        // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/1/${user}`
-        `http://localhost:8080/api/dGoal/1/${user.id}`
-      )
+      .get(url2)
       .then((Response) => {
         setDoneGoals(Response.data);
         console.log(Response.data);
@@ -429,10 +431,7 @@ function DashBoard() {
 
     // 획득한 배지 가져오기
     axios
-      .get(
-        // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/mybadge/${user}`
-        `http://localhost:8080/api/mybadge/${user.id}`
-      )
+      .get(url3)
       .then((Response) => {
         // console.log(Response.data);
         setBadge(Response.data.slice(0, 5));
@@ -441,10 +440,7 @@ function DashBoard() {
 
     // 내 작성 글 가져오기
     axios
-      .get(
-        // `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/list/${user}`
-        `http://localhost:8081/api/post/list/${user.id}`
-      )
+      .get(url4)
       .then((Response) => {
         // console.log(Response.data);
         setPost(Response.data.slice(0, 5));
@@ -453,7 +449,7 @@ function DashBoard() {
 
     // 참여 중인 챌린지 가져오기
     axios
-      .get(`http://localhost:8082/api/mychallenge/list/${user.id}`)
+      .get(url5)
       .then((Response) => {
         setChallenge(Response.data.slice(0, 3));
       })
@@ -477,7 +473,7 @@ function DashBoard() {
                 <Grade>🕊️ 갈매기</Grade>
               </InfoBox>
               <Link to="/signup">
-                <EditBtn onClick={() => navigate('/signup')}>Edit profile</EditBtn>
+                <EditBtn onClick={() => navigate("/signup")}>Edit profile</EditBtn>
               </Link>
             </ProfileBox>
           </Container>
