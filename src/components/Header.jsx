@@ -15,15 +15,40 @@ const Nav = styled(motion.nav)`
   width: 100%;
   top: 0;
   font-size: 14px;
-  padding: 30px 90px 20px 100px;
+  padding: 30px 90px 20px 80px;
   color: gray;
   z-index: 99;
 `;
 
+const ColLogo = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* justify-content: space-between; */
+`;
+
 const Col = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+`;
+
+const LogoBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  height: auto;
+`;
+
+const LogoImg = styled.img`
+  width: 8%;
+  height: auto;
+  /* position: relative; */
+  margin-right: 10px;
+  /* top: 50%; */
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%); */
 `;
 
 const HeaderTitle = styled(motion.div)`
@@ -287,8 +312,12 @@ function Header() {
 
   return (
     <Nav variants={navVariants} initial="top" animate={navAnimation}>
-      <Col>
-        <Link to="/">
+      <Col style={{}}>
+        <Link
+          to="/"
+          style={{ display: "flex", flexDirection: "row", justifyContent: "left" }}
+        >
+          <LogoImg src="../assets/images/logo.png" alt="logo" />
           <HeaderTitle
             titlecolor={isDarkMode === true ? "#fff" : "gray"}
             neon={isDarkMode === true ? "flicker 1.5s infinite alternate" : "none"}

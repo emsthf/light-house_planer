@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
+import { useRecoilValue } from "recoil";
+import { userState } from "../../Atom";
+import axios from "axios";
 
 const Container = styled.div`
   width: 1200px;
@@ -97,6 +100,8 @@ const Button = styled.button`
 function SignUp() {
   const [user, setUser] = useState({});
   const [img, setImg] = useState("");
+  const loginUserId = useRecoilValue(userState);
+  const [userData, setUserData] = useState();
 
   const {
     register,
@@ -104,7 +109,14 @@ function SignUp() {
     formState: { errors },
     reset,
     watch,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name: userData.name,
+      email: userData.email,
+      password: userData.password,
+      phone: userData.phoneNum,
+    },
+  });
 
   const readFile = (e) => {
     const reader = new FileReader(); // 파일 미리보기 객체
@@ -135,6 +147,12 @@ function SignUp() {
       phone: "",
     });
   };
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8082/api/user/get/${loginUserId}`)
+      .then((res) => setUserData(res.data));
+  }, []);
 
   return (
     <Container>
