@@ -8,6 +8,7 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { goalId, goalPeriod, userState } from "../Atom";
 import Badge from "./Badge";
+import BarChart from "../components/BarChart";
 
 const Wrapper = styled.div`
   height: auto;
@@ -187,6 +188,12 @@ const Goal = styled(motion.div)`
   }
 `;
 
+const ChallengeBox = styled(GoalBox)``;
+
+const ChallengeItem = styled(Goal)`
+  height: 70px;
+`;
+
 const CreateBtn = styled.button`
   padding: 0.5rem 2rem;
   border: none;
@@ -253,12 +260,14 @@ const StatisticsBox = styled(GoalBox)`
   margin-bottom: 0;
 `;
 
-const DoneGoalBox = styled(GoalBox)``;
+const DoneGoalBox = styled(GoalBox)`
+  margin-bottom: 40px;
+`;
 
 const MoreViewBtn = styled(MoreBadge)``;
 
 const BoardBox = styled(GoalBox)`
-  height: 300px;
+  height: 320px;
 `;
 
 const Table = styled.table`
@@ -367,6 +376,7 @@ function DashBoard() {
   const [badge, setBadge] = useState([]);
   const [post, setPost] = useState([]);
   const [user, setUser] = useRecoilState(userState); // 로그인한 유저 - 현재 1번 사용자라고 가정
+  const [challenge, setChallenge] = useState([]); // 진행 중인 챌린지
 
   const navigate = useNavigate();
   const { scrollY } = useViewportScroll();
@@ -403,7 +413,7 @@ function DashBoard() {
         setIsGoalPeriod(Response.data.slice(0, 3));
       });
 
-    // 최근 완료된 목표 3개 불러오기
+    // 최근 완료된 목표 불러오기
     axios
       .get(
         `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/1/${user}`
@@ -435,10 +445,20 @@ function DashBoard() {
       )
       .then((Response) => {
         // console.log(Response.data);
-        setPost(Response.data);
+        setPost(Response.data.slice(0, 5));
+      })
+      .catch((Error) => console.log(Error));
+
+    // 참여 중인 챌린지 가져오기
+    axios
+      .get(`http://localhost:8082/api/mychallenge/list/${user}`)
+      .then((Response) => {
+        setChallenge(Response.data.slice(0, 3));
       })
       .catch((Error) => console.log(Error));
   }, [setBadge]);
+
+  console.log(challenge);
 
   return (
     <>
@@ -499,6 +519,22 @@ function DashBoard() {
                 <CreateBtn>새 목표 생성</CreateBtn>
               </Link>
             </GoalBox>
+            <ChallengeBox>
+              <BoxTitle>현재 참가 중인 챌린지</BoxTitle>
+              {challenge &&
+                challenge.map((challenge) => (
+                  <Link to={`/challenge/${challenge.challenge.id}`}>
+                    <ChallengeItem key={challenge.challenge.id}>
+                      <div>
+                        <i className="fa-regular fa-calendar-check"></i>
+                        <GoalTitle>{challenge.challenge.challengeTitle}</GoalTitle>
+                        <Explanation>{challenge.challenge.challengeDesc}</Explanation>
+                        {/* <Status>진행 중</Status> */}
+                      </div>
+                    </ChallengeItem>
+                  </Link>
+                ))}
+            </ChallengeBox>
             <BadgeBox>
               <BoxTitle style={{ marginBottom: "10px" }}>최근 획득 배지</BoxTitle>
               <BadgeList>
@@ -519,6 +555,7 @@ function DashBoard() {
               <StatisticsBox>
                 <PieChart />
                 <TimelineChart doingGoals={doingGoals} />
+                {/* <BarChart doingGoals={doingGoals} /> */}
               </StatisticsBox>
             </StatisticsCon>
             <DoneGoalBox>
@@ -569,18 +606,6 @@ function DashBoard() {
                       <TD>{post.view}</TD>
                     </TR>
                   ))}
-                  {/* <TR>
-                    <TD>인증</TD>
-                    <TD>3.15 공부 인증</TD>
-                    <TD>22.03.15</TD>
-                    <TD>123</TD>
-                  </TR>
-                  <TR>
-                    <TD>인증</TD>
-                    <TD>3.16 공부 인증</TD>
-                    <TD>22.03.16</TD>
-                    <TD>127</TD>
-                  </TR> */}
                 </tbody>
               </Table>
             </BoardBox>

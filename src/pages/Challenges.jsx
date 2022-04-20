@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 
 const Title = styled.div`
   width: 800px;
-  height: 130px;
+  height: 100px;
   background: #fafafa;
   border-radius: 20px;
   box-shadow: 3px 5px 10px #d7d7d7;
@@ -25,57 +25,60 @@ const Title = styled.div`
   align-items: center;
   justify-content: center;
   margin: 2rem auto;
+  position: relative;
+  &:hover {
+    background : #ebf7ff;
+  }
 `;
 
 const ChallengeCondition = styled.div`
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  display: block;
   background-color: #d9e5ff;
-  height: 100px;
-  width: 7em;
-  margin: auto;
+  position: absolute;
+  top: 50%;
+  right: 4rem;
+  transform: translateY(-50%);
+  display: flex;
   align-items: center;
-  margin-left: 550px;
-  margin-right: 6px;
+  justify-content: center;
 `;
 
 const GridBox = styled.div`
-  height: 20%;
+  height: 60px;
   width: 90%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-`;
-
-const Paging = styled.span`
-  background-color: #fafafa;
-  width: 150px;
-  height: 30px;
-  border-radius: 5px;
-  box-shadow: 2px 5px 10px #d7d7d7;
-  text-align: center;
-  line-height: 30px;
 `;
 
 const NewChallengeEnroll = styled.button`
-  background-color: #fafafa;
-  width: 150px;
-  height: 30px;
-  border-radius: 5px;
-  box-shadow: 2px 5px 10px #d7d7d7;
-  position: absolute;
-  right: 100px;
-  top: 16px;
+  padding: 0.5rem 3rem;
+  border: none;
+  box-shadow: 3px 4px 8px #b7b7b7;
+  background: #416dea;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 30px;
+  &:hover {
+      box-shadow: none;
+      background: linear-gradient(315deg, #89d8d3, #416dea 74%);
+  }
+  &:active {
+      background: linear-gradient(315deg, #89d8d3, #416dea 74%);
+      box-shadow: 3px 4px 10px #bbb;
+  }
 `;
 
-const HalfGridBox = styled.div`
-  display: grid;
-  height: 20%;
+const BtnGridBox = styled.div`
+  height: 80px;
   max-width: 1000px;
-  grid-template-columns: repeat(1, 1fr);
-  grid-template-columns: 1fr 1fr;
+  margin: 2rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const ToNotice = styled.button`
@@ -83,42 +86,12 @@ const ToNotice = styled.button`
   text-align: center;
   width: 160px;
   height: 40px;
-  margin-top: 45px;
-  margin-left: 380px;
   border-radius: 5px;
   border: none;
   box-shadow: ${(props) => props.theme.boxShadow};
   background: ${(props) => props.backgroundColor || "#416dea"};
   color: #fff;
   font-weight: bold;
-  // margin: 1rem 0;
-  margin-left: ${(props) => props.marginLeft && "2rem"};
-  &:hover {
-    box-shadow: none;
-    background: ${(props) =>
-      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
-  }
-  &:active {
-    box-shadow: none;
-    background: ${(props) =>
-      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
-    box-shadow: 3px 4px 10px #bbb;
-  }
-`;
-const ToAuthentication = styled.button`
-  text-align: center;
-  width: 160px;
-  height: 40px;
-  padding: 10px;
-  margin-top: 45px;
-  margin-left: 25px;
-  border-radius: 7px;
-  border: none;
-  box-shadow: ${(props) => props.theme.boxShadow};
-  background: ${(props) => props.backgroundColor || "#416dea"};
-  color: #fff;
-  font-weight: bold;
-  // margin: 1rem 0;
   margin-left: ${(props) => props.marginLeft && "2rem"};
   &:hover {
     box-shadow: none;
@@ -133,11 +106,26 @@ const ToAuthentication = styled.button`
   }
 `;
 
+const ToAuthentication = styled(ToNotice)`
+`;
+
+const DeleteBtn = styled.div`
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-weight: bold;
+  padding: 4px;
+  cursor: pointer;
+  &:hover {
+    color: #888;
+  }
+`;
+
 const ChallengesTable = styled.div`
-  border-radius: 4%;
-  border: 2px #878787;
-  background-color: #ebf7ff;
-  height: 700px;
+  border-radius: 40px;
+  background-color: #fafafa;
   max-width: 1100px;
   box-shadow: ${(props) => props.theme.boxShadow};
   padding: 15px;
@@ -147,48 +135,49 @@ const ChallengesTable = styled.div`
 function Challenges() {
 
   const [challenge, setChallenge] = useState();
+  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   axios.get('http://localhost:8082/api/challenge')
-  //   .then(Response => {
-  //     // console.log(Response.data)
-  //     setChallenge(Response.data);
-  //   })
-  // }, []);
+  // const delChallenge = (id) => {
+  //   axios.delete(`http://localhost:8082/api/challenge/${id}`)
+  //   .then(console.log('delete'))
+  //   .catch(Error => console.log(Error));
+  // }
+
+  useEffect(() => {
+    axios.get('http://localhost:8082/api/challenge')
+    .then(Response => {
+      // console.log(Response.data);
+      setChallenge(Response.data);
+    })
+  }, []);
 
   return (
     <Container>
       <Wrapper>
         <ChallengesTable>
-          {/* {
-            challenge.map(challenge => (
-              <Title>
-                {challenge.challengeTitle}
-                <ChallengeCondition></ChallengeCondition>
-              </Title>
-            ))
-          } */}
-          <Title>
-            챌린지1<ChallengeCondition></ChallengeCondition>
-          </Title>
-          <Title>
-            챌린지2<ChallengeCondition></ChallengeCondition>
-          </Title>
-          <Title>
-            챌린지3<ChallengeCondition></ChallengeCondition>
-          </Title>
           <GridBox>
-            <Paging>1/2/3/4/5</Paging>
             <Link to='/set/challenge'>
               <NewChallengeEnroll type='button'>새로운챌린지등록</NewChallengeEnroll>
             </Link>
           </GridBox>
+          {
+            challenge &&
+            challenge.map(challenge => (
+              <Link to={`/challenges/${challenge.id}`}>
+                <Title key={challenge.id}>
+                    {challenge.challengeTitle}
+                  <ChallengeCondition>
+                    {challenge.challengeState === 0 ? "진행중" : "종료"}
+                  </ChallengeCondition>
+                </Title>
+              </Link>
+            ))
+          }
         </ChallengesTable>
-
-        <HalfGridBox>
-          <ToNotice>공지게시판</ToNotice>
-          <ToAuthentication>인증게시판</ToAuthentication>
-        </HalfGridBox>
+        <BtnGridBox>
+          <ToNotice onClick={() => navigate('/noti')}>공지게시판</ToNotice>
+          <ToAuthentication onClick={() => navigate('/board')} marginLeft>인증게시판</ToAuthentication>
+        </BtnGridBox>
       </Wrapper>
     </Container>
   );

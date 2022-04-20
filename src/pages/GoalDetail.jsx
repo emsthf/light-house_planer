@@ -140,6 +140,7 @@ const myVars = {
 };
 
 function GoalDetail() {
+  
   const [isGoalId, setIsGoalId] = useRecoilState(goalId);
   const [goal, setGoal] = useState({});
   const [now, setNow] = useState();

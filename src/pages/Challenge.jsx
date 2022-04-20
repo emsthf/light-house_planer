@@ -199,8 +199,6 @@ function Challenge() {
   // const { scrollY } = useViewportScroll();
   // console.log(scrollY);
 
-  const { id } = useParams();
-
   return (
     <Wrapper>
       <Container>
