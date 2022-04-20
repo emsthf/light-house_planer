@@ -110,7 +110,8 @@ const Textarea = styled.textarea`
 
 function SetGoalStep5() {
   const url =
-    "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal";
+    // "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal";
+    "http://localhost:8080/api/goal";
   const navigate = useNavigate();
   const setGoal = useSetRecoilState(goalState);
   const goal = useRecoilValue(goalState);
@@ -143,7 +144,7 @@ function SetGoalStep5() {
           : goal.period % 7 === 0 
           ? totalWeekCount
           : totalWeekCount + remainderDay,
-        userId : user
+        userId : user.id
       })
       .then((Response) => {
         if (Response.data) {

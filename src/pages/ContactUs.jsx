@@ -18,11 +18,12 @@ const GridContainer = styled.div`
 
 const TitleBox = styled.div`
   height: 400px;
-  background-color: pink;
+  /* background-color: pink; */
   display: flex;
   flex-direction: column;
+  padding-left: 8rem;
   span {
-    font-size: 70px;
+    font-size: 52px;
     font-family: "Source Sans Pro", sans-serif;
     font-weight: 600;
   }
@@ -30,7 +31,13 @@ const TitleBox = styled.div`
 
 const InputBox = styled.div`
   height: 400px;
-  background-color: skyblue;
+  background-color: #fafafa;
+`;
+
+const Desc = styled.div`
+  width: 80%;
+  color : #888;
+  margin: 5rem auto;
 `;
 
 function ContactUs() {
@@ -43,7 +50,17 @@ function ContactUs() {
           <span>to Say?</span>
           <span>Contact us!</span>
         </TitleBox>
-        <InputBox></InputBox>
+        <InputBox>
+          <Desc>
+          회원가입<br />
+          메뉴를 통해 이용약관, 개
+          인정보보호정책 동의 및 일정 양식의
+          가입항목을 기입함으로써 회원에 가
+          입되며, 가입 즉시 서비스를 무료로 이
+          용하실 수 있습니다. 회원을 위한 이벤
+          트에 참여하실 수 있습니다.
+          </Desc>
+        </InputBox>
       </GridContainer>
     </Wrapper>
   );

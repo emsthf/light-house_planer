@@ -35,7 +35,6 @@ export const goalPeriod = atom({
 });
 
 export const userState = atom({
-  // 로그인한 사용자 - 현재 1번 사용자라고 가정
   key: "user",
   default: {
     id : 0,
