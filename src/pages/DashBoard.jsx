@@ -475,7 +475,7 @@ function DashBoard() {
                 <Grade>🕊️ 갈매기</Grade>
               </InfoBox>
               <Link to="/signup">
-                <EditBtn>Edit profile</EditBtn>
+                <EditBtn onClick={() => navigate('/signup')}>Edit profile</EditBtn>
               </Link>
             </ProfileBox>
           </Container>

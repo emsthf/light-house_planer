@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { userState } from "../../Atom";
 
 const Container = styled.div`
   width: 1200px;
@@ -97,13 +101,15 @@ const Button = styled.button`
 function SignUp() {
   const [user, setUser] = useState({});
   const [img, setImg] = useState("");
+  const navigate = useNavigate();
+  const [loginUser, SetLoginUser] = useRecoilState(userState);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
+    watch
   } = useForm();
 
   const readFile = (e) => {
@@ -115,15 +121,18 @@ function SignUp() {
   };
 
   const onSubmit = (data) => {
-    // setUser({
-    //     name : data.name,
-    //     email: data.email,
-    //     password: data.password,
-    //     phone: data.phone,
-    //     img: data.img
-    // });
-    console.log("submit");
-    console.log(data);
+    setUser({
+        name : data.name,
+        email: data.email,
+        password: data.password,
+        phoneNum: data.phone,
+        // img: data.img
+    });
+    axios.post('http://localhost:8083/api/signup', {
+      ...user
+    }).then(console.log(user))
+    .then(navigate('/'))
+    .catch(Error => console.log(Error));
   };
 
   const resetForm = () => {
@@ -213,7 +222,7 @@ function SignUp() {
               {errors.phone?.type === "required" && "전화번호를 입력해주세요."}
             </ErrorMessage>
           </Label>
-          <Label>
+          {/* <Label>
             <SubTitle>프로필 이미지</SubTitle>
             <InputFile
               type="file"
@@ -224,18 +233,22 @@ function SignUp() {
               }}
             ></InputFile>
             {img && <ImageThumbnail src={img} alt="thumbnail" />}
-          </Label>
+          </Label> */}
           <ButtonWrapper>
-            <Button>가입</Button>
-            <Button
-              type="button"
-              marginLeft
-              onClick={resetForm}
-              backgroundColor={"#89d8d3"}
-              hoverColor={"linear-gradient(315deg, #416dea, #89d8d3 74%)"}
-            >
-              reset
-            </Button>
+            <Button>{loginUser.id !== 0 ? '수정' : '가입'}</Button>
+            {
+              loginUser.id !== 0
+              ? <Button marginLeft>탈퇴</Button>
+              : <Button
+                  type="button"
+                  marginLeft
+                  onClick={resetForm}
+                  backgroundColor={"#89d8d3"}
+                  hoverColor={"linear-gradient(315deg, #416dea, #89d8d3 74%)"}
+                >
+                  reset
+                </Button>
+            }
           </ButtonWrapper>
         </Form>
       </FormWrapper>
