@@ -276,6 +276,7 @@ function Header() {
           phoneNum : ""
         })
       };
+      navigate('/');
     }
   };
 
@@ -293,7 +294,8 @@ function Header() {
       // console.log(Response.data);
       // window.location.reload();
       resetForm();
-    }).then(setIsClick(false))
+    })
+    .then(setIsClick(false))
     .catch(Error => console.log(Error));
   };
 

@@ -165,16 +165,20 @@ function Challenge() {
   const [count, setCount] = useState(0);
 
   const enrollChallenge = () => {
-    axios.post(`http://localhost:8082/api/mychallenge`, {
-      userId : user.id,
-      challengeId : id
-    })
-    .then(Response => {
-      console.log('submit');
-      // console.log(Response.data);
-      alert(Response.data);
-    })
-    .catch(Error => console.log(Error));
+    if(user.id !== 0) {
+      axios.post(`http://localhost:8082/api/mychallenge`, {
+        userId : user.id,
+        challengeId : id
+      })
+      .then(Response => {
+        console.log('submit');
+        // console.log(Response.data);
+        alert(Response.data);
+      })
+      .catch(Error => console.log(Error));
+    } else {
+      alert('로그인 이후 신청 가능합니다.');
+    }
   };
 
   useEffect(() => {

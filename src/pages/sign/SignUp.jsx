@@ -102,7 +102,6 @@ function SignUp() {
   const [user, setUser] = useState({});
   const [img, setImg] = useState("");
   const navigate = useNavigate();
-  const [loginUser, SetLoginUser] = useRecoilState(userState);
 
   const {
     register,
@@ -121,16 +120,21 @@ function SignUp() {
   };
 
   const onSubmit = (data) => {
-    setUser({
-        name : data.name,
-        email: data.email,
-        password: data.password,
-        phoneNum: data.phone,
-        // img: data.img
-    });
+    // console.log(data);
+    // setUser({
+    //     name : data.name,
+    //     email: data.email,
+    //     password: data.password,
+    //     phoneNum: data.phone,
+    //     // img: data.img
+    // });
     axios.post('http://localhost:8083/api/signup', {
-      ...user
-    }).then(console.log(user))
+      name : data.name,
+      email: data.email,
+      password: data.password,
+      phoneNum: data.phone,
+    })
+    // .then(console.log(user))
     .then(navigate('/'))
     .catch(Error => console.log(Error));
   };
@@ -235,20 +239,16 @@ function SignUp() {
             {img && <ImageThumbnail src={img} alt="thumbnail" />}
           </Label> */}
           <ButtonWrapper>
-            <Button>{loginUser.id !== 0 ? '수정' : '가입'}</Button>
-            {
-              loginUser.id !== 0
-              ? <Button marginLeft>탈퇴</Button>
-              : <Button
-                  type="button"
-                  marginLeft
-                  onClick={resetForm}
-                  backgroundColor={"#89d8d3"}
-                  hoverColor={"linear-gradient(315deg, #416dea, #89d8d3 74%)"}
-                >
-                  reset
-                </Button>
-            }
+            <Button>가입</Button>
+            <Button
+              type="button"
+              marginLeft
+              onClick={resetForm}
+              backgroundColor={"#89d8d3"}
+              hoverColor={"linear-gradient(315deg, #416dea, #89d8d3 74%)"}
+            >
+              reset
+            </Button>
           </ButtonWrapper>
         </Form>
       </FormWrapper>
