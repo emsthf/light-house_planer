@@ -16,16 +16,26 @@ function PieChart() {
 
   useEffect(() => {
     // 성공한 목표 갯수
-    axios.get(`http://localhost:8080/api/goal/result/1/1/${user}?result=true`)
-    .then(Response => {
-      setSuccess(Response.data);
-    }).catch(Error => console.log(Error));
+    axios
+      .get(
+        `http://localhost:8080/api/goal/result/1/1/${user.id}?result=true`
+        // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/result/1/1/${user}?result=true`
+      )
+      .then((Response) => {
+        setSuccess(Response.data);
+      })
+      .catch((Error) => console.log(Error));
 
     // 실패한 목표 갯수
-    axios.get(`http://localhost:8080/api/goal/result/1/0/${user}?result=false`)
-    .then(Response => {
-      setFail(Response.data);
-    }).catch(Error => console.log(Error));
+    axios
+      .get(
+        `http://localhost:8080/api/goal/result/1/0/${user.id}?result=false`
+        // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/result/1/0/${user}?result=false`
+      )
+      .then((Response) => {
+        setFail(Response.data);
+      })
+      .catch((Error) => console.log(Error));
   }, []);
 
   return (

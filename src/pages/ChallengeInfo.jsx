@@ -113,7 +113,6 @@ const StyledLink = styled(Link)`
 `;
 
 function ChallengeInfo() {
-
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -121,41 +120,47 @@ function ChallengeInfo() {
   const [count, setCount] = useState(0);
 
   const deleteChallenge = () => {
-    if(window.confirm('챌린지를 삭제하시겠습니까?')) {
-      axios.delete(`http://localhost:8082/api/challenge/${id}`)
-      .then(navigate('/challenge'))
-      .catch(Error => console.log(Error));
+    if (window.confirm("챌린지를 삭제하시겠습니까?")) {
+      axios
+        .delete(
+          `http://localhost:8082/api/challenge/${id}`
+          // `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/challenge/${id}`
+        )
+        .then(navigate("/challenge"))
+        .catch((Error) => console.log(Error));
     }
-  }
+  };
 
   useEffect(() => {
-    axios.get(`http://localhost:8082/api/challenge/${id}`)
-    .then(Response => {
-      console.log(Response.data);
-      setChallenge(Response.data);
-    }).catch(Error => console.log(Error));
+    axios
+      .get(
+        `http://localhost:8082/api/challenge/${id}`
+        // `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/challenge/${id}`
+      )
+      .then((Response) => {
+        console.log(Response.data);
+        setChallenge(Response.data);
+      })
+      .catch((Error) => console.log(Error));
 
-    axios.get(`http://localhost:8082/api/mychallenge/all/${id}`)
-    .then(Response => {
-      setCount(Response.data);
-    }).catch(Error => console.log(Error));
+    axios
+      .get(
+        `http://localhost:8082/api/mychallenge/all/${id}`
+        // `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/mychallenge/all/${id}`
+      )
+      .then((Response) => {
+        setCount(Response.data);
+      })
+      .catch((Error) => console.log(Error));
   }, []);
 
   return (
     <Container>
       <Wrapper>
-        <Title>
-          {challenge && challenge.challengeTitle}
-        </Title>
-        <Desc>
-          {challenge && challenge.challengeDesc}
-        </Desc>
-        <Date>
-          {challenge && `${challenge.startDay} ~ ${challenge.endDay}`}
-        </Date>
-        <Desc>
-          신청 인원 : {count && count}명
-        </Desc>
+        <Title>{challenge && challenge.challengeTitle}</Title>
+        <Desc>{challenge && challenge.challengeDesc}</Desc>
+        <Date>{challenge && `${challenge.startDay} ~ ${challenge.endDay}`}</Date>
+        <Desc>신청 인원 : {count && count}명</Desc>
         <ButtonWrapper>
           <Button
             backgroundColor={"#373737"}

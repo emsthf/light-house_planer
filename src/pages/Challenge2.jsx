@@ -164,10 +164,14 @@ function Challenge2() {
 
   const enrollChallenge = () => {
     axios
-      .post(`http://localhost:8082/api/mychallenge`, {
-        userId: user,
-        challengeId: id,
-      })
+      .post(
+        `http://localhost:8082/api/mychallenge`,
+        // "http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/mychallenge",
+        {
+          userId: user.id,
+          challengeId: id,
+        }
+      )
       .then((Response) => {
         console.log("submit");
         // console.log(Response.data);
@@ -178,7 +182,10 @@ function Challenge2() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8082/api/challenge/${id}`)
+      .get(
+        `http://localhost:8082/api/challenge/${id}`
+        // `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/challenge/${id}`
+      )
       .then((Response) => {
         // console.log(Response.data);
         setChallenge(Response.data);
@@ -186,7 +193,10 @@ function Challenge2() {
       .catch((Error) => console.log(Error));
 
     axios
-      .get(`http://localhost:8082/api/mychallenge/all/${id}`)
+      .get(
+        `http://localhost:8082/api/mychallenge/all/${id}`
+        // `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/mychallenge/all/${id}`
+      )
       .then((Response) => {
         setCount(Response.data);
       })

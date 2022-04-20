@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../Atom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { userState } from "../../Atom";
 
 const Container = styled.div`
   width: 1200px;
@@ -100,8 +101,9 @@ const Button = styled.button`
 function SignUp() {
   const [user, setUser] = useState({});
   const [img, setImg] = useState("");
-  const loginUserId = useRecoilValue(userState);
-  const [userData, setUserData] = useState();
+  const navigate = useNavigate();
+  const [loginUser, SetLoginUser] = useRecoilState(userState);
+  // const [userData, setUserData] = useState();
 
   const {
     register,
@@ -109,14 +111,13 @@ function SignUp() {
     formState: { errors },
     reset,
     watch,
-  } = useForm({
-    defaultValues: {
-      name: userData.name,
-      email: userData.email,
-      password: userData.password,
-      phone: userData.phoneNum,
-    },
-  });
+  } = useForm();
+  // {defaultValues: {
+  //   name: userData.name,
+  //   email: userData.email,
+  //   password: userData.password,
+  //   phone: userData.phoneNum,
+  // }}
 
   const readFile = (e) => {
     const reader = new FileReader(); // 파일 미리보기 객체
@@ -127,32 +128,44 @@ function SignUp() {
   };
 
   const onSubmit = (data) => {
-    // setUser({
-    //     name : data.name,
-    //     email: data.email,
-    //     password: data.password,
-    //     phone: data.phone,
-    //     img: data.img
-    // });
-    console.log("submit");
-    console.log(data);
-  };
-
-  const resetForm = () => {
-    reset({
-      name: "",
-      email: "",
-      password: "",
-      passwordConfirm: "",
-      phone: "",
+    setUser({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      phoneNum: data.phone,
+      // img: data.img
     });
+    axios
+      .post(
+        "http://localhost:8083/api/signup",
+        // "http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/signup",
+        {
+          ...user,
+        }
+      )
+      .then(console.log(user))
+      .then(navigate("/"))
+      .catch((Error) => console.log(Error));
   };
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8082/api/user/get/${loginUserId}`)
-      .then((res) => setUserData(res.data));
-  }, []);
+  // const resetForm = () => {
+  //   reset({
+  //     name: "",
+  //     email: "",
+  //     password: "",
+  //     passwordConfirm: "",
+  //     phone: "",
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       `http://localhost:8083/api/user/get/${loginUser.id}`
+  //       // `http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/user/get/${loginUser.id}`
+  //     )
+  //     .then((res) => setUserData(res.data));
+  // }, []);
 
   return (
     <Container>
@@ -231,7 +244,7 @@ function SignUp() {
               {errors.phone?.type === "required" && "전화번호를 입력해주세요."}
             </ErrorMessage>
           </Label>
-          <Label>
+          {/* <Label>
             <SubTitle>프로필 이미지</SubTitle>
             <InputFile
               type="file"
@@ -242,18 +255,22 @@ function SignUp() {
               }}
             ></InputFile>
             {img && <ImageThumbnail src={img} alt="thumbnail" />}
-          </Label>
+          </Label> */}
           <ButtonWrapper>
-            <Button>가입</Button>
-            <Button
-              type="button"
-              marginLeft
-              onClick={resetForm}
-              backgroundColor={"#89d8d3"}
-              hoverColor={"linear-gradient(315deg, #416dea, #89d8d3 74%)"}
-            >
-              reset
-            </Button>
+            <Button>{loginUser.id !== 0 ? "수정" : "가입"}</Button>
+            {loginUser.id !== 0 ? (
+              <Button marginLeft>탈퇴</Button>
+            ) : (
+              <Button
+                type="button"
+                marginLeft
+                // onClick={resetForm}
+                backgroundColor={"#89d8d3"}
+                hoverColor={"linear-gradient(315deg, #416dea, #89d8d3 74%)"}
+              >
+                reset
+              </Button>
+            )}
           </ButtonWrapper>
         </Form>
       </FormWrapper>

@@ -1,9 +1,9 @@
-import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
-import { userState } from '../Atom';
+import axios from "axios";
+import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import styled from "styled-components";
+import { userState } from "../Atom";
 
 const Container = styled.div`
   width: 1200px;
@@ -18,27 +18,27 @@ const Wrapper = styled.div`
 `;
 
 const SearchWrapper = styled.div`
-display: flex;
-justify-content: center;
+  display: flex;
+  justify-content: center;
 `;
 
 const SearchForm = styled.form``;
 
 const Select = styled.select`
-width: 80px;
-text-align: center;
-height: 2rem;
+  width: 80px;
+  text-align: center;
+  height: 2rem;
 `;
 
 const SearchInput = styled.input`
-height: 2rem;
-margin-right: 1rem;
+  height: 2rem;
+  margin-right: 1rem;
 `;
 
 const Button = styled.button`
   padding: 0.4rem 1rem;
   border: none;
-  box-shadow: ${props => props.theme.boxShadow};
+  box-shadow: ${(props) => props.theme.boxShadow};
   background: ${(props) => props.backgroundColor || "#416dea"};
   color: #fff;
   border-radius: 30px;
@@ -61,68 +61,76 @@ const List = styled.div`
   height: 80px;
   background: #fafafa;
   border-radius: 20px;
-  box-shadow: ${props => props.theme.boxShadow};
-  color: ${props => props.theme.titleColor};
+  box-shadow: ${(props) => props.theme.boxShadow};
+  color: ${(props) => props.theme.titleColor};
   display: flex;
   align-items: center;
   margin: 1rem auto;
 `;
 
 const Title = styled.div`
-margin-left: 2rem;
-font-weight: bold;
+  margin-left: 2rem;
+  font-weight: bold;
 `;
 
 const Desc = styled.div`
-flex-grow: 2;
-margin-left: 1rem;
+  flex-grow: 2;
+  margin-left: 1rem;
 `;
 
 const Tag = styled.div`
-width: 48px;
-height: 48px;
-background: ${props => props.background || '#416dea'};
-border-radius: 50%;
-margin-right: 2rem;
-display: flex;
-align-items: center;
-justify-content: center;
-color: #fff;
-font-size: 0.9rem;
+  width: 48px;
+  height: 48px;
+  background: ${(props) => props.background || "#416dea"};
+  border-radius: 50%;
+  margin-right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.9rem;
 `;
 
 function GoalList() {
-
   const user = useRecoilValue(userState);
   const [list, setList] = useState([]);
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState("");
   const [result, setResult] = useState({});
   const [listState, setListState] = useState(true);
 
   const handleFormValue = (e) => {
     setKeyword(e.target.value);
-  }
+  };
 
   const submitForm = (e) => {
     e.preventDefault();
     console.log(keyword);
-    axios.get(`http://localhost:8080/api/goal/1/${user}/search?keyword=${keyword}`)
-    .then(Response => {
-      console.log(Response.data);
-      setResult(Response.data);
-      setListState(false);
-    })
-  }
+    axios
+      .get(
+        `http://localhost:8080/api/goal/1/${user}/search?keyword=${keyword}`
+        // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/1/${user}/search?keyword=${keyword}`
+      )
+      .then((Response) => {
+        console.log(Response.data);
+        setResult(Response.data);
+        setListState(false);
+      });
+  };
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/dGoal/1/${user}`)
-    .then(Response => {
-    //   console.log(Response.data);
-      setList(Response.data);
-    }).catch(Error => console.log(Error));
+    axios
+      .get(
+        `http://localhost:8080/api/dGoal/1/${user}`
+        // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/1/${user}`
+      )
+      .then((Response) => {
+        //   console.log(Response.data);
+        setList(Response.data);
+      })
+      .catch((Error) => console.log(Error));
   }, []);
 
-  return ( 
+  return (
     <Container>
       <Wrapper>
         <SearchWrapper>
@@ -136,33 +144,38 @@ function GoalList() {
             <Button>Search</Button>
           </SearchForm>
         </SearchWrapper>
-        {
-          (list && listState == true) &&
-          list.map(goal => (
+        {list &&
+          listState == true &&
+          list.map((goal) => (
             <Link to={`/goal/${goal.id}`}>
               <List key={goal.id}>
-                  <Title>{goal.goalTitle}</Title>
-                  <Desc>{`(총 ${goal.totalCount}회 중 ${goal.count}회 실행)`}</Desc>
-                  {goal.result === true ? <Tag>성공</Tag> : <Tag background={'#373737'}>실패</Tag>}
+                <Title>{goal.goalTitle}</Title>
+                <Desc>{`(총 ${goal.totalCount}회 중 ${goal.count}회 실행)`}</Desc>
+                {goal.result === true ? (
+                  <Tag>성공</Tag>
+                ) : (
+                  <Tag background={"#373737"}>실패</Tag>
+                )}
               </List>
             </Link>
-          ))
-        }
-        {
-          result.length > 0
-          ? result.map(goal => (
-            <Link to={`/goal/${goal.id}`}>
-              <List key={goal.id}>
+          ))}
+        {result.length > 0
+          ? result.map((goal) => (
+              <Link to={`/goal/${goal.id}`}>
+                <List key={goal.id}>
                   <Title>{goal.goalTitle}</Title>
-                  {goal.result === true ? <Tag>성공</Tag> : <Tag background={'#373737'}>실패</Tag>}
-              </List>
-            </Link>
-          ))
-          : null
-        }
+                  {goal.result === true ? (
+                    <Tag>성공</Tag>
+                  ) : (
+                    <Tag background={"#373737"}>실패</Tag>
+                  )}
+                </List>
+              </Link>
+            ))
+          : null}
       </Wrapper>
     </Container>
-   );
+  );
 }
 
 export default GoalList;

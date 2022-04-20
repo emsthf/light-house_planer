@@ -140,12 +140,10 @@ const myVars = {
 };
 
 function GoalDetail() {
-  
   const [isGoalId, setIsGoalId] = useRecoilState(goalId);
   const [goal, setGoal] = useState({});
   const [now, setNow] = useState();
   // const [checked, setChecked] = useState(false);
-  const url = `http://localhost:8080/api/goal/${isGoalId}`;
   const navigate = useNavigate();
 
   const [checkGoal, setCheckGoal] = useRecoilState(goalState);
@@ -157,7 +155,10 @@ function GoalDetail() {
   // 목표 세부 조회
   useEffect(() => {
     axios
-      .get(url)
+      .get(
+        `http://localhost:8080/api/goal/${isGoalId}`
+        // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/${isGoalId}`
+      )
       .then((Response) => {
         setGoal(Response.data);
         console.log(Response.data);
@@ -169,7 +170,10 @@ function GoalDetail() {
 
     // 골 id로 골에 달린 모든 post 조회
     axios
-      .get(`http://localhost:8081/api/post/auth/${isGoalId}`)
+      .get(
+        `http://localhost:8081/api/post/auth/${isGoalId}`
+        // `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/auth/${isGoalId}`
+      )
       .then((Response) => {
         setPost(Response.data);
       })
@@ -194,9 +198,15 @@ function GoalDetail() {
     if (window.confirm("정말 이 목표를 지우시겠습니까?")) {
       console.log(id);
       axios
-        .delete(`http://localhost:8080/api/goal/${id}/${user}`)
+        .delete(
+          `http://localhost:8080/api/goal/${id}/${user}`
+          // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/${id}/${user}`
+        )
         .then((Response) => {
-          axios.delete(`http://localhost:8081/api/post/${id}/${user}`); // 목표 인증글 삭제
+          axios.delete(
+            `http://localhost:8081/api/post/${id}/${user}`
+            // `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/${id}/${user}`
+          ); // 목표 인증글 삭제
           navigate("/dash");
         })
         .catch((Error) => {

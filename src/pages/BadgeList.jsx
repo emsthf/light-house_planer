@@ -67,12 +67,12 @@ const Badge = styled.div`
 `;
 
 const Img = styled.img`
-width: 90%;
-height: auto;
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
+  width: 90%;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const BadgeContent = styled.div`
@@ -127,45 +127,73 @@ function BadgeList() {
   const [id, setId] = useState(null); // 모달용 임시 state
   const [specialBadge, setSpecialBadge] = useState();
   const [badge, setBadge] = useState();
-  const [user, setUser] = useRecoilState(userState) // 로그인한 유저 - 현재 1번 사용자라고 가정
+  const [user, setUser] = useRecoilState(userState); // 로그인한 유저 - 현재 1번 사용자라고 가정
 
   const findBadgeName = (badge) => {
-    if(badge.badge.badgeName === "100") {
+    if (badge.badge.badgeName === "100") {
       return (
-        <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
-          <Img src='../assets/images/badge100.png ' alt='goal badge' />
-          <BadgeContent>{badge.badge.badgeName}({badge.count})</BadgeContent>
+        <Badge
+          key={badge.id}
+          onClick={() => setId(`${badge.id}`)}
+          layoutId={`${badge.id}`}
+        >
+          <Img src="../assets/images/badge100.png " alt="goal badge" />
+          <BadgeContent>
+            {badge.badge.badgeName}({badge.count})
+          </BadgeContent>
         </Badge>
-      )
-    } else if(badge.badge.badgeName === "90") {
+      );
+    } else if (badge.badge.badgeName === "90") {
       return (
-        <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
-          <Img src='../assets/images/badge90.png ' alt='goal badge' />
-          <BadgeContent>{badge.badge.badgeName}({badge.count})</BadgeContent>
+        <Badge
+          key={badge.id}
+          onClick={() => setId(`${badge.id}`)}
+          layoutId={`${badge.id}`}
+        >
+          <Img src="../assets/images/badge90.png " alt="goal badge" />
+          <BadgeContent>
+            {badge.badge.badgeName}({badge.count})
+          </BadgeContent>
         </Badge>
-      )
-    } else if(badge.badge.badgeName === "80") {
+      );
+    } else if (badge.badge.badgeName === "80") {
       return (
-        <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
-          <Img src='../assets/images/badge80.png' alt='goal badge' />
-          <BadgeContent>{badge.badge.badgeName}({badge.count})</BadgeContent>
+        <Badge
+          key={badge.id}
+          onClick={() => setId(`${badge.id}`)}
+          layoutId={`${badge.id}`}
+        >
+          <Img src="../assets/images/badge80.png" alt="goal badge" />
+          <BadgeContent>
+            {badge.badge.badgeName}({badge.count})
+          </BadgeContent>
         </Badge>
-      )
+      );
     }
-  }
+  };
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/mybadge/list/${user}?type=Special`) // 특별 한정 배지 리스트
-    .then(Response => {
-      setSpecialBadge(Response.data);
-      console.log(Response.data);
-    }).catch(Error => console.log(Error));
+    axios
+      .get(
+        `http://localhost:8080/api/mybadge/list/${user}?type=Special`
+        // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/mybadge/list/${user}?type=Special`
+      ) // 특별 한정 배지 리스트
+      .then((Response) => {
+        setSpecialBadge(Response.data);
+        console.log(Response.data);
+      })
+      .catch((Error) => console.log(Error));
 
-    axios.get(`http://localhost:8080/api/mybadge/list/${user}?type=Ordinary`) // 목표 달성 배지 리스트
-    .then(Response => {
-      setBadge(Response.data);
-      console.log(Response.data);
-    }).catch(Error => console.log(Error));
+    axios
+      .get(
+        `http://localhost:8080/api/mybadge/list/${user}?type=Ordinary`
+        // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/mybadge/list/${user}?type=Ordinary`
+      ) // 목표 달성 배지 리스트
+      .then((Response) => {
+        setBadge(Response.data);
+        console.log(Response.data);
+      })
+      .catch((Error) => console.log(Error));
   }, []);
 
   return (
@@ -175,14 +203,19 @@ function BadgeList() {
         <Section>
           <Title>특별 한정</Title>
           <BadgeWrapper>
-            {
-              specialBadge && specialBadge.map(badge => (
-                <Badge key={badge.id} onClick={() => setId(`${badge.id}`)} layoutId={`${badge.id}`}>
-                  {badge.badge.badgeName.includes("Goal") ? <Img src='../assets/images/special_reward.png ' alt='special badge' /> : null}
+            {specialBadge &&
+              specialBadge.map((badge) => (
+                <Badge
+                  key={badge.id}
+                  onClick={() => setId(`${badge.id}`)}
+                  layoutId={`${badge.id}`}
+                >
+                  {badge.badge.badgeName.includes("Goal") ? (
+                    <Img src="../assets/images/special_reward.png " alt="special badge" />
+                  ) : null}
                   <BadgeContent>{badge.badge.badgeName}</BadgeContent>
                 </Badge>
-              ))
-            }
+              ))}
             {/* <Badge onClick={() => setId("1")} layoutId={"1"}>
               <BadgeCount>1</BadgeCount>
             </Badge>
@@ -197,11 +230,7 @@ function BadgeList() {
         <Section>
           <Title>목표 달성</Title>
           <BadgeWrapper>
-            {
-              badge && badge.map(badge => (
-                findBadgeName(badge)
-              ))
-            }
+            {badge && badge.map((badge) => findBadgeName(badge))}
           </BadgeWrapper>
         </Section>
       </Wrapper>

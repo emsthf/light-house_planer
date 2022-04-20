@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { goalState } from "../../Atom";
+import { goalState, userState } from "../../Atom";
 
 const Container = styled.div`
   width: 1200px;
@@ -114,6 +114,7 @@ function SetGoalStep5() {
   const navigate = useNavigate();
   const setGoal = useSetRecoilState(goalState);
   const goal = useRecoilValue(goalState);
+  const user = useRecoilValue(userState);
   const [errorMsg, setErrorMsg] = useState();
 
   const {
@@ -134,17 +135,21 @@ function SetGoalStep5() {
     // });
 
     axios
-      .post(url, {
-        ...goal,
-        goalDesc: data.goalDesc,
-        totalCount:
-          goal.period % 7 > goal.weekCount
-            ? parseInt(totalWeekCount) + parseInt(goal.weekCount)
-            : goal.period % 7 === 0
-            ? totalWeekCount
-            : totalWeekCount + remainderDay,
-        userId: 1, // test용 user
-      })
+      .post(
+        "http://localhost:8080/api/goal",
+        // "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal",
+        {
+          ...goal,
+          goalDesc: data.goalDesc,
+          totalCount:
+            goal.period % 7 > goal.weekCount
+              ? parseInt(totalWeekCount) + parseInt(goal.weekCount)
+              : goal.period % 7 === 0
+              ? totalWeekCount
+              : totalWeekCount + remainderDay,
+          userId: user.id,
+        }
+      )
       .then((Response) => {
         if (Response.data) {
           // console.log(Response.data);

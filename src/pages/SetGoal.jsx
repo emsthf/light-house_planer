@@ -148,11 +148,8 @@ const Textarea = styled.textarea`
 
 function SetGoal({ step }) {
   const url = "/api/goal";
-
   const navigate = useNavigate();
-
   const [goalStep, setGoalStep] = useState(step); // 다음 단계로 이동
-
   const [goal, setGoal] = useRecoilState(goalState); // set한 목표 goalState atom에 저장
 
   const {
@@ -214,9 +211,13 @@ function SetGoal({ step }) {
 
     if (step === "5") {
       axios
-        .post(url, {
-          ...goal,
-        })
+        .post(
+          "http://localhost:8080/api/goal",
+          // "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal",
+          {
+            ...goal,
+          }
+        )
         .then((Response) => {
           console.log("Success");
           setGoalStep("1");
