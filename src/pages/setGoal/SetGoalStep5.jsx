@@ -109,8 +109,10 @@ const Textarea = styled.textarea`
 `;
 
 function SetGoalStep5() {
+  // const url = "http://localhost:8080/api/goal";
   const url =
     "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal";
+
   const navigate = useNavigate();
   const setGoal = useSetRecoilState(goalState);
   const goal = useRecoilValue(goalState);
@@ -135,21 +137,17 @@ function SetGoalStep5() {
     // });
 
     axios
-      .post(
-        "http://localhost:8080/api/goal",
-        // "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal",
-        {
-          ...goal,
-          goalDesc: data.goalDesc,
-          totalCount:
-            goal.period % 7 > goal.weekCount
-              ? parseInt(totalWeekCount) + parseInt(goal.weekCount)
-              : goal.period % 7 === 0
-              ? totalWeekCount
-              : totalWeekCount + remainderDay,
-          userId: user.id,
-        }
-      )
+      .post(url, {
+        ...goal,
+        goalDesc: data.goalDesc,
+        totalCount:
+          goal.period % 7 > goal.weekCount
+            ? parseInt(totalWeekCount) + parseInt(goal.weekCount)
+            : goal.period % 7 === 0
+            ? totalWeekCount
+            : totalWeekCount + remainderDay,
+        userId: user.id,
+      })
       .then((Response) => {
         if (Response.data) {
           // console.log(Response.data);

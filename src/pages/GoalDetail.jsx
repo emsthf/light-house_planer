@@ -152,13 +152,16 @@ function GoalDetail() {
   const [post, setPost] = useState([]); // 인증글
   const [limit, setLimit] = useState(5); // 처음 화면에 보여지는 인증글 수
 
+  // const url1 = `http://localhost:8080/api/goal/${isGoalId}`;
+  // const url2 = `http://localhost:8081/api/post/auth/${isGoalId}`;
+
+  const url1 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/${isGoalId}`;
+  const url2 = `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/auth/${isGoalId}`;
+
   // 목표 세부 조회
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:8080/api/goal/${isGoalId}`
-        // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/${isGoalId}`
-      )
+      .get(url1)
       .then((Response) => {
         setGoal(Response.data);
         console.log(Response.data);
@@ -170,10 +173,7 @@ function GoalDetail() {
 
     // 골 id로 골에 달린 모든 post 조회
     axios
-      .get(
-        `http://localhost:8081/api/post/auth/${isGoalId}`
-        // `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/auth/${isGoalId}`
-      )
+      .get(url2)
       .then((Response) => {
         setPost(Response.data);
       })
@@ -199,13 +199,13 @@ function GoalDetail() {
       console.log(id);
       axios
         .delete(
-          `http://localhost:8080/api/goal/${id}/${user}`
-          // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/${id}/${user}`
+          // `http://localhost:8080/api/goal/${id}/${user.id}`
+          `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/${id}/${user.id}`
         )
         .then((Response) => {
           axios.delete(
-            `http://localhost:8081/api/post/${id}/${user}`
-            // `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/${id}/${user}`
+            // `http://localhost:8081/api/post/${id}/${user.id}`
+            `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/${id}/${user.id}`
           ); // 목표 인증글 삭제
           navigate("/dash");
         })

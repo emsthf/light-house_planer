@@ -185,8 +185,8 @@ function SetChallenge() {
     console.log(data);
     axios
       .post(
-        "http://localhost:8082/api/challenge",
-        // "http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/challenge",
+        // "http://localhost:8082/api/challenge",
+        "http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/challenge",
         {
           challengeTitle: data.title,
           startDay: data.startDay,
@@ -196,7 +196,7 @@ function SetChallenge() {
           challengeDesc: data.desc,
         }
       )
-      .then(navigate("/challenges"))
+      .then(navigate("/challenge"))
       .catch((Error) => console.log(Error));
   };
 

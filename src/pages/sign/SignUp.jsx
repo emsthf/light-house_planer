@@ -128,22 +128,25 @@ function SignUp() {
   };
 
   const onSubmit = (data) => {
-    setUser({
-      name: data.name,
-      email: data.email,
-      password: data.password,
-      phoneNum: data.phone,
-      // img: data.img
-    });
+    // setUser({
+    //   name: data.name,
+    //   email: data.email,
+    //   password: data.password,
+    //   phoneNum: data.phone,
+    //   // img: data.img
+    // });
     axios
       .post(
-        "http://localhost:8083/api/signup",
-        // "http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/signup",
+        // "http://localhost:8083/api/signup",
+        "http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/signup",
         {
-          ...user,
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          phoneNum: data.phone,
         }
       )
-      .then(console.log(user))
+      .then(console.log(data))
       .then(navigate("/"))
       .catch((Error) => console.log(Error));
   };

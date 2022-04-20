@@ -74,7 +74,7 @@ const DescContainer = styled.div`
   p {
     font-size: 14px;
     font-weight: bold;
-    color: #888;
+    color: #666;
   }
 `;
 

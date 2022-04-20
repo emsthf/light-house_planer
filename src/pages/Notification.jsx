@@ -128,8 +128,8 @@ function Notification() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:8081/api/notification"
-        // "http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/notification"
+        // "http://localhost:8081/api/notification"
+        "http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/notification"
       )
       .then((Response) => {
         // console.log(Response.data);

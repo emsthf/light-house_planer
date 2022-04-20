@@ -375,20 +375,20 @@ function DashBoard() {
   const [doneGoals, setDoneGoals] = useState([]);
   const [badge, setBadge] = useState([]);
   const [post, setPost] = useState([]);
-  const [user, setUser] = useRecoilState(userState); // 로그인한 유저 - 현재 1번 사용자라고 가정
+  const [user, setUser] = useRecoilState(userState); // 로그인한 유저
   const [challenge, setChallenge] = useState([]); // 진행 중인 챌린지
 
-  const url1 = `http://localhost:8080/api/dGoal/0/${user.id}`;
-  const url2 = `http://localhost:8080/api/dGoal/1/${user.id}`;
-  const url3 = `http://localhost:8080/api/mybadge/${user.id}`;
-  const url4 = `http://localhost:8081/api/post/list/${user.id}`;
-  const url5 = `http://localhost:8082/api/mychallenge/list/${user.id}`;
+  // const url1 = `http://localhost:8080/api/dGoal/0/${user.id}`;
+  // const url2 = `http://localhost:8080/api/dGoal/1/${user.id}`;
+  // const url3 = `http://localhost:8080/api/mybadge/${user.id}`;
+  // const url4 = `http://localhost:8081/api/post/list/${user.id}`;
+  // const url5 = `http://localhost:8082/api/mychallenge/list/${user.id}`;
 
-  // const url1 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/0/${user.id}`;
-  // const url2 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/1/${user.id}`;
-  // const url3 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/mybadge/${user.id}`;
-  // const url4 = `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/list/${user.id}`;
-  // const url5 = `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/mychallenge/list/${user.id}`;
+  const url1 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/0/${user.id}`;
+  const url2 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/1/${user.id}`;
+  const url3 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/mybadge/${user.id}`;
+  const url4 = `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/list/${user.id}`;
+  const url5 = `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/mychallenge/list/${user.id}`;
 
   const navigate = useNavigate();
   const { scrollY } = useViewportScroll();

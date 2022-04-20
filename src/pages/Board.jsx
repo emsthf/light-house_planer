@@ -128,8 +128,8 @@ function Board() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:8081/api/post"
-        // "http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post"
+        // "http://localhost:8081/api/post"
+        "http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post"
       )
       .then((Response) => {
         // console.log(Response.data);

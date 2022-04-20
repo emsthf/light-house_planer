@@ -17,15 +17,11 @@ import SetGoalStep5 from "./pages/setGoal/SetGoalStep5";
 import SignUp from "./pages/sign/SignUp";
 
 import Landing from "./pages/Landing";
-import SetGoal from "./pages/SetGoal";
 import { darkTheme, lightTheme, theme } from "./theme";
 import { useRecoilState } from "recoil";
 import { darkModeState } from "./Atom";
 
-import Challenge from "./pages/Challenge";
-import Challenges from "./pages/Challenges";
 import AuthBoard from "./pages/AuthBoard";
-import AuthBoardDetail from "./pages/AuthBoardDetail";
 import SiteRule from "./pages/SiteRule";
 import ContactUs from "./pages/ContactUs";
 import BoardDetail from "./pages/BoardDetail";
@@ -35,8 +31,10 @@ import SetChallenge from "./pages/SetChallenge";
 import ChanllengeList from "./pages/ChanllengeList";
 import Notification from "./pages/Notification";
 import NotificationDetail from "./pages/NotificationDetail";
-import Challenge2 from "./pages/Challenge2";
 import ChallengeInfo from "./pages/ChallengeInfo";
+import UserList from "./pages/UserList";
+import AdminPage from "./pages/AdminPage";
+import Challenge from "./pages/Challenge";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -135,16 +133,15 @@ function App() {
           <Route path="/board/:id" element={<BoardDetail />} />
           <Route path="/" element={<Landing />} />
           <Route path="/challenge" element={<ChanllengeList />} />
-          <Route path="/challenge/:id" element={<Challenge2 />} />
-          <Route path="/challengee" element={<Challenge />} />
-          <Route path="/challenges" element={<Challenges />} />
-          <Route path="/challenges/:id" element={<ChallengeInfo/>} />
+          <Route path="/challenge/:id" element={<Challenge />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/challenges/:id" element={<ChallengeInfo />} />
           <Route path="/set/challenge" element={<SetChallenge />} />
           <Route path="/authboard" element={<AuthBoard />} />
-          <Route path="/authdetail" element={<AuthBoardDetail />} />
           <Route path="/site-rule" element={<SiteRule />} />
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/goal/list" element={<GoalList />} />
+          <Route path="/users" element={<UserList />} />
         </Routes>
         <Footer />
       </BrowserRouter>

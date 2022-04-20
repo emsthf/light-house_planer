@@ -139,8 +139,8 @@ function ChanllengeList() {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:8082/api/challenge"
-        // "http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/challenge"
+        // "http://localhost:8082/api/challenge"
+        "http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/challenge"
       )
       .then((Response) => {
         console.log(Response.data);

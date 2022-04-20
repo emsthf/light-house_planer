@@ -119,13 +119,18 @@ function ChallengeInfo() {
   const [challenge, setChallenge] = useState({});
   const [count, setCount] = useState(0);
 
+  // const url1 = `http://localhost:8082/api/challenge/${id}`;
+  // const url2 = `http://localhost:8082/api/challenge/${id}`
+  // const url3 = `http://localhost:8082/api/mychallenge/all/${id}`;
+
+  const url1 = `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/challenge/${id}`;
+  const url2 = `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/challenge/${id}`;
+  const url3 = `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/mychallenge/all/${id}`;
+
   const deleteChallenge = () => {
     if (window.confirm("챌린지를 삭제하시겠습니까?")) {
       axios
-        .delete(
-          `http://localhost:8082/api/challenge/${id}`
-          // `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/challenge/${id}`
-        )
+        .delete(url1)
         .then(navigate("/challenge"))
         .catch((Error) => console.log(Error));
     }
@@ -133,10 +138,7 @@ function ChallengeInfo() {
 
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:8082/api/challenge/${id}`
-        // `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/challenge/${id}`
-      )
+      .get(url2)
       .then((Response) => {
         console.log(Response.data);
         setChallenge(Response.data);
@@ -144,10 +146,7 @@ function ChallengeInfo() {
       .catch((Error) => console.log(Error));
 
     axios
-      .get(
-        `http://localhost:8082/api/mychallenge/all/${id}`
-        // `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/mychallenge/all/${id}`
-      )
+      .get(url3)
       .then((Response) => {
         setCount(Response.data);
       })

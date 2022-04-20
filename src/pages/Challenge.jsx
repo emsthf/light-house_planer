@@ -1,246 +1,260 @@
-import React, { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
+import { userState } from "../Atom";
 
 const Wrapper = styled.div`
-  // background-color: #74b9ff;
   height: auto;
   min-height: 100%;
-  width: 100vw;
+  width: 1200px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 100px 250px 150px 100px;
-  margin: auto;
-  @media screen and (min-width: 768px) {
+  margin: 20vh auto;
+  margin-bottom: 240px;
+  color: ${(props) => props.theme.titleColor};
+  @media screen and (max-width: 768px) {
     padding-right: 24px !important;
     padding-left: 24px !important;
   }
-  @media screen and (min-width: 768px) {
+  @media screen and (max-width: 500px) {
     padding-right: 24px !important;
     padding-left: 24px !important;
   }
 `;
 
 const Container = styled.div`
-  border-radius: 3%;
-  background-color: #f0f8ff;
-  height: 80vh;
-  width: 1200px;
-  box-shadow: 10px 8px 5px rgba(0, 0, 0, 0.5);
-  margin: 40px 40px 40px 40px;
-`;
-
-const ChallengeNameBox = styled.div`
-  // background-color: #ffcccc;
-  // background-color: #90afff;
-  background-color: #d9e5ff;
-  width: 96%;
-  // width: 42em;
-  height: 60px;
-  border-radius: 7px;
+  width: 100%;
+  margin-bottom: 40px;
   display: flex;
-  // margin: auto;
-  margin-top: 20px;
-  margin-bottom: 15px;
-  margin-right: 15px;
-  margin-left: 25px;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f0f8ff;
+  border-radius: 30px;
+  box-shadow: ${(props) => props.theme.boxShadow};
 `;
 
-const ChallengeName = styled.span`
-  margin: 15px;
-  width: 40em;
-  display: block;
-  color: #6e2fc7;
+const Title = styled.div`
+  width: 85%;
+  text-align: center;
   font-size: 30px;
   font-weight: bold;
+  margin-top: 3rem;
+  padding: 0.5rem 0;
+  border-radius: 30px;
 `;
 
-const ContentBox = styled.div`
-  background-color: none;
-  // border: 2px solid gray;
+const TagBox = styled.div`
+  width: 100%;
+  height: 30px;
   display: flex;
-  height: 90%;
-  width: 9em;
-  margin-left: 5px;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: 99%;
+  margin-top: 20px;
 `;
 
-const GridBox = styled.div`
-  display: grid;
-  height: 90%;
-  // max-width: 1280px;
-  width: 97%;
-  // grid-template-columns: repeat(2, 1fr);
-  grid-template-columns: 8fr 3fr;
-  margin: 15px 15px 15px 15px;
+const Tag = styled.div`
+  padding: 5px 10px;
+  border: 1px solid gray;
+  border-radius: 20px;
+  text-align: center;
+  margin: 0 5px;
 `;
 
-const InfoBox = styled.div`
-  display: block;
+const BigTagBox = styled.div``;
+
+const BigTag = styled.div`
+  margin: 1rem;
+`;
+
+const Subscript = styled.div``;
+
+const ContentBox = styled.div`
   width: 100%;
-  margin: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-`;
-
-const ChallengePeriod = styled.span`
-  color: #4a0ba3;
-  font-size: 23px;
-  font-weight: bold !important;
-  margin-left: 20px;
-  margin-bottom: 8px !important;
-`;
-
-const ChallengePeople = styled.span`
-  color: #4a0ba3;
-  font-size: 23px;
-  font-weight: bold;
-  margin-left: 20px;
-  margin-right: 6px;
-`;
-
-const ChallengeImg = styled.div`
-  border-radius: 4%;
-  // width: 31em;
-  // width: 45em;
-  // height: 30em;
-  width: 94%;
-  height: 98%;
-  // border: 3px solid navy;
-  margin: 2px 5px 20px 0px;
-  background: no-repeat
-    url(https://health.chosun.com/site/data/img_dir/2018/09/10/2018091003038_0.jpg);
-  background-size: cover;
   display: flex;
-  justify-content: left;
-  align-items: left;
+  margin-bottom: 2em;
 `;
 
-const ChallengeNotice = styled.span`
-  color: #4a0ba3;
-  font-size: 23px;
+const ContentLarge = styled.div`
+  width: 65%;
+  box-sizing: border-box;
+  padding: 2em 0 2em 6em;
+`;
+
+const Content = styled.div`
+  width: 30%;
+  padding: 2em;
+`;
+
+const Desc = styled.div`
+  line-height: 1.4rem;
+  font-size: 0.9rem;
+  padding-left: 2rem;
+`;
+
+const Image = styled.img`
+  width: 600px;
+  height: auto;
+  margin-bottom: 1em;
+`;
+
+const TextStrong = styled.strong`
   font-weight: bold;
-  margin-left: 20px;
-  margin-right: 6px;
+  line-height: 2rem;
 `;
 
-const ChallengeExplanation = styled.div`
-  margin-left: 23px;
-  font-size: 21px;
-  margin-top: 5px;
-  color: ${(props) => props.theme.titleColor};
+const Enroll = styled.div`
+  width: 90%;
+  height: 55%;
+  margin: 0 auto;
+  border-radius: 30px;
+  background: #d9e5ff;
+  box-sizing: border-box;
 `;
 
-const ChallengeRewardImg = styled.div`
-border-radius: 50%;
-width: 12em;
-height: 12em;
-border: 7px solid grey:
-margin: auto;
-margin-left: 50px;
-background: no-repeat
-    url(https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F2266204454D8A84F32);
-  background-size: cover;
+const RewardImg = styled(Image)`
+  width: 160px;
+  border-radius: 50%;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  margin-top: 4em;
+`;
+
+const ButtonWrapper = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center; 
 `;
 
-const ChallengeRewardBox = styled.div`
-  border-radius: 10%;
-  display: block;
-  background-color: #d9e5ff;
-  // height: 150px;
-  // width: 10em;
-  height: 270px;
-  width: 98%;
-  // margin: auto;
-  padding: 15px;
-  margin-left: 3px;
-  margin-right: 12px;
-`;
-
-const EnrollBtn = styled.button`
-  margin-top: 15px;
-  margin-left: 90px;
-  width: 100px;
-  height: 30px;
-  border-radius: 7px;
+const Button = styled.button`
+  padding: 0.5rem 3rem;
   border: none;
   box-shadow: 3px 4px 8px #b7b7b7;
-  background: ${(props) => props.backgroundColor || "#416dea"};
+  background: #416dea;
   color: #fff;
   font-weight: bold;
-  // border-radius: 30px;
-  // margin: 1rem 0;
-  margin-left: ${(props) => props.marginLeft && "2rem"};
+  border-radius: 30px;
+  margin: 1rem 0;
   &:hover {
     box-shadow: none;
-    background: ${(props) =>
-      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
+    background: linear-gradient(315deg, #89d8d3, #416dea 74%);
   }
   &:active {
-    box-shadow: none;
-    background: ${(props) =>
-      props.hoverColor || "linear-gradient(315deg, #89d8d3, #416dea 74%)"};
+    background: linear-gradient(315deg, #89d8d3, #416dea 74%);
     box-shadow: 3px 4px 10px #bbb;
   }
 `;
 
-//여기구분
+const Information = styled.div`
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 5em;
+  color: #777;
+`;
 
 function Challenge() {
-  // const [id, setId] = useState(null);
-  // const { scrollY } = useViewportScroll();
-  // console.log(scrollY);
+  const { id } = useParams();
+  const user = useRecoilValue(userState);
+  const [challenge, setChallenge] = useState();
+  const [count, setCount] = useState(0);
+
+  // const url1 = `http://localhost:8082/api/mychallenge`;
+  // const url2 = `http://localhost:8082/api/challenge/${id}`;
+  // const url3 = `http://localhost:8082/api/mychallenge/all/${id}`;
+
+  const url1 =
+    "http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/mychallenge";
+  const url2 = `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/challenge/${id}`;
+  const url3 = `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/mychallenge/all/${id}`;
+
+  const enrollChallenge = () => {
+    axios
+      .post(url1, {
+        userId: user.id,
+        challengeId: id,
+      })
+      .then((Response) => {
+        console.log("submit");
+        // console.log(Response.data);
+        alert(Response.data);
+      })
+      .catch((Error) => console.log(Error));
+  };
+
+  useEffect(() => {
+    axios
+      .get(url2)
+      .then((Response) => {
+        // console.log(Response.data);
+        setChallenge(Response.data);
+      })
+      .catch((Error) => console.log(Error));
+
+    axios
+      .get(url3)
+      .then((Response) => {
+        setCount(Response.data);
+      })
+      .catch((Error) => console.log(Error));
+  }, [setCount]);
 
   return (
     <Wrapper>
       <Container>
-        <ChallengeNameBox>
-          <ChallengeName>Chanllenge : 1만보 걷기</ChallengeName>
-        </ChallengeNameBox>
-
-        <GridBox>
-          <ContentBox>
-            <ChallengeImg></ChallengeImg>
-            <InfoBox>
-              <ChallengePeriod>◎ 챌린지기간: 5월1일(일)~6월31일(목)</ChallengePeriod>
-            </InfoBox>
-            <InfoBox>
-              <ChallengePeople>◎ 참여인원:4,871</ChallengePeople>
-            </InfoBox>
-            <InfoBox>
-              <ChallengeNotice>◎ 인증방법 및 주의사항</ChallengeNotice>
-              <br />
-              <ChallengeExplanation>
+        <Title>{challenge && challenge.challengeTitle}</Title>
+        <TagBox>
+          <Tag>총 {challenge && challenge.period}일</Tag>
+          <Tag>주 {challenge && challenge.weekCount}회</Tag>
+        </TagBox>
+        <BigTagBox>
+          <BigTag>
+            <Subscript>
+              {challenge && challenge.startDay} ~ {challenge && challenge.endDay}
+            </Subscript>
+          </BigTag>
+        </BigTagBox>
+        <ContentBox>
+          <ContentLarge>
+            <Image
+              src="https://health.chosun.com/site/data/img_dir/2018/09/10/2018091003038_0.jpg"
+              alt="challenge"
+            />
+            <Desc>
+              <p>
+                <TextStrong>인증방법 및 주의사항</TextStrong>
+                <br />
                 60일동안 하루에 1번 인증샷을 촬영하셔야 합니다.
                 <br />
                 인증샷 피드에 인증샷이 공개됩니다.
                 <br />
                 스마트워치 혹은 앱 화면 "캡쳐"만 가능합니다.
                 <br />
-                동일한 사진으로 2번 이상 인증한 것으로 스탭이 판단하는 경우,
+                - 동일한 사진으로 2번 이상 인증한 것으로 스탭이 판단하는 경우
                 <br />
-                또는 다른 회원들의 신고를 받으신 경우, <br />
-                등대에서는 추가 증빙을 요구할 수 있으며, 같은 신고가 반복될 경우 패널티가
-                있을 수 있습니다.
+                - 다른 회원들의 신고를 받으신 경우
                 <br />
-              </ChallengeExplanation>
-            </InfoBox>
-          </ContentBox>
-          <div>
-            <ChallengeRewardBox>
-              <ChallengeRewardImg />
-              <EnrollBtn>신청하기</EnrollBtn>
-            </ChallengeRewardBox>
-          </div>
-        </GridBox>
+                추가 증빙 요구 또는 패널티가 있을 수 있습니다.
+              </p>
+            </Desc>
+          </ContentLarge>
+          <Content>
+            <Enroll>
+              <RewardImg src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F2266204454D8A84F32" />
+              <ButtonWrapper>
+                <Button onClick={enrollChallenge}>신청하기</Button>
+              </ButtonWrapper>
+            </Enroll>
+            <Information>
+              <p>신청 인원</p>
+              <hr />
+              <p>{count && count}명</p>
+            </Information>
+          </Content>
+        </ContentBox>
       </Container>
     </Wrapper>
   );

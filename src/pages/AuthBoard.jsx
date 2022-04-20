@@ -204,21 +204,26 @@ function AuthBoard() {
 
     setLoadingToggle((prev) => !prev);
 
+    // const url1 = `http://localhost:8081/api/post/${post.id}`;
+    // const url2 = "http://localhost:8081/api/post";
+    // const url3 = `http://localhost:8080/api/goal/${goal.id}`;
+
+    const url1 = `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/${post.id}`;
+    const url2 =
+      "http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post";
+    const url3 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/${goal.id}`;
+
     if ((post.title && post.content) !== null && post.created === now) {
       setTimeout(() => {
         axios
-          .put(
-            `http://localhost:8081/api/post/${post.id}`,
-            // `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/${post.id}`,
-            {
-              id: post.id,
-              title: data.title,
-              content: data.content,
-              postImg: file, // img url 넘기기
-              goalId: goal.id,
-              created: post.created,
-            }
-          )
+          .put(url1, {
+            id: post.id,
+            title: data.title,
+            content: data.content,
+            postImg: file, // img url 넘기기
+            goalId: goal.id,
+            created: post.created,
+          })
           .then((res) => {
             navigate(`/goal/${post.id}`);
             console.log("수정 : ", res);
@@ -229,36 +234,28 @@ function AuthBoard() {
     } else {
       setTimeout(() => {
         axios
-          .post(
-            "http://localhost:8081/api/post",
-            // "http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post",
-            {
-              categoryId: 1,
-              title: data.title,
-              content: data.content,
-              created: now,
-              goalId: goal.id,
-              postImg: file, // img url 넘기기
-              userId: user,
-              count: goal.count,
-            }
-          )
+          .post(url2, {
+            categoryId: 1,
+            title: data.title,
+            content: data.content,
+            created: now,
+            goalId: goal.id,
+            postImg: file, // img url 넘기기
+            userId: user.id,
+            count: goal.count,
+          })
           .then((Response) => {
             console.log("등록 : ", Response.data);
             console.log("포스트 등록 img : ", file);
             // setFile();
             if (Response.data != null) {
               axios
-                .put(
-                  `http://localhost:8080/api/goal/${goal.id}`,
-                  // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/${goal.id}`,
-                  {
-                    ...goal,
-                    checkDate: now,
-                    postId: Response.data,
-                    userId: user,
-                  }
-                )
+                .put(url3, {
+                  ...goal,
+                  checkDate: now,
+                  postId: Response.data,
+                  userId: user.id,
+                })
                 .then((res) => {
                   console.log(res);
                   navigate("/dash");
@@ -278,8 +275,8 @@ function AuthBoard() {
       formData.append("file", document.getElementById("uploadFile").files[0]);
       axios
         .post(
-          "http://localhost:8081/api/postImg",
-          // "http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/postImg",
+          // "http://localhost:8081/api/postImg",
+          "http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/postImg",
           formData
         )
         .then((res) => {
@@ -304,8 +301,8 @@ function AuthBoard() {
     // 해당 일자에 작성한 일일 인증글이 있는 경우
     axios
       .get(
-        `http://localhost:8081/api/post/auth/find?goalId=${goal.id}&created=${now}`
-        // `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/auth/find?goalId=${goal.id}&created=${now}`
+        // `http://localhost:8081/api/post/auth/find?goalId=${goal.id}&created=${now}`
+        `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/auth/find?goalId=${goal.id}&created=${now}`
       )
       .then((Response) => {
         console.log(Response.data);
