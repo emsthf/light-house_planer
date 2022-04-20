@@ -14,18 +14,28 @@ function PieChart() {
   const [success, setSuccess] = useState(0);
   const [fail, setFail] = useState(0);
 
+  // const url1 = `http://localhost:8080/api/goal/result/1/1/${user.id}?result=true`;
+  // const url2 = `http://localhost:8080/api/goal/result/1/0/${user.id}?result=false`;
+
+  const url1 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/result/1/1/${user.id}?result=true`;
+  const url2 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/result/1/0/${user.id}?result=false`;
+
   useEffect(() => {
     // 성공한 목표 갯수
-    axios.get(`http://localhost:8080/api/goal/result/1/1/${user.id}?result=true`)
-    .then(Response => {
-      setSuccess(Response.data);
-    }).catch(Error => console.log(Error));
+    axios
+      .get(url1)
+      .then((Response) => {
+        setSuccess(Response.data);
+      })
+      .catch((Error) => console.log(Error));
 
     // 실패한 목표 갯수
-    axios.get(`http://localhost:8080/api/goal/result/1/0/${user.id}?result=false`)
-    .then(Response => {
-      setFail(Response.data);
-    }).catch(Error => console.log(Error));
+    axios
+      .get(url2)
+      .then((Response) => {
+        setFail(Response.data);
+      })
+      .catch((Error) => console.log(Error));
   }, []);
 
   return (

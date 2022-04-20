@@ -40,8 +40,7 @@ const Information = styled.div`
   width: 800px;
   margin: 2rem auto;
   font-size: 14px;
-  color: #555;
-  line-height: 1.4rem;
+  line-height: 1.5rem;
   strong {
     font-weight: bold;
   }
@@ -139,7 +138,10 @@ function ChanllengeList() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8082/api/challenge")
+      .get(
+        // "http://localhost:8082/api/challenge"
+        "http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/challenge"
+      )
       .then((Response) => {
         console.log(Response.data);
         setChallenge(Response.data);
@@ -151,48 +153,62 @@ function ChanllengeList() {
     <Wrapper>
       <Container>
         <Information>
-          <strong>
-            챌린지 신청 및 인증<br />
+          <strong style={{ fontSize: 22 }}>
+            챌린지 신청 및 인증
+            <br />
           </strong>
-          ▷ 참여하기 원하는 챌린지를 신청<br />
-          ▷ 참가기간 동안 인증<br />
-          해당 챌린지 내 인증 규정을 반드시 확인해주세요.<br />
-          인증 규정 내 명시한 인증 시간 내에 진행 가능하며 자정 12시
-          기준으로 변화합니다.<br />
+          <hr />
+          ▷ 참여하기 원하는 챌린지를 신청
+          <br />
+          ▷ 참가기간 동안 인증
+          <br />
+          해당 챌린지 내 인증 규정을 반드시 확인해주세요.
+          <br />
+          인증 규정 내 명시한 인증 시간 내에 진행 가능하며 자정 12시 기준으로 변화합니다.
+          <br />
           (*인증 방법은 챌린지마다 상이할 수 있습니다.)
         </Information>
         {challenge &&
           challenge.map((challenge) => (
-              <ChallengeBox onClick={() => {
+            <ChallengeBox
+              onClick={() => {
                 onClicked();
                 navigate(`/challenge/${challenge.id}`);
-              }} key={challenge.id}>
-                <GridBox>
-                  <LeftGrid>
-                    <div style={{ marginBottom: 10 }}>
-                      <i
-                        className="fa-solid fa-person-running"
-                        style={{ fontSize: 22 }}
-                      ></i>
-                      <GoalTitle>&nbsp;{challenge.challengeTitle}</GoalTitle>
-                    </div>
-                    <div>
-                      <Explanation>{challenge.challengeDesc}</Explanation>
-                    </div>
-                  </LeftGrid>
-                  <MiddleGrid>
-                    {challenge.challengeState === 0 ? (
-                      <Stamp variants={myVars} initial="start" animate="end">
-                        진행중!
-                      </Stamp>
-                    ) : null}
-                  </MiddleGrid>
-                  <RightGrid>
-                    <div>기간 : {challenge.period}일</div>
-                    <div>시작일 : {`${challenge.startDay.substring(5, 7)}월 ${challenge.startDay.substring(8, 10)}일`}</div>
-                  </RightGrid>
-                </GridBox>
-              </ChallengeBox>
+              }}
+              key={challenge.id}
+            >
+              <GridBox>
+                <LeftGrid>
+                  <div style={{ marginBottom: 10 }}>
+                    <i
+                      className="fa-solid fa-person-running"
+                      style={{ fontSize: 22 }}
+                    ></i>
+                    <GoalTitle>&nbsp;{challenge.challengeTitle}</GoalTitle>
+                  </div>
+                  <div>
+                    <Explanation>{challenge.challengeDesc}</Explanation>
+                  </div>
+                </LeftGrid>
+                <MiddleGrid>
+                  {challenge.challengeState === 0 ? (
+                    <Stamp variants={myVars} initial="start" animate="end">
+                      진행중!
+                    </Stamp>
+                  ) : null}
+                </MiddleGrid>
+                <RightGrid>
+                  <div>기간 : {challenge.period}일</div>
+                  <div>
+                    시작일 :{" "}
+                    {`${challenge.startDay.substring(
+                      5,
+                      7
+                    )}월 ${challenge.startDay.substring(8, 10)}일`}
+                  </div>
+                </RightGrid>
+              </GridBox>
+            </ChallengeBox>
           ))}
         {/* <ChallengeBox onClick={() => onClicked()}>
           <GridBox>

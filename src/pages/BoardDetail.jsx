@@ -129,7 +129,10 @@ function BoardDetail() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8081/api/post/${id}`)
+      .get(
+        // `http://localhost:8081/api/post/${id}`
+        `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/${id}`
+      )
       .then((Response) => {
         setPost(Response.data);
         console.log(Response.data.postImg);

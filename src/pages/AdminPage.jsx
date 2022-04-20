@@ -27,7 +27,7 @@ const Title = styled.div`
   margin: 2rem auto;
   position: relative;
   &:hover {
-    background : #ebf7ff;
+    background: #ebf7ff;
   }
 `;
 
@@ -63,12 +63,12 @@ const NewChallengeEnroll = styled.button`
   font-weight: bold;
   border-radius: 30px;
   &:hover {
-      box-shadow: none;
-      background: linear-gradient(315deg, #89d8d3, #416dea 74%);
+    box-shadow: none;
+    background: linear-gradient(315deg, #89d8d3, #416dea 74%);
   }
   &:active {
-      background: linear-gradient(315deg, #89d8d3, #416dea 74%);
-      box-shadow: 3px 4px 10px #bbb;
+    background: linear-gradient(315deg, #89d8d3, #416dea 74%);
+    box-shadow: 3px 4px 10px #bbb;
   }
 `;
 
@@ -106,8 +106,7 @@ const ToNotice = styled.button`
   }
 `;
 
-const ToUserList = styled(ToNotice)`
-`;
+const ToUserList = styled(ToNotice)``;
 
 const DeleteBtn = styled.div`
   width: 24px;
@@ -133,16 +132,19 @@ const ChallengesTable = styled.div`
 `;
 
 function AdminPage() {
-
   const [challenge, setChallenge] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:8082/api/challenge')
-    .then(Response => {
-      // console.log(Response.data);
-      setChallenge(Response.data);
-    })
+    axios
+      .get(
+        // "http://localhost:8082/api/challenge"
+        `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/challenge`
+      )
+      .then((Response) => {
+        // console.log(Response.data);
+        setChallenge(Response.data);
+      });
   }, []);
 
   return (
@@ -150,27 +152,27 @@ function AdminPage() {
       <Wrapper>
         <ChallengesTable>
           <GridBox>
-            <Link to='/set/challenge'>
-              <NewChallengeEnroll type='button'>새로운챌린지등록</NewChallengeEnroll>
+            <Link to="/set/challenge">
+              <NewChallengeEnroll type="button">새로운챌린지등록</NewChallengeEnroll>
             </Link>
           </GridBox>
-          {
-            challenge &&
-            challenge.map(challenge => (
+          {challenge &&
+            challenge.map((challenge) => (
               <Link to={`/challenges/${challenge.id}`}>
                 <Title key={challenge.id}>
-                    {challenge.challengeTitle}
+                  {challenge.challengeTitle}
                   <ChallengeCondition>
                     {challenge.challengeState === 0 ? "진행중" : "종료"}
                   </ChallengeCondition>
                 </Title>
               </Link>
-            ))
-          }
+            ))}
         </ChallengesTable>
         <BtnGridBox>
-          <ToNotice onClick={() => navigate('/noti')}>공지게시판</ToNotice>
-          <ToUserList onClick={() => navigate('/users')} marginLeft>회원목록</ToUserList>
+          <ToNotice onClick={() => navigate("/noti")}>공지게시판</ToNotice>
+          <ToUserList onClick={() => navigate("/users")} marginLeft>
+            회원목록
+          </ToUserList>
         </BtnGridBox>
       </Wrapper>
     </Container>
