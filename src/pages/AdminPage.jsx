@@ -106,7 +106,7 @@ const ToNotice = styled.button`
   }
 `;
 
-const ToAuthentication = styled(ToNotice)`
+const ToUserList = styled(ToNotice)`
 `;
 
 const DeleteBtn = styled.div`
@@ -132,16 +132,10 @@ const ChallengesTable = styled.div`
   margin: auto;
 `;
 
-function Challenges() {
+function AdminPage() {
 
   const [challenge, setChallenge] = useState();
   const navigate = useNavigate();
-
-  // const delChallenge = (id) => {
-  //   axios.delete(`http://localhost:8082/api/challenge/${id}`)
-  //   .then(console.log('delete'))
-  //   .catch(Error => console.log(Error));
-  // }
 
   useEffect(() => {
     axios.get('http://localhost:8082/api/challenge')
@@ -176,11 +170,11 @@ function Challenges() {
         </ChallengesTable>
         <BtnGridBox>
           <ToNotice onClick={() => navigate('/noti')}>공지게시판</ToNotice>
-          <ToAuthentication onClick={() => navigate('/board')} marginLeft>인증게시판</ToAuthentication>
+          <ToUserList onClick={() => navigate('/users')} marginLeft>회원목록</ToUserList>
         </BtnGridBox>
       </Wrapper>
     </Container>
   );
 }
 
-export default Challenges;
+export default AdminPage;

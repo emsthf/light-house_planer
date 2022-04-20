@@ -354,6 +354,12 @@ function Header() {
         </Search> */}
 
         <Items>
+          {
+            user.name === "admin" &&
+            <Item>
+              <Link to="/challenges">관리자{notiMatch && <Circle layoutId="circle" />}</Link>
+            </Item>
+          }
           <Item>
             <Link to="/noti">공지 사항 {notiMatch && <Circle layoutId="circle" />}</Link>
           </Item>

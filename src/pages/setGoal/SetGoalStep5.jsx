@@ -110,7 +110,8 @@ const Textarea = styled.textarea`
 
 function SetGoalStep5() {
   const url =
-    "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal";
+    // "http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal";
+    "http://localhost:8080/api/goal";
   const navigate = useNavigate();
   const setGoal = useSetRecoilState(goalState);
   const goal = useRecoilValue(goalState);

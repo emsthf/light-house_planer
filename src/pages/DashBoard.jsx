@@ -404,8 +404,8 @@ function DashBoard() {
     // 최근 진행중 목표 3개 불러오기
     axios
       .get(
-        `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/0/${user}`
-        // `http://localhost:8080/api/dGoal/0/${user}`
+        // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/0/${user}`
+        `http://localhost:8080/api/dGoal/0/${user}`
       )
       .then((Response) => {
         setDoingGoals(Response.data.slice(0, 3));
@@ -416,8 +416,8 @@ function DashBoard() {
     // 최근 완료된 목표 불러오기
     axios
       .get(
-        `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/1/${user}`
-        // `http://localhost:8080/api/dGoal/1/${user}`
+        // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/dGoal/1/${user}`
+        `http://localhost:8080/api/dGoal/1/${user}`
       )
       .then((Response) => {
         setDoneGoals(Response.data);
@@ -428,8 +428,8 @@ function DashBoard() {
     // 획득한 배지 가져오기
     axios
       .get(
-        `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/mybadge/${user}`
-        // `http://localhost:8080/api/mybadge/${user}`
+        // `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/mybadge/${user}`
+        `http://localhost:8080/api/mybadge/${user}`
       )
       .then((Response) => {
         // console.log(Response.data);
@@ -440,8 +440,8 @@ function DashBoard() {
     // 내 작성 글 가져오기
     axios
       .get(
-        `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/list/${user}`
-        // `http://localhost:8081/api/post/list/${user}`
+        // `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/list/${user}`
+        `http://localhost:8081/api/post/list/${user}`
       )
       .then((Response) => {
         // console.log(Response.data);

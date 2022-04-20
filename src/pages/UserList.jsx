@@ -1,9 +1,7 @@
 import axios from 'axios';
-import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { userState } from '../Atom';
+
 
 const Container = styled.div`
   width: 1200px;
@@ -69,32 +67,18 @@ const List = styled.div`
 `;
 
 const Title = styled.div`
-margin-left: 2rem;
+margin: 0 4rem;
 font-weight: bold;
 `;
 
 const Desc = styled.div`
-flex-grow: 2;
 margin-left: 1rem;
 `;
 
-const Tag = styled.div`
-width: 48px;
-height: 48px;
-background: ${props => props.background || '#416dea'};
-border-radius: 50%;
-margin-right: 2rem;
-display: flex;
-align-items: center;
-justify-content: center;
-color: #fff;
-font-size: 0.9rem;
-`;
 
-function GoalList() {
+function UserList() {
 
-  const user = useRecoilValue(userState);
-  const [list, setList] = useState([]);
+  const [users, setUsers] = useState([]);
   const [keyword, setKeyword] = useState('');
   const [result, setResult] = useState({});
   const [listState, setListState] = useState(true);
@@ -106,7 +90,7 @@ function GoalList() {
   const submitForm = (e) => {
     e.preventDefault();
     console.log(keyword);
-    axios.get(`http://localhost:8080/api/goal/1/${user}/search?keyword=${keyword}`)
+    axios.get(`http://localhost:8083/api/user/search?keyword=${keyword}`)
     .then(Response => {
       console.log(Response.data);
       setResult(Response.data);
@@ -115,10 +99,10 @@ function GoalList() {
   }
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/dGoal/1/${user}`)
+    axios.get(`http://localhost:8083/api/user/getAll`)
     .then(Response => {
-    //   console.log(Response.data);
-      setList(Response.data);
+      // console.log(Response.data);
+      setUsers(Response.data);
     }).catch(Error => console.log(Error));
   }, []);
 
@@ -127,36 +111,28 @@ function GoalList() {
       <Wrapper>
         <SearchWrapper>
           <SearchForm onSubmit={submitForm}>
-            {/* <Select>
-              <option>전체</option>
-              <option>성공</option>
-              <option>실패</option>
-            </Select> */}
             <SearchInput onChange={handleFormValue}></SearchInput>
             <Button>Search</Button>
           </SearchForm>
         </SearchWrapper>
         {
-          (list && listState === true) &&
-          list.map(goal => (
-            <Link to={`/goal/${goal.id}`}>
-              <List key={goal.id}>
-                  <Title>{goal.goalTitle}</Title>
-                  <Desc>{`(총 ${goal.totalCount}회 중 ${goal.count}회 실행)`}</Desc>
-                  {goal.result === true ? <Tag>성공</Tag> : <Tag background={'#373737'}>실패</Tag>}
-              </List>
-            </Link>
+          (users && listState == true) &&
+          users.map(user => (
+            <List key={user.id}>
+              <Title>{user.email}</Title>
+              <Desc>{user.name}</Desc>
+              <Desc>({user.phoneNum})</Desc>
+            </List>
           ))
         }
         {
-          result.length > 0
-          ? result.map(goal => (
-            <Link to={`/goal/${goal.id}`}>
-              <List key={goal.id}>
-                  <Title>{goal.goalTitle}</Title>
-                  {goal.result === true ? <Tag>성공</Tag> : <Tag background={'#373737'}>실패</Tag>}
-              </List>
-            </Link>
+          result.length > 0 
+          ? result.map(findUser => (
+            <List key={findUser.id}>
+              <Title>{findUser.email}</Title>
+              <Desc>{findUser.name}</Desc>
+              <Desc>({findUser.phoneNum})</Desc>
+            </List>
           ))
           : null
         }
@@ -165,4 +141,4 @@ function GoalList() {
    );
 }
 
-export default GoalList;
+export default UserList;
