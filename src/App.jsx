@@ -35,7 +35,7 @@ import NotificationDetail from "./pages/NotificationDetail";
 import ChallengeInfo from "./pages/ChallengeInfo";
 import UserList from "./pages/UserList";
 import AdminPage from "./pages/AdminPage";
-import UpdateProfile from "./pages/sign/UpdateProfile";
+import EditUser from "./pages/sign/EditUser";
 import UserValidation from "./pages/sign/UserValidation";
 
 const GlobalStyle = createGlobalStyle`
@@ -144,7 +144,7 @@ function App() {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/goal/list" element={<GoalList />} />
           <Route path="/users" element={<UserList />} />
-          <Route path="/update-profile" element={<UpdateProfile />} />
+          <Route path="/edit" element={<EditUser />} />
           <Route path="/userValidation" element={<UserValidation />} />
         </Routes>
         <Footer />

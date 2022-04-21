@@ -105,18 +105,13 @@ const Button = styled.button`
   }
 `;
 
-function SignUp() {
-  const [user, setUser] = useState({});
+function EditUser() {
   const [img, setImg] = useState("");
   const navigate = useNavigate();
+  const [loginUser, SetLoginUser] = useRecoilState(userState);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    watch,
-  } = useForm();
+  // const delUrl = `http://localhost:8083/api/user/${loginUser.id}`;
+  const delUrl = `http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/user/${loginUser.id}`;
 
   const readFile = (e) => {
     const reader = new FileReader(); // 파일 미리보기 객체
@@ -126,118 +121,92 @@ function SignUp() {
     };
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
-    console.log("서브밋");
-    // setUser({
-    //   name: data.name,
-    //   email: data.email,
-    //   password: data.password,
-    //   phoneNum: data.phone,
-    //   // img: data.img
-    // });
+  const [formValue, setFormValue] = useState(loginUser);
+
+  console.log(formValue);
+
+  const handleFormValue = (e) => {
+    const {name, value} = e.target;
+    setFormValue({
+      ...formValue,
+      [name] : value
+    })
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault();
     axios
-      .post(
-        // "http://localhost:8083/api/signup",
-        "http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/signup",
+      .put(
+        // "http://localhost:8083/api/user/edit",
+        "http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/user/edit",
         {
-          name: data.name,
-          email: data.email,
-          password: data.password,
-          phoneNum: data.phone,
+          ...formValue
         }
       )
-      // .then(console.log(data))
-      .then(navigate("/"))
+      .then(
+        SetLoginUser(formValue)
+      )
+      // .then(navigate("/"))
       .catch((Error) => console.log(Error));
   };
 
-  const resetForm = () => {
-    reset({
-      name: "",
-      email: "",
-      password: "",
-      passwordConfirm: "",
-      phone: "",
-    });
-  };
+  // 회원 탈퇴
+  const deleteUser = () => {
+    axios.delete(delUrl)
+    .then(alert('탈퇴되었습니다.'))
+    .then(SetLoginUser(
+      {
+        id: 0,
+        name: "",
+        email: "",
+        password: "",
+        phoneNum: "",
+      }
+    ))
+    .then(navigate("/"))
+    .catch(Error => console.log(Error));
+  }
 
   return (
     <Container>
       <FormWrapper>
-        <Title>SIgnUp</Title>
-        <Form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+        <Title>Update Profile</Title>
+        <Form onSubmit={onSubmit}>
           <Label>
             <Input
               type="text"
               placeholder="이름"
-              {...register("name", {
-                required: true,
-                pattern: /^[A-Za-z0-9가-힣]{2,20}$/,
-              })}
+              name="name"
+              value={formValue.name || ''}
+              readOnly
             ></Input>
-            <ErrorMessage>
-              {errors.name?.type === "required" && "이름을 입력해주세요."}
-            </ErrorMessage>
           </Label>
           <Label>
             <Input
               type="text"
               placeholder="이메일"
-              {...register("email", {
-                required: true,
-                pattern: /^([a-z0-9+_.-]+)@([\da-z+-]+)\.([a-z\.]{2,6})$/,
-              })}
+              name="email"
+              onChange={handleFormValue}
+              value={formValue.email || ''}
+              readOnly
             ></Input>
-            <ErrorMessage>
-              {errors.email?.type === "required" && "이메일을 입력해주세요."}
-            </ErrorMessage>
           </Label>
           <Label>
             <Input
               type="password"
               placeholder="비밀번호(영문자 및 숫자 8자 이상)"
-              {...register("password", {
-                required: true,
-                pattern: /^(?=.*\d)(?=.*[A-Za-z])[A-Za-z\d]{8,}$/,
-              })}
+              name="password"
+              onChange={handleFormValue}
             ></Input>
-            <ErrorMessage>
-              {errors.password?.type === "required" && "비밀번호를 입력해주세요."}
-              {errors.password?.type === "pattern" &&
-                "비밀번호는 영문자 및 숫자 8자 이상이어야 합니다."}
-            </ErrorMessage>
-          </Label>
-          <Label>
-            <Input
-              type="password"
-              placeholder="비밀번호 확인"
-              {...register("passwordConfirm", {
-                required: true,
-                pattern: /^(?=.*\d)(?=.*[A-Za-z])[A-Za-z\d]{8,}$/,
-              })}
-            ></Input>
-            <ErrorMessage>
-              {errors.passwordConfirm?.type === "required" &&
-                "다시 한번 비밀번호를 입력해주세요."}
-              {watch("password") !== "" &&
-                watch("passwordConfirm") !== "" &&
-                watch("password") !== watch("passwordConfirm") &&
-                "비밀번호를 다시 확인해주세요."}
-            </ErrorMessage>
           </Label>
           <Label>
             <Input
               type="text"
               placeholder="전화번호 ( - 제외 입력)"
-              {...register("phone", {
-                required: true,
-                pattern: /(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/g,
-              })}
+              name="phoneNum"
+              onChange={handleFormValue}
+              value={formValue.phoneNum || ''}
             ></Input>
-            <ErrorMessage>
-              {errors.phone?.type === "required" && "전화번호를 입력해주세요."}
-            </ErrorMessage>
           </Label>
           {/* <Label>
             <SubTitle>프로필 이미지</SubTitle>
@@ -252,16 +221,8 @@ function SignUp() {
             {img && <ImageThumbnail src={img} alt="thumbnail" />}
           </Label> */}
           <ButtonWrapper>
-            <Button>가입</Button>
-            <Button
-              type="button"
-              marginLeft
-              onClick={resetForm}
-              backgroundColor={"#89d8d3"}
-              hoverColor={"linear-gradient(315deg, #416dea, #89d8d3 74%)"}
-            >
-              reset
-            </Button>
+            <Button>수정</Button>
+            <Button marginLeft type="button" onClick={deleteUser}>탈퇴</Button>
           </ButtonWrapper>
         </Form>
       </FormWrapper>
@@ -269,4 +230,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default EditUser;
