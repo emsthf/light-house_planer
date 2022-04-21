@@ -144,7 +144,7 @@ function App() {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/goal/list" element={<GoalList />} />
           <Route path="/users" element={<UserList />} />
-          <Route path="/edit" element={<EditUser />} />
+          <Route path="/updateprofile" element={<EditUser />} />
           <Route path="/userValidation" element={<UserValidation />} />
         </Routes>
         <Footer />

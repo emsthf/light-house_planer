@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { userState } from "../../Atom";
@@ -112,11 +111,9 @@ const Button = styled.button`
 `;
 
 function UserValidation() {
-  const [img, setImg] = useState("");
+
   const navigate = useNavigate();
   const [loginUser, SetLoginUser] = useRecoilState(userState);
-
-  // const delUrl = `http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/user/${user.id}`;
 
   const {
     register,
@@ -125,18 +122,11 @@ function UserValidation() {
     reset,
   } = useForm();
 
-  const readFile = (e) => {
-    const reader = new FileReader(); // 파일 미리보기 객체
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = function (e) {
-      setImg(reader.result); // 미리보기1
-    };
-  };
+  console.log(loginUser.password, " 로그인 된 유저 비밀번호");
 
   const onSubmit = (data) => {
-    console.log(data, " 서브밋");
-    console.log(loginUser.password, " 로그인 된 유저 비밀번호");
-    if (loginUser.password === data) {
+    console.log(data.password, " 서브밋");
+    if (loginUser.password === data.password) {
       console.log("비밀 번호 일치!!!");
       navigate("/updateprofile");
     } else {
@@ -148,20 +138,18 @@ function UserValidation() {
     <Container>
       <FormWrapper>
         <Title>Verify Password</Title>
-        <Form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <HrLine />
           <Label>
             <Input
               type="password"
               placeholder="비밀번호 확인"
               {...register("password", {
-                required: true,
-                pattern: /^(?=.*\d)(?=.*[A-Za-z])[A-Za-z\d]{8,}$/,
+                required: true
               })}
             ></Input>
             <ErrorMessage>
               {errors.password?.type === "required" && "비밀번호를 입력해주세요."}
-              {errors.password?.type === "pattern" && "비밀번호 형식을 확인해주세요."}
             </ErrorMessage>
           </Label>
           <ButtonWrapper>
