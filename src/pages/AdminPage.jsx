@@ -19,13 +19,14 @@ const Title = styled.div`
   height: 100px;
   background: #fafafa;
   border-radius: 20px;
-  box-shadow: 3px 5px 10px #d7d7d7;
+  box-shadow: ${(props) => props.theme.boxShadow};
   display: flex;
   align-items: center;
   /* justify-content: center; */
   margin: 2rem auto;
   position: relative;
   padding: 0 20px;
+  cursor: pointer;
   &:hover {
     background: #ebf7ff;
   }
@@ -64,7 +65,7 @@ const GridBox = styled.div`
 const NewChallengeEnroll = styled.button`
   padding: 0.5rem 3rem;
   border: none;
-  box-shadow: 3px 4px 8px #b7b7b7;
+  box-shadow: ${(props) => props.theme.boxShadow};
   background: #416dea;
   color: #fff;
   font-weight: bold;
@@ -134,6 +135,7 @@ const ChallengesTable = styled.div`
   /* background-color: #fafafa; */
   max-width: 1100px;
   min-height: 420px;
+  padding: 2rem 0;
   box-shadow: ${(props) => props.theme.boxShadow};
   /* padding: 15px; */
   margin: auto;
@@ -172,14 +174,12 @@ function AdminPage() {
           </GridBox>
           {challenge &&
             challenge.map((challenge) => (
-              <Link to={`/challenges/${challenge.id}`}>
-                <Title key={challenge.id}>
-                  {challenge.challengeTitle}
-                  <ChallengeCondition>
-                    {challenge.challengeState === 0 ? "진행중" : "종료"}
-                  </ChallengeCondition>
-                </Title>
-              </Link>
+              <Title key={challenge.id} onClick={() => navigate(`/challenges/${challenge.id}`)}>
+                {challenge.challengeTitle}
+                <ChallengeCondition>
+                  {challenge.challengeState === 0 ? "진행중" : "종료"}
+                </ChallengeCondition>
+              </Title>
             ))}
         </ChallengesTable>
         <BtnGridBox>

@@ -35,7 +35,7 @@ const Title = styled.div`
   font-weight: bold;
   font-size: 1.3em;
   @media screen and (max-width: 1350px) {
-    width: 100%;
+    width: 80%;
     padding: 0 100px;
   }
   @media screen and (max-width: 768px) {
