@@ -328,9 +328,9 @@ function Header() {
   // };
   const navigate = useNavigate();
 
-  // const url = "http://localhost:8083/api/login";
-  const url =
-    "http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/login";
+  const url = "http://localhost:8083/api/login";
+  // const url =
+  //   "http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/login";
 
   const {
     register,
@@ -375,8 +375,11 @@ function Header() {
         password: data.password,
       })
       .then((Response) => {
-        if (Response.data !== null) {
+        console.log(Response);
+        if (Response.data.id !== 0) {
           setUser(Response.data);
+        } else {
+          alert('로그인 정보를 다시 확인해 주세요.');
         }
         // console.log(Response.data);
         // window.location.reload();

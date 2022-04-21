@@ -66,6 +66,10 @@ const List = styled.div`
   display: flex;
   align-items: center;
   margin: 1rem auto;
+  cursor: pointer;
+  &:hover {
+    background: #f0f8ff;
+  }
 `;
 
 const Title = styled.div`
@@ -149,7 +153,7 @@ function GoalList() {
         {list &&
           listState === true &&
           list.map((goal) => (
-            <List key={goal.id} onClick={() => navigate(`/goal/${goal.id}`)}>
+            <List key={goal.id}>
               <Title>{goal.goalTitle}</Title>
               <Desc>{`(총 ${goal.totalCount}회 중 ${goal.count}회 실행)`}</Desc>
               {goal.result === true ? (
@@ -161,13 +165,11 @@ function GoalList() {
           ))}
         {result.length > 0
           ? result.map((goal) => (
-              <Link to={`/goal/${goal.id}`}>
-                <List key={goal.id}>
-                  <Title>{goal.goalTitle}</Title>
-                  <Desc>{`(총 ${goal.totalCount}회 중 ${goal.count}회 실행)`}</Desc>
-                  {goal.result === true ? <Tag>성공</Tag> : <Tag background={'#373737'}>실패</Tag>}
-              </List>
-            </Link>
+            <List key={goal.id}>
+              <Title>{goal.goalTitle}</Title>
+              <Desc>{`(총 ${goal.totalCount}회 중 ${goal.count}회 실행)`}</Desc>
+              {goal.result === true ? <Tag>성공</Tag> : <Tag background={'#373737'}>실패</Tag>}
+            </List>
           ))
           : null
         }
