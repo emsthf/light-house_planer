@@ -124,7 +124,7 @@ function App() {
           <Route path="/set/3" element={<SetGoalStep3 />} />
           <Route path="/set/4" element={<SetGoalStep4 />} />
           <Route path="/set/5" element={<SetGoalStep5 />} />
-          <Route path="/goal/:id" element={<GoalDetail />} />
+          <Route path="/goal/*" element={<GoalDetail />} />
           <Route path="/badge" element={<BadgeList />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/noti" element={<Notification />} />
@@ -135,7 +135,7 @@ function App() {
           <Route path="/challenge" element={<ChanllengeList />} />
           <Route path="/challenge/:id" element={<Challenge />} />
           <Route path="/admin" element={<AdminPage />} />
-          <Route path="/challenges/:id" element={<ChallengeInfo />} />
+          <Route path="/challenges/:id" element={<ChallengeInfo/>} />
           <Route path="/set/challenge" element={<SetChallenge />} />
           <Route path="/authboard" element={<AuthBoard />} />
           <Route path="/site-rule" element={<SiteRule />} />

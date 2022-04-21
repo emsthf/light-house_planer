@@ -105,6 +105,8 @@ function SignUp() {
   const [loginUser, SetLoginUser] = useRecoilState(userState);
   // const [userData, setUserData] = useState();
 
+  // const delUrl = `http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/user/${user.id}`;
+
   const {
     register,
     handleSubmit,
@@ -150,6 +152,13 @@ function SignUp() {
       .then(navigate("/"))
       .catch((Error) => console.log(Error));
   };
+
+  // 회원 탈퇴
+  // const deleteUser = () => {
+  //   axios.delete(delUrl)
+  //   .then(console.log('delete'))
+  //   .catch(Error => console.log(Error));
+  // }
 
   // const resetForm = () => {
   //   reset({

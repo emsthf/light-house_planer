@@ -13,15 +13,15 @@ function TimelineChart({doingGoals}) {
       {
         data: [
           {
-            x: "숨 쉬기",
+            x: "인강 듣기",
             y: [new Date("2019-03-02").getTime(), new Date("2019-03-04").getTime()],
           },
           {
-            x: "밥 먹기",
+            x: "청소하기",
             y: [new Date("2019-03-08").getTime(), new Date("2019-03-12").getTime()],
           },
           {
-            x: "걷기",
+            x: "악기 연습",
             y: [new Date("2019-03-12").getTime(), new Date("2019-03-18").getTime()],
           },
         ],

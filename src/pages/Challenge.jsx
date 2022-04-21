@@ -173,7 +173,7 @@ function Challenge() {
 
   const enrollChallenge = () => {
     if(user.id !== 0) {
-      axios.post(`http://localhost:8082/api/mychallenge`, {
+      axios.post(url1, {
         userId : user.id,
         challengeId : id
       })
@@ -203,7 +203,7 @@ function Challenge() {
         setCount(Response.data);
       })
       .catch((Error) => console.log(Error));
-  }, [setCount]);
+  }, [enrollChallenge]);
 
   return (
     <Wrapper>

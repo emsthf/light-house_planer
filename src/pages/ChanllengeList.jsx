@@ -152,7 +152,7 @@ function ChanllengeList() {
         setChallenge(Response.data);
       })
       .catch((Error) => console.log(Error));
-  }, []);
+  }, [setChallenge]);
 
   return (
     <Wrapper>

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { userState } from "../Atom";
@@ -98,6 +98,10 @@ function GoalList() {
   const [result, setResult] = useState({});
   const [listState, setListState] = useState(true);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location);
+
   const handleFormValue = (e) => {
     setKeyword(e.target.value);
   };
@@ -145,24 +149,21 @@ function GoalList() {
         {list &&
           listState === true &&
           list.map((goal) => (
-            <Link to={`/goal/${goal.id}`}>
-              <List key={goal.id}>
-                <Title>{goal.goalTitle}</Title>
-                <Desc>{`(총 ${goal.totalCount}회 중 ${goal.count}회 실행)`}</Desc>
-                {goal.result === true ? (
-                  <Tag>성공</Tag>
-                ) : (
-                  <Tag background={"#373737"}>실패</Tag>
-                )}
-              </List>
-            </Link>
+            <List key={goal.id} onClick={() => navigate(`/goal/${goal.id}`)}>
+              <Title>{goal.goalTitle}</Title>
+              <Desc>{`(총 ${goal.totalCount}회 중 ${goal.count}회 실행)`}</Desc>
+              {goal.result === true ? (
+                <Tag>성공</Tag>
+              ) : (
+                <Tag background={"#373737"}>실패</Tag>
+              )}
+            </List>
           ))}
         {result.length > 0
           ? result.map((goal) => (
               <Link to={`/goal/${goal.id}`}>
                 <List key={goal.id}>
                   <Title>{goal.goalTitle}</Title>
-<<<<<<< HEAD
                   <Desc>{`(총 ${goal.totalCount}회 중 ${goal.count}회 실행)`}</Desc>
                   {goal.result === true ? <Tag>성공</Tag> : <Tag background={'#373737'}>실패</Tag>}
               </List>
@@ -170,17 +171,6 @@ function GoalList() {
           ))
           : null
         }
-=======
-                  {goal.result === true ? (
-                    <Tag>성공</Tag>
-                  ) : (
-                    <Tag background={"#373737"}>실패</Tag>
-                  )}
-                </List>
-              </Link>
-            ))
-          : null}
->>>>>>> 9f0cf970246d104c0ceacd7f65f05f56c39e9168
       </Wrapper>
     </Container>
   );
