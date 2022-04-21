@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -7,15 +7,22 @@ import { useRecoilState } from "recoil";
 import { userState } from "../../Atom";
 
 const Container = styled.div`
-  width: 1200px;
   margin: 20vh auto;
-  margin-bottom: 240px;
+  /* margin-bottom: 240px; */
 `;
 
 const FormWrapper = styled.div`
-  width: 80%;
+  width: 500px;
   margin: 0 auto;
   padding-bottom: 8vh;
+  @media screen and (max-width: 1350px) {
+    padding: 0px 250px;
+    width: 100%;
+  }
+  @media screen and (max-width: 768px) {
+    padding: 0px 25px;
+    width: 100%;
+  }
 `;
 
 const Title = styled.h2`
@@ -32,7 +39,7 @@ const Label = styled.label`
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin: 2rem 0;
+  margin: 1.5rem 0;
   font-size: 0.8rem;
   color: #888;
 `;
@@ -40,7 +47,7 @@ const Label = styled.label`
 const Input = styled.input`
   padding: 1rem;
   border: 0;
-  width: 500px;
+  width: 100%;
   border-bottom: 1px solid #000;
   background: #fafafa;
   ::placeholder {

@@ -67,14 +67,16 @@ const ChallengeBox = styled(motion.div)`
   border: 2px solid gray;
   display: flex !important;
   flex-direction: column;
+  align-items: center;
   padding: 20px;
   margin-bottom: 10px;
   cursor: pointer;
-  @media screen and (max-width: 1150px) {
+  @media screen and (max-width: 1350px) {
     width: 70%;
   }
   @media screen and (max-width: 768px) {
-    width: 80%;
+    width: 100%;
+    padding: 15px 20px;
   }
 `;
 
@@ -82,10 +84,20 @@ const GoalTitle = styled.span`
   font-size: 22px;
   font-weight: bold;
   margin-right: 6px;
+  @media screen and (max-width: 1350px) {
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 const Explanation = styled.span`
   font-size: 15px;
+  @media screen and (max-width: 1350px) {
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 10px;
+  }
 `;
 
 const GridBox = styled.div`
@@ -111,6 +123,17 @@ const RightGrid = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  @media screen and (max-width: 1350px) {
+  }
+  @media screen and (max-width: 768px) {
+    margin-left: 8px;
+    align-items: flex-start;
+    div {
+      justify-content: start;
+      text-align: left;
+      font-size: 10px;
+    }
+  }
 `;
 
 const Stamp = styled(motion.div)`
@@ -126,6 +149,10 @@ const Stamp = styled(motion.div)`
   font-weight: bold;
   font-size: 1rem;
   position: absolute;
+  @media screen and (max-width: 1350px) {
+  }
+  @media screen and (max-width: 768px) {
+  }
 `;
 
 const myVars = {

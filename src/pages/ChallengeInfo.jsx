@@ -4,10 +4,16 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
-  width: 1200px;
+  /* width: 1200px; */
   margin: 20vh auto;
-  min-height: 100vh;
+  min-height: 80vh;
   margin-bottom: 240px;
+  @media screen and (max-width: 1350px) {
+  }
+  @media screen and (max-width: 768px) {
+    padding-left: 0px;
+    min-height: 60vh;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -28,6 +34,14 @@ const Title = styled.div`
   margin: 2rem auto;
   font-weight: bold;
   font-size: 1.3em;
+  @media screen and (max-width: 1350px) {
+    width: 100%;
+    padding: 0 100px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 92%;
+    margin: 1rem 15px;
+  }
 `;
 
 const Desc = styled(Title)`

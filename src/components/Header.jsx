@@ -304,6 +304,7 @@ function Header() {
   const boardMatch = useMatch("/board");
   const notiMatch = useMatch("/noti");
   const challengeMatch = useMatch("/challenge");
+  const adminMatch = useMatch("/admin");
   const loginMatch = useMatch("/login");
   // const inputAnumation = useAnimation();
   const navAnimation = useAnimation();
@@ -455,7 +456,7 @@ function Header() {
         <Items toggleState={open ? "376px" : "-376px"}>
           {user.name === "admin" && (
             <Item>
-              <Link to="/admin">관리자{notiMatch && <Circle layoutId="circle" />}</Link>
+              <Link to="/admin">관리자{adminMatch && <Circle layoutId="circle" />}</Link>
             </Item>
           )}
           <Item>

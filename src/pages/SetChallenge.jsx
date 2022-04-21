@@ -5,15 +5,22 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
-  width: 1200px;
+  width: 850px;
   margin: 20vh auto;
   min-height: 100vh;
   margin-bottom: 240px;
+  @media screen and (max-width: 1350px) {
+    padding: 0px 200px;
+    width: 100%;
+  }
+  @media screen and (max-width: 768px) {
+    padding: 0px 20px;
+  }
 `;
 
 const Setting = styled.div`
-  width: 90%;
-  min-height: 150vh;
+  width: 100%;
+  min-height: 100vh;
   margin: 5vh auto;
   background: #fafafa;
   border-radius: 40px;
@@ -43,7 +50,7 @@ const SubTitle = styled.h3`
 const InputText = styled.input`
   padding: 1rem;
   border: 0;
-  width: 800px;
+  width: 100%;
   border-bottom: 1px solid #000;
   background: #fafafa;
   ::placeholder {
@@ -79,7 +86,7 @@ const ErrorMessage = styled.div`
 
 const Textarea = styled.textarea`
   padding: 1rem;
-  width: 800px;
+  width: 100%;
   height: 80px;
   border-radius: 20px;
 `;
