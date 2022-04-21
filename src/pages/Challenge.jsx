@@ -6,22 +6,20 @@ import styled from "styled-components";
 import { userState } from "../Atom";
 
 const Wrapper = styled.div`
-  height: auto;
-  min-height: 100%;
-  width: 1200px;
+  min-height: 100vh;
+  width: 1100px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20vh auto;
+  margin: 18vh auto;
   margin-bottom: 240px;
   color: ${(props) => props.theme.titleColor};
-  @media screen and (max-width: 768px) {
-    padding-right: 24px !important;
-    padding-left: 24px !important;
+  @media screen and (max-width: 1350px) {
+    width: 80%;
   }
-  @media screen and (max-width: 500px) {
-    padding-right: 24px !important;
-    padding-left: 24px !important;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding: 0xp 20px;
   }
 `;
 
@@ -34,6 +32,11 @@ const Container = styled.div`
   background-color: #f0f8ff;
   border-radius: 30px;
   box-shadow: ${(props) => props.theme.boxShadow};
+  @media screen and (max-width: 1350px) {
+  }
+  @media screen and (max-width: 768px) {
+    margin: 0px 20px;
+  }
 `;
 
 const Title = styled.div`
@@ -74,18 +77,34 @@ const Subscript = styled.div``;
 
 const ContentBox = styled.div`
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
   margin-bottom: 2em;
+  @media screen and (max-width: 1350px) {
+  }
+  @media screen and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const ContentLarge = styled.div`
-  width: 65%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   box-sizing: border-box;
   padding: 2em 0 2em 6em;
+  @media screen and (max-width: 1350px) {
+  }
+  @media screen and (max-width: 768px) {
+    padding: 2em;
+  }
 `;
 
 const Content = styled.div`
-  width: 30%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   padding: 2em;
 `;
 
@@ -93,12 +112,25 @@ const Desc = styled.div`
   line-height: 1.4rem;
   font-size: 0.9rem;
   padding-left: 2rem;
+  @media screen and (max-width: 1350px) {
+  }
+  @media screen and (max-width: 768px) {
+    padding-left: 0px;
+  }
 `;
 
 const Image = styled.img`
-  width: 600px;
+  width: 100%;
   height: auto;
   margin-bottom: 1em;
+  border-radius: 20px;
+  @media screen and (max-width: 1350px) {
+    width: 80%;
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding: 0xp 20px;
+  }
 `;
 
 const TextStrong = styled.strong`
@@ -154,6 +186,7 @@ const Information = styled.div`
   text-align: center;
   margin-top: 5em;
   color: #777;
+  font-weight: bold;
 `;
 
 function Challenge() {
@@ -172,19 +205,20 @@ function Challenge() {
   const url3 = `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/mychallenge/all/${id}`;
 
   const enrollChallenge = () => {
-    if(user.id !== 0) {
-      axios.post(`http://localhost:8082/api/mychallenge`, {
-        userId : user.id,
-        challengeId : id
-      })
-      .then(Response => {
-        console.log('submit');
-        // console.log(Response.data);
-        alert(Response.data);
-      })
-      .catch(Error => console.log(Error));
+    if (user.id !== 0) {
+      axios
+        .post(`http://localhost:8082/api/mychallenge`, {
+          userId: user.id,
+          challengeId: id,
+        })
+        .then((Response) => {
+          console.log("submit");
+          // console.log(Response.data);
+          alert(Response.data);
+        })
+        .catch((Error) => console.log(Error));
     } else {
-      alert('로그인 이후 신청 가능합니다.');
+      alert("로그인 이후 신청 가능합니다.");
     }
   };
 

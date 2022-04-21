@@ -3,15 +3,23 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-  width: 1200px;
+  width: 1000px;
   margin: 20vh auto;
-  min-height: 100vh;
+  min-height: 80vh;
   margin-bottom: 240px;
+  @media screen and (max-width: 1350px) {
+    width: 100%;
+    padding: 0 200px;
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding: 0 20px;
+    min-height: 60vh;
+  }
 `;
 
 const Wrapper = styled.div`
-  width: 90%;
-  margin: 0 auto;
+  width: 100%;
 `;
 
 const SearchWrapper = styled.div`
@@ -54,7 +62,7 @@ const Button = styled.button`
 `;
 
 const List = styled.div`
-  width: 90%;
+  width: 100%;
   height: 80px;
   background: #fafafa;
   border-radius: 20px;
@@ -62,12 +70,12 @@ const List = styled.div`
   color: ${(props) => props.theme.titleColor};
   display: flex;
   align-items: center;
-  margin: 1rem auto;
+  margin: 1rem 0;
 `;
 
 const Title = styled.div`
-  margin: 0 4rem;
   font-weight: bold;
+  margin-left: 18px;
 `;
 
 const Desc = styled.div`
@@ -115,10 +123,11 @@ function UserList() {
       <Wrapper>
         <SearchWrapper>
           <SearchForm onSubmit={submitForm}>
-            <SearchInput onChange={handleFormValue}></SearchInput>
+            <SearchInput onChange={handleFormValue} placeholder="email 검색" />
             <Button>Search</Button>
           </SearchForm>
         </SearchWrapper>
+        <hr />
         {users &&
           listState == true &&
           users.map((user) => (

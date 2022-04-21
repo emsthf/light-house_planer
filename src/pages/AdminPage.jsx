@@ -4,10 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
-  width: 1200px;
-  margin: 20vh auto;
-  min-height: 100vh;
-  margin-bottom: 240px;
+  margin: 18vh auto;
+  min-height: 90vh;
+
   color: ${(props) => props.theme.titleColor};
 `;
 
@@ -16,18 +15,26 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.div`
-  width: 800px;
+  width: 80%;
   height: 100px;
   background: #fafafa;
   border-radius: 20px;
   box-shadow: 3px 5px 10px #d7d7d7;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   margin: 2rem auto;
   position: relative;
+  padding: 0 20px;
   &:hover {
     background: #ebf7ff;
+  }
+  @media screen and (max-width: 1350px) {
+  }
+  @media screen and (max-width: 768px) {
+    width: 95%;
+    margin: 10px 10px;
+    padding: 0 15px;
   }
 `;
 
@@ -124,11 +131,18 @@ const DeleteBtn = styled.div`
 
 const ChallengesTable = styled.div`
   border-radius: 40px;
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
   max-width: 1100px;
+  min-height: 420px;
   box-shadow: ${(props) => props.theme.boxShadow};
-  padding: 15px;
+  /* padding: 15px; */
   margin: auto;
+  @media screen and (max-width: 1150px) {
+  }
+  @media screen and (max-width: 768px) {
+    border-radius: 30px;
+    width: 92%;
+  }
 `;
 
 function AdminPage() {
