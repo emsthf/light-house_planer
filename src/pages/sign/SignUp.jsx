@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -110,7 +110,7 @@ function SignUp() {
   const [img, setImg] = useState("");
   const navigate = useNavigate();
   const [loginUser, SetLoginUser] = useRecoilState(userState);
-  // const [userData, setUserData] = useState();
+  const [userDetail, setUserDetail] = useState({});
 
   // const delUrl = `http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/user/${user.id}`;
 
@@ -120,13 +120,13 @@ function SignUp() {
     formState: { errors },
     reset,
     watch,
-  } = useForm();
-  // {defaultValues: {
-  //   name: userData.name,
-  //   email: userData.email,
-  //   password: userData.password,
-  //   phone: userData.phoneNum,
-  // }}
+  } = useForm({
+    defaultValues: {
+      name: loginUser.name,
+      email: loginUser.email,
+      phone: loginUser.phoneNum,
+    },
+  });
 
   const readFile = (e) => {
     const reader = new FileReader(); // 파일 미리보기 객체
@@ -137,6 +137,8 @@ function SignUp() {
   };
 
   const onSubmit = (data) => {
+    console.log(data);
+    console.log("서브밋");
     // setUser({
     //   name: data.name,
     //   email: data.email,
@@ -183,7 +185,11 @@ function SignUp() {
   //       `http://localhost:8083/api/user/get/${loginUser.id}`
   //       // `http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/user/get/${loginUser.id}`
   //     )
-  //     .then((res) => setUserData(res.data));
+  //     .then((res) => {
+  //       setUserDetail(res.data);
+  //       console.log(res);
+  //     });
+  //   console.log(userDetail);
   // }, []);
 
   return (
@@ -276,20 +282,7 @@ function SignUp() {
             {img && <ImageThumbnail src={img} alt="thumbnail" />}
           </Label> */}
           <ButtonWrapper>
-            <Button>{loginUser.id !== 0 ? "수정" : "가입"}</Button>
-            {loginUser.id !== 0 ? (
-              <Button marginLeft>탈퇴</Button>
-            ) : (
-              <Button
-                type="button"
-                marginLeft
-                // onClick={resetForm}
-                backgroundColor={"#89d8d3"}
-                hoverColor={"linear-gradient(315deg, #416dea, #89d8d3 74%)"}
-              >
-                reset
-              </Button>
-            )}
+            <Button>가입</Button>
           </ButtonWrapper>
         </Form>
       </FormWrapper>
