@@ -127,6 +127,8 @@ function SignUp() {
   };
 
   const onSubmit = (data) => {
+    console.log(data);
+    console.log("서브밋");
     // setUser({
     //   name: data.name,
     //   email: data.email,
@@ -252,14 +254,14 @@ function SignUp() {
           <ButtonWrapper>
             <Button>가입</Button>
             <Button
-                type="button"
-                marginLeft
-                onClick={resetForm}
-                backgroundColor={"#89d8d3"}
-                hoverColor={"linear-gradient(315deg, #416dea, #89d8d3 74%)"}
-              >
-                reset
-              </Button>
+              type="button"
+              marginLeft
+              onClick={resetForm}
+              backgroundColor={"#89d8d3"}
+              hoverColor={"linear-gradient(315deg, #416dea, #89d8d3 74%)"}
+            >
+              reset
+            </Button>
           </ButtonWrapper>
         </Form>
       </FormWrapper>

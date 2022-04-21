@@ -508,7 +508,7 @@ function DashBoard() {
                 <Motto>no pain, no gain</Motto>
                 <Grade>🕊️ 갈매기</Grade>
               </InfoBox>
-              <Link to="/edit">
+              <Link to="/userValidation">
                 <EditBtn>Edit profile</EditBtn>
               </Link>
             </ProfileBox>
@@ -557,7 +557,10 @@ function DashBoard() {
               <BoxTitle>현재 참가 중인 챌린지</BoxTitle>
               {challenge &&
                 challenge.map((challenge) => (
-                  <ChallengeItem key={challenge.challenge.id} onClick={() => navigate(`/challenge/${challenge.challenge.id}`)}>
+                  <ChallengeItem
+                    key={challenge.challenge.id}
+                    onClick={() => navigate(`/challenge/${challenge.challenge.id}`)}
+                  >
                     <div>
                       <i className="fa-regular fa-calendar-check"></i>
                       <GoalTitle>{challenge.challenge.challengeTitle}</GoalTitle>
@@ -603,11 +606,11 @@ function DashBoard() {
                     <div>
                       <i className="fa-regular fa-calendar-check"></i>
                       <GoalTitle>{item.goalTitle}</GoalTitle>
-                      {
-                        item.result === true 
-                        ? <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
-                        : <Status style={{ backgroundColor: "pink" }}>실패</Status>
-                      }
+                      {item.result === true ? (
+                        <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
+                      ) : (
+                        <Status style={{ backgroundColor: "pink" }}>실패</Status>
+                      )}
                     </div>
                     <div>
                       <Explanation>{item.goalDesc}</Explanation>
