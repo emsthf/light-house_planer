@@ -8,7 +8,6 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { goalId, goalPeriod, userState } from "../Atom";
 import Badge from "./Badge";
-import BarChart from "../components/BarChart";
 
 const Wrapper = styled.div`
   /* height: auto; */
@@ -218,6 +217,7 @@ const ChallengeBox = styled(GoalBox)``;
 
 const ChallengeItem = styled(Goal)`
   height: 70px;
+  cursor: pointer;
 `;
 
 const CreateBtn = styled.button`
@@ -490,7 +490,7 @@ function DashBoard() {
         setChallenge(Response.data.slice(0, 3));
       })
       .catch((Error) => console.log(Error));
-  }, [setBadge]);
+  }, [setBadge, setDoingGoals, setDoneGoals]);
 
   console.log(challenge);
 
@@ -501,10 +501,10 @@ function DashBoard() {
           <Container>
             <ProfileImg />
             <ProfileBox>
-              <Name>Kevin</Name>
+              <Name>{user.name}</Name>
               <InfoBox>
-                <Email>alone@gmail.com</Email>
-                <Phone>010-0000-0000</Phone>
+                <Email>{user.email}</Email>
+                <Phone>{user.phoneNum}</Phone>
                 <Motto>no pain, no gain</Motto>
                 <Grade>🕊️ 갈매기</Grade>
               </InfoBox>
@@ -557,16 +557,14 @@ function DashBoard() {
               <BoxTitle>현재 참가 중인 챌린지</BoxTitle>
               {challenge &&
                 challenge.map((challenge) => (
-                  <Link to={`/challenge/${challenge.challenge.id}`}>
-                    <ChallengeItem key={challenge.challenge.id}>
-                      <div>
-                        <i className="fa-regular fa-calendar-check"></i>
-                        <GoalTitle>{challenge.challenge.challengeTitle}</GoalTitle>
-                        <Explanation>{challenge.challenge.challengeDesc}</Explanation>
-                        {/* <Status>진행 중</Status> */}
-                      </div>
-                    </ChallengeItem>
-                  </Link>
+                  <ChallengeItem key={challenge.challenge.id} onClick={() => navigate(`/challenge/${challenge.challenge.id}`)}>
+                    <div>
+                      <i className="fa-regular fa-calendar-check"></i>
+                      <GoalTitle>{challenge.challenge.challengeTitle}</GoalTitle>
+                      <Explanation>{challenge.challenge.challengeDesc}</Explanation>
+                      {/* <Status>진행 중</Status> */}
+                    </div>
+                  </ChallengeItem>
                 ))}
             </ChallengeBox>
             <BadgeBox>
@@ -589,7 +587,6 @@ function DashBoard() {
               <StatisticsBox>
                 <PieChart />
                 <TimelineChart doingGoals={doingGoals} />
-                {/* <BarChart doingGoals={doingGoals} /> */}
               </StatisticsBox>
             </StatisticsCon>
             <DoneGoalBox>
@@ -606,7 +603,11 @@ function DashBoard() {
                     <div>
                       <i className="fa-regular fa-calendar-check"></i>
                       <GoalTitle>{item.goalTitle}</GoalTitle>
-                      <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
+                      {
+                        item.result === true 
+                        ? <Status style={{ backgroundColor: "skyblue" }}>성공</Status>
+                        : <Status style={{ backgroundColor: "pink" }}>실패</Status>
+                      }
                     </div>
                     <div>
                       <Explanation>{item.goalDesc}</Explanation>

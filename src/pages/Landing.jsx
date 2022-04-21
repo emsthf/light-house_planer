@@ -1,7 +1,10 @@
+import userEvent from "@testing-library/user-event";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { userState } from "../Atom";
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -190,6 +193,7 @@ function Landing() {
     setBack(false);
     setVisible((prev) => (prev === 2 ? 1 : prev + 1));
   };
+  const user = useRecoilValue(userState);
   // const toggleLeaving = () => {
   //   setLeaving((prev) => !prev);
   // };
@@ -209,6 +213,12 @@ function Landing() {
   const onBoxClicked = (id) => {
     navigate(`/${id}`);
   };
+
+  const handleSetGoal = () => {
+    if(user.id === 0) {
+      alert('로그인 이후 이용해주세요.')
+    }
+  }
 
   const imgUrl = [
     {
@@ -243,7 +253,7 @@ function Landing() {
               <h2>{item.title}</h2>
               <h2>{item.subTitle}</h2>
               <Link to="/set/1" style={{ marginTop: "48px" }}>
-                <span style={{ fontWeight: "bold" }}>+목표 세우기</span>
+                <span style={{ fontWeight: "bold" }} onClick={handleSetGoal}>+목표 세우기</span>
               </Link>
             </Carousel>
           ) : null

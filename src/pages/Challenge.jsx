@@ -205,18 +205,18 @@ function Challenge() {
   const url3 = `http://springbootlhchallenge-env.eba-am3tqpey.us-east-1.elasticbeanstalk.com/api/mychallenge/all/${id}`;
 
   const enrollChallenge = () => {
-    if (user.id !== 0) {
-      axios
-        .post(`http://localhost:8082/api/mychallenge`, {
-          userId: user.id,
-          challengeId: id,
-        })
-        .then((Response) => {
-          console.log("submit");
-          // console.log(Response.data);
-          alert(Response.data);
-        })
-        .catch((Error) => console.log(Error));
+    if(user.id !== 0) {
+      axios.post(url1, {
+        userId : user.id,
+        challengeId : id
+      })
+      .then(Response => {
+        console.log('submit');
+        // console.log(Response.data);
+        alert(Response.data);
+      })
+      .catch(Error => console.log(Error));
+
     } else {
       alert("로그인 이후 신청 가능합니다.");
     }
@@ -237,7 +237,7 @@ function Challenge() {
         setCount(Response.data);
       })
       .catch((Error) => console.log(Error));
-  }, [setCount]);
+  }, [enrollChallenge]);
 
   return (
     <Wrapper>

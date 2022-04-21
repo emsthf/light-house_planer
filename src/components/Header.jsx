@@ -360,6 +360,7 @@ function Header() {
           phoneNum: "",
         });
       }
+      alert('로그아웃 되었습니다.');
       navigate("/");
     }
   };
@@ -379,6 +380,7 @@ function Header() {
         }
         // console.log(Response.data);
         // window.location.reload();
+        resetForm();
       })
       .then(setIsClick(false))
       .catch((Error) => console.log(Error));

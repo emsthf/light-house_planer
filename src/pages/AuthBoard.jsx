@@ -43,7 +43,7 @@ const AuthboardFrame = styled.div`
 const Writer = styled.div`
   background-color: #f7f6f6;
   color: black;
-  width: 7%;
+  width: 200px;
   border-radius: 7px;
   text-align: center;
   font-weight: bold;
@@ -325,7 +325,7 @@ function AuthBoard() {
         <Wrapper>
           <AuthboardFrame>
             <ContentBox encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>
-              <Writer>{post.userId === 1 ? "케빈" : null}</Writer>
+              <Writer>{user.name}</Writer>
               <Label>
                 <TitleContent
                   type="text"
