@@ -35,6 +35,7 @@ import NotificationDetail from "./pages/NotificationDetail";
 import ChallengeInfo from "./pages/ChallengeInfo";
 import UserList from "./pages/UserList";
 import AdminPage from "./pages/AdminPage";
+import EditUser from "./pages/sign/EditUser";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -142,6 +143,7 @@ function App() {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/goal/list" element={<GoalList />} />
           <Route path="/users" element={<UserList />} />
+          <Route path="/edit" element={<EditUser />} />
         </Routes>
         <Footer />
       </BrowserRouter>

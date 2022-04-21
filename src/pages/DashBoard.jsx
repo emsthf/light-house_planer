@@ -508,8 +508,8 @@ function DashBoard() {
                 <Motto>no pain, no gain</Motto>
                 <Grade>🕊️ 갈매기</Grade>
               </InfoBox>
-              <Link to="/signup">
-                <EditBtn onClick={() => navigate("/signup")}>Edit profile</EditBtn>
+              <Link to="/edit">
+                <EditBtn>Edit profile</EditBtn>
               </Link>
             </ProfileBox>
           </Container>
