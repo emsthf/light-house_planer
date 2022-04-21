@@ -110,7 +110,8 @@ const Content = styled.div`
 
 const Desc = styled.div`
   line-height: 1.4rem;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  color: #666;
   padding-left: 2rem;
   @media screen and (max-width: 1350px) {
   }
@@ -136,6 +137,12 @@ const Image = styled.img`
 const TextStrong = styled.strong`
   font-weight: bold;
   line-height: 2rem;
+`;
+
+const Text = styled.p`
+  font-size: 1rem;
+  margin: 1rem 0;
+  color: #444;
 `;
 
 const Enroll = styled.div`
@@ -226,7 +233,7 @@ function Challenge() {
     axios
       .get(url2)
       .then((Response) => {
-        // console.log(Response.data);
+        console.log(Response.data);
         setChallenge(Response.data);
       })
       .catch((Error) => console.log(Error));
@@ -261,6 +268,9 @@ function Challenge() {
               alt="challenge"
             />
             <Desc>
+              <Text>
+                {challenge && challenge.challengeDesc}
+              </Text>
               <p>
                 <TextStrong>인증방법 및 주의사항</TextStrong>
                 <br />
