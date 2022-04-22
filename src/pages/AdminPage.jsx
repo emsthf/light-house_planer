@@ -161,7 +161,7 @@ function AdminPage() {
         // console.log(Response.data);
         setChallenge(Response.data);
       });
-  }, []);
+  }, [setChallenge]);
 
   return (
     <Container>

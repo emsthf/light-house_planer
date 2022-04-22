@@ -220,14 +220,23 @@ function Challenge() {
       .then(Response => {
         console.log('submit');
         // console.log(Response.data);
+        handleCount();
         alert(Response.data);
       })
       .catch(Error => console.log(Error));
-
     } else {
       alert("로그인 이후 신청 가능합니다.");
     }
   };
+
+  const handleCount = () => {
+    axios
+      .get(url3)
+      .then((Response) => {
+        setCount(Response.data);
+      })
+      .catch((Error) => console.log(Error));
+  }
 
   useEffect(() => {
     axios
@@ -237,14 +246,8 @@ function Challenge() {
         setChallenge(Response.data);
       })
       .catch((Error) => console.log(Error));
-
-    axios
-      .get(url3)
-      .then((Response) => {
-        setCount(Response.data);
-      })
-      .catch((Error) => console.log(Error));
-  }, [enrollChallenge]);
+      handleCount();
+  }, [setCount]);
 
   return (
     <Wrapper>
