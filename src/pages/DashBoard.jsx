@@ -147,6 +147,10 @@ const OrEmpty = styled.span`
   line-height: 2;
 `;
 
+const Empty = styled(OrEmpty)`
+  font-size : 32px;
+`;
+
 const BoxTitle = styled.span`
   font-size: 20px;
   font-weight: bold !important;
@@ -555,6 +559,12 @@ function DashBoard() {
             </GoalBox>
             <ChallengeBox>
               <BoxTitle>현재 참가 중인 챌린지</BoxTitle>
+              {
+                challenge.length === 0 &&
+                <Empty>
+                  참여 중인 챌린지가 없습니다.😥
+                </Empty>
+              }
               {challenge &&
                 challenge.map((challenge) => (
                   <ChallengeItem

@@ -203,7 +203,7 @@ function SetChallenge() {
           challengeDesc: data.desc,
         }
       )
-      .then(navigate("/challenge"))
+      .then(navigate("/admin"))
       .catch((Error) => console.log(Error));
   };
 
