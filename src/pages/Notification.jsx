@@ -42,8 +42,8 @@ const Wrapper = styled.div`
 // `;
 
 const BoardBox = styled.div`
-  padding: 0px 300px;
-  width: 100%;
+  /* padding: 0px 300px; */
+  width: 1000px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -51,13 +51,16 @@ const BoardBox = styled.div`
   margin-bottom: 20px;
   height: 100%;
   @media screen and (max-width: 1350px) {
-    padding: 0px 150px;
+    padding: 0px 250px;
+    width: 100%;
   }
   @media screen and (max-width: 1150px) {
-    padding: 0px 150px;
+    padding: 0px 200px;
+    width: 100%;
   }
   @media screen and (max-width: 768px) {
     padding: 0px 25px;
+    width: 100%;
   }
 `;
 

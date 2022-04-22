@@ -7,8 +7,17 @@ import { useRecoilState } from "recoil";
 import { userState } from "../../Atom";
 
 const Container = styled.div`
-  margin: 20vh auto;
-  /* margin-bottom: 240px; */
+  margin: 25vh auto;
+  @media screen and (max-width: 1350px) {
+    padding: 0px 250px;
+    width: 100%;
+    margin-bottom: 35vh;
+  }
+  @media screen and (max-width: 768px) {
+    padding: 0px 25px;
+    width: 100%;
+    margin-bottom: 30vh;
+  }
 `;
 
 const FormWrapper = styled.div`
@@ -16,7 +25,7 @@ const FormWrapper = styled.div`
   margin: 0 auto;
   padding-bottom: 8vh;
   @media screen and (max-width: 1350px) {
-    padding: 0px 250px;
+    padding: 0px 50px;
     width: 100%;
   }
   @media screen and (max-width: 768px) {
@@ -126,12 +135,12 @@ function EditUser() {
   console.log(formValue);
 
   const handleFormValue = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setFormValue({
       ...formValue,
-      [name] : value
-    })
-  }
+      [name]: value,
+    });
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -140,32 +149,32 @@ function EditUser() {
         // "http://localhost:8083/api/user/edit",
         "http://springbootlhuser-env.eba-fykahfmb.us-east-1.elasticbeanstalk.com/api/user/edit",
         {
-          ...formValue
+          ...formValue,
         }
       )
-      .then(
-        SetLoginUser(formValue)
-      )
-      // .then(navigate("/"))
+      .then(SetLoginUser(formValue))
+      .then(alert("회원 정보가 수정되었습니다"))
+      .then(navigate("/dash"))
       .catch((Error) => console.log(Error));
   };
 
   // 회원 탈퇴
   const deleteUser = () => {
-    axios.delete(delUrl)
-    .then(alert('탈퇴되었습니다.'))
-    .then(SetLoginUser(
-      {
-        id: 0,
-        name: "",
-        email: "",
-        password: "",
-        phoneNum: "",
-      }
-    ))
-    .then(navigate("/"))
-    .catch(Error => console.log(Error));
-  }
+    axios
+      .delete(delUrl)
+      .then(alert("탈퇴되었습니다."))
+      .then(
+        SetLoginUser({
+          id: 0,
+          name: "",
+          email: "",
+          password: "",
+          phoneNum: "",
+        })
+      )
+      .then(navigate("/"))
+      .catch((Error) => console.log(Error));
+  };
 
   return (
     <Container>
@@ -177,7 +186,7 @@ function EditUser() {
               type="text"
               placeholder="이름"
               name="name"
-              value={formValue.name || ''}
+              value={formValue.name || ""}
               readOnly
             ></Input>
           </Label>
@@ -187,7 +196,7 @@ function EditUser() {
               placeholder="이메일"
               name="email"
               onChange={handleFormValue}
-              value={formValue.email || ''}
+              value={formValue.email || ""}
               readOnly
             ></Input>
           </Label>
@@ -205,7 +214,7 @@ function EditUser() {
               placeholder="전화번호 ( - 제외 입력)"
               name="phoneNum"
               onChange={handleFormValue}
-              value={formValue.phoneNum || ''}
+              value={formValue.phoneNum || ""}
             ></Input>
           </Label>
           {/* <Label>
@@ -222,7 +231,9 @@ function EditUser() {
           </Label> */}
           <ButtonWrapper>
             <Button>수정</Button>
-            <Button marginLeft type="button" onClick={deleteUser}>탈퇴</Button>
+            <Button marginLeft type="button" onClick={deleteUser}>
+              탈퇴
+            </Button>
           </ButtonWrapper>
         </Form>
       </FormWrapper>

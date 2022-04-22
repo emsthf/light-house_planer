@@ -36,7 +36,7 @@ const Container = styled.div`
 `;
 
 const Information = styled.div`
-  padding: 0px 300px;
+  padding: 0px 26rem;
   width: 100%;
   margin: 2rem auto;
   font-size: 14px;
@@ -44,7 +44,9 @@ const Information = styled.div`
   strong {
     font-weight: bold;
   }
-  @media screen and (max-width: 1150px) {
+  @media screen and (max-width: 1350px) {
+    padding: 0px 200px;
+    width: 100%;
   }
   @media screen and (max-width: 768px) {
     padding: 0px 20px;

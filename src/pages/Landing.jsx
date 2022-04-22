@@ -1,4 +1,3 @@
-import userEvent from "@testing-library/user-event";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -80,7 +79,8 @@ const DescContainer = styled.div`
   flex-direction: column;
   align-items: center;
   height: 720px;
-  margin-top: 720px;
+  margin-top: 850px;
+  margin-bottom: 150px;
   h2 {
     font-size: 70px;
     font-family: "Source Sans Pro", sans-serif;
@@ -215,10 +215,10 @@ function Landing() {
   };
 
   const handleSetGoal = () => {
-    if(user.id === 0) {
-      alert('로그인 이후 이용해주세요.')
+    if (user.id === 0) {
+      alert("로그인 이후 이용해주세요.");
     }
-  }
+  };
 
   const imgUrl = [
     {
@@ -253,7 +253,9 @@ function Landing() {
               <h2>{item.title}</h2>
               <h2>{item.subTitle}</h2>
               <Link to="/set/1" style={{ marginTop: "48px" }}>
-                <span style={{ fontWeight: "bold" }} onClick={handleSetGoal}>+목표 세우기</span>
+                <span style={{ fontWeight: "bold" }} onClick={handleSetGoal}>
+                  +목표 세우기
+                </span>
               </Link>
             </Carousel>
           ) : null
@@ -268,7 +270,7 @@ function Landing() {
             내일은 더 멋져질 당신을 위해, <br />
             등대와 함께하는 슬기로운 습관 생활 <br />
           </strong>
-          <hr />
+          <hr style={{ width: "80%", margin: "20px auto" }} />
           등대는 당신의 습관을 성취하고 관리하는 가장 강력한 툴입니다. <br />
           꾸준한 성취을 반복하며 더 멋지게 발전하는 나를 경험해보세요.
         </span>

@@ -69,7 +69,9 @@ const Check = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  @media screen and (max-width: 1450px) {
+  @media screen and (max-width: 1350px) {
+    width: 80%;
+    font-size: 14px;
   }
   @media screen and (max-width: 768px) {
     width: 100%;
@@ -82,7 +84,8 @@ const ProgressBox = styled.div`
   width: 80%;
   margin: auto;
   margin-top: 25px;
-  @media screen and (max-width: 1450px) {
+  @media screen and (max-width: 1350px) {
+    width: 80%;
   }
   @media screen and (max-width: 768px) {
     width: 100%;
@@ -118,6 +121,16 @@ const Button = styled.button`
   &:disabled {
     background: linear-gradient(315deg, #cfcfcf, #707070 74%);
     box-shadow: 3px 4px 10px #bbb;
+  }
+  @media screen and (max-width: 1550px) {
+    margin-left: 5px;
+    font-size: 15px;
+  }
+  @media screen and (max-width: 1350px) {
+    margin-left: 5px;
+    font-size: 10px;
+  }
+  @media screen and (max-width: 768px) {
   }
 `;
 
