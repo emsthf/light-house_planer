@@ -211,16 +211,28 @@ function AuthBoard() {
     setLoadingToggle((prev) => !prev);
 
     // const url1 = `http://localhost:8081/api/post/${post.id}`;
-    // const url2 = "http://localhost:8081/api/post";
+    // const url2 = `http://localhost:8081/api/feign/${goal.id}`;
     // const url3 = `http://localhost:8080/api/goal/${goal.id}`;
 
     const url1 = `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post/${post.id}`;
-    const url2 =
-      "http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post";
+    const url2 = `http://springbootlhpost-env.eba-rktpiamg.us-east-1.elasticbeanstalk.com/api/post`;
     const url3 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/${goal.id}`;
 
+    console.log(
+      "원본 데이터: ",
+      post.id,
+      " + ",
+      post.title,
+      " + ",
+      post.content,
+      " + ",
+      post.created
+    );
+    console.log("수정 데이터: ", data.title, " + ", data.content, " + ", now);
     if ((post.title && post.content) !== null && post.created === now) {
+      console.log("수정 조건 통과.");
       setTimeout(() => {
+        console.log("수정 axios 시작.");
         axios
           .put(url1, {
             id: post.id,

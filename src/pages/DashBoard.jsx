@@ -60,7 +60,7 @@ const ProfileImg = styled.div`
   border: 2px solid gray;
   margin: auto;
   background: no-repeat
-    url(http://jjal.today/data/file/gallery/1028612757_tfzgnpT0_8b425806e9bc8770ee9926f757d5ff046f92f11e.png);
+    url(https://images.velog.io/images/wjdtmdgml/profile/b44a98b1-8fd3-498a-87f1-4ef1a922e2ce/%EB%AF%B8%EB%AA%A8%ED%8B%B0%EC%BD%982.png);
   background-size: cover;
 `;
 
@@ -148,7 +148,7 @@ const OrEmpty = styled.span`
 `;
 
 const Empty = styled(OrEmpty)`
-  font-size : 32px;
+  font-size: 32px;
 `;
 
 const BoxTitle = styled.span`
@@ -307,7 +307,11 @@ const DoneGoalBox = styled(GoalBox)`
 const MoreViewBtn = styled(MoreBadge)``;
 
 const BoardBox = styled(GoalBox)`
-  height: 320px;
+  min-height: 320px;
+  @media screen and (max-width: 1350px) {
+  }
+  @media screen and (max-width: 768px) {
+  }
 `;
 
 const Table = styled.table`
@@ -494,7 +498,7 @@ function DashBoard() {
         setChallenge(Response.data.slice(0, 3));
       })
       .catch((Error) => console.log(Error));
-  }, [setBadge, setDoingGoals, setDoneGoals]);
+  }, [badge, doingGoals, doneGoals]);
 
   console.log(challenge);
 
@@ -559,12 +563,7 @@ function DashBoard() {
             </GoalBox>
             <ChallengeBox>
               <BoxTitle>현재 참가 중인 챌린지</BoxTitle>
-              {
-                challenge.length === 0 &&
-                <Empty>
-                  참여 중인 챌린지가 없습니다.😥
-                </Empty>
-              }
+              {challenge.length === 0 && <Empty>참여 중인 챌린지가 없습니다.😥</Empty>}
               {challenge &&
                 challenge.map((challenge) => (
                   <ChallengeItem

@@ -59,8 +59,8 @@ const LogoImg = styled.img`
   @media screen and (max-width: 1150px) {
   }
   @media screen and (max-width: 768px) {
-    width: 15%;
-    height: 15%;
+    width: 7%;
+    height: 7%;
   }
 `;
 
@@ -93,6 +93,11 @@ const HeaderTitle = styled(motion.div)`
   @media screen and (max-width: 768px) {
     font-size: 30px;
   }
+`;
+
+const DarkToggleBox = styled.div`
+  /* background: #fff; */
+  margin-left: -300px;
 `;
 
 const ToggleBtn = styled.div`
@@ -360,7 +365,7 @@ function Header() {
           phoneNum: "",
         });
       }
-      alert('로그아웃 되었습니다.');
+      alert("로그아웃 되었습니다.");
       navigate("/");
     }
   };
@@ -378,8 +383,9 @@ function Header() {
         console.log(Response);
         if (Response.data.id !== 0) {
           setUser(Response.data);
+          navigate("/dash");
         } else {
-          alert('로그인 정보를 다시 확인해 주세요.');
+          alert("로그인 정보를 다시 확인해 주세요.");
         }
         // console.log(Response.data);
         // window.location.reload();
@@ -427,7 +433,9 @@ function Header() {
             Light House
           </HeaderTitle>
         </Link>
-        <DarkModeToggle onChange={toggleDarkAtom} checked={isDarkMode} size={60} />
+        <DarkToggleBox>
+          <DarkModeToggle onChange={toggleDarkAtom} checked={isDarkMode} size={60} />
+        </DarkToggleBox>
       </Col>
       <Col>
         {/* <Search onSubmit={handleSubmit(onValid)}>

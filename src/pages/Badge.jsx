@@ -11,6 +11,11 @@ const BadgeBox = styled.div`
   &:hover {
     background: #fafafa;
   }
+  @media screen and (max-width: 1350px) {
+  }
+  @media screen and (max-width: 768px) {
+    margin: 0px;
+  }
 `;
 
 const Img = styled.img`
@@ -20,6 +25,10 @@ const Img = styled.img`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  @media screen and (max-width: 1350px) {
+  }
+  @media screen and (max-width: 768px) {
+  }
 `;
 
 function Badge({ badge, setId }) {
