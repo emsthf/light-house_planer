@@ -220,7 +220,11 @@ function AuthBoard() {
     const url3 = `http://springbootgoal-env.eba-wzmejvgd.us-east-1.elasticbeanstalk.com/api/goal/${goal.id}`;
 
     if ((post.title && post.content) !== null && post.created === now) {
+      console.log("post id : " + post.id);
+      console.log(data.title);
+      console.log(data.content);
       setTimeout(() => {
+        console.log("axios start")
         axios
           .put(url1, {
             id: post.id,
