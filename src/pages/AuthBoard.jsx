@@ -230,17 +230,11 @@ function AuthBoard() {
     );
     console.log("수정 데이터: ", data.title, " + ", data.content, " + ", now);
     if ((post.title && post.content) !== null && post.created === now) {
-<<<<<<< HEAD
       console.log("post id : " + post.id);
       console.log(data.title);
       console.log(data.content);
       setTimeout(() => {
-        console.log("axios start")
-=======
-      console.log("수정 조건 통과.");
-      setTimeout(() => {
-        console.log("수정 axios 시작.");
->>>>>>> 920fa0b04e0038cdf8d5c1641bf1d063e36a05b1
+        console.log("axios start");
         axios
           .put(url1, {
             id: post.id,
